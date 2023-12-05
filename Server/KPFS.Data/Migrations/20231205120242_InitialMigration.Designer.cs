@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KPFS.Data.Migrations
 {
     [DbContext(typeof(KpfsDbContext))]
-    [Migration("20231129111516_InitialMigration")]
+    [Migration("20231205120242_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -57,6 +57,16 @@ namespace KPFS.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("Purpose")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("varchar(255)");
 
@@ -74,38 +84,6 @@ namespace KPFS.Data.Migrations
                     b.HasIndex("UpdatedBy");
 
                     b.ToTable("BankAccounts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AccountNumber = "12345678",
-                            BankName = "SBI",
-                            CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            CreatedOn = new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7355),
-                            FundId = 1,
-                            IsDeleted = false
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AccountNumber = "48395847",
-                            BankName = "ICICI",
-                            CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            CreatedOn = new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7356),
-                            FundId = 1,
-                            IsDeleted = false
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AccountNumber = "49573625",
-                            BankName = "HDFC",
-                            CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            CreatedOn = new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7357),
-                            FundId = 1,
-                            IsDeleted = false
-                        });
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.Closure", b =>
@@ -141,6 +119,11 @@ namespace KPFS.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
+
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("varchar(255)");
 
@@ -158,17 +141,6 @@ namespace KPFS.Data.Migrations
                     b.HasIndex("UpdatedBy");
 
                     b.ToTable("Closures");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            CreatedOn = new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7388),
-                            FundId = 1,
-                            IsDeleted = false,
-                            Name = "Default Closure"
-                        });
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.Drawdown", b =>
@@ -187,10 +159,6 @@ namespace KPFS.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<DateTime>("Date")
-                        .HasMaxLength(100)
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("DeletedBy")
                         .HasColumnType("varchar(255)");
 
@@ -203,10 +171,28 @@ namespace KPFS.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<string>("Method")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<DateTime>("NoticeDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("varchar(255)");
@@ -248,16 +234,46 @@ namespace KPFS.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
                     b.Property<int>("FundHouseId")
                         .HasColumnType("int");
+
+                    b.Property<string>("InvestmentManagerName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("LegalAdvisorName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("MerchantBankerName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("SebiRegistrationNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("varchar(15)");
+
+                    b.Property<string>("SponserName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("varchar(255)");
@@ -276,17 +292,6 @@ namespace KPFS.Data.Migrations
                     b.HasIndex("UpdatedBy");
 
                     b.ToTable("Funds");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            CreatedOn = new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7332),
-                            FundHouseId = 1,
-                            IsDeleted = false,
-                            Name = "KPFS Fund"
-                        });
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.FundHouse", b =>
@@ -308,13 +313,18 @@ namespace KPFS.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("varchar(255)");
@@ -337,9 +347,10 @@ namespace KPFS.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            CreatedOn = new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7313),
+                            CreatedOn = new DateTime(2023, 12, 5, 12, 2, 42, 463, DateTimeKind.Utc).AddTicks(4635),
+                            FullName = "KPFS Fund House",
                             IsDeleted = false,
-                            Name = "KPFS Fund House"
+                            ShortName = "KPFS"
                         });
                 });
 
@@ -400,30 +411,6 @@ namespace KPFS.Data.Migrations
                     b.HasIndex("UpdatedBy");
 
                     b.ToTable("FundManagers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            CreatedOn = new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7375),
-                            Email = "pawan.nogariya@gmail.com",
-                            FundId = 1,
-                            IsDeleted = false,
-                            ManagerFirstName = "John",
-                            ManagerLastName = "Edward"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            CreatedOn = new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7377),
-                            Email = "pawan.nogariya@gmail.com",
-                            FundId = 1,
-                            IsDeleted = false,
-                            ManagerFirstName = "Rohit",
-                            ManagerLastName = "Sharma"
-                        });
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.Investor", b =>
@@ -432,8 +419,57 @@ namespace KPFS.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("AccountNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Address1")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("Address2")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("BankAccountType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("BankName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<double>("CapitalCommitment")
+                        .HasColumnType("double");
+
+                    b.Property<double>("CapitalContribution")
+                        .HasColumnType("double");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Class")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
                     b.Property<int>("ClosureId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ContactNo")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -448,21 +484,125 @@ namespace KPFS.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("FirstName")
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("Email2")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
+                    b.Property<string>("FolioNo")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<DateTime?>("ForfeitAndTransferDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("FundId")
                         .HasColumnType("int");
 
+                    b.Property<string>("IFSCCode")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("IdentityPanNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("InvestorName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsCarryClass")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("KpfsIncompleteRecordRemark")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("KpfsRecordStatus")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<string>("MICRCode")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("ManagementFees")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<int>("ModeOfHolding")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OperatingExpenses")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("OtherBankAccountType")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Pincode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Salutation")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("SebiInvestorType1")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("SebiInvestorType2")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("SebiInvestorType3")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("SetupFees")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("TaxPanNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<int>("TaxStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UniqueKey")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("varchar(255)");
@@ -483,6 +623,60 @@ namespace KPFS.Data.Migrations
                     b.HasIndex("UpdatedBy");
 
                     b.ToTable("Investors");
+                });
+
+            modelBuilder.Entity("KPFS.Data.Entities.PortfolioCompany", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("SebiIndustrySector")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("PortfolioCompanies");
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.Role", b =>
@@ -515,8 +709,8 @@ namespace KPFS.Data.Migrations
                         {
                             Id = "ada877bb-8dda-11ee-b507-e86a64b47aae",
                             ConcurrencyStamp = "1",
-                            Name = "Normal",
-                            NormalizedName = "Normal"
+                            Name = "User",
+                            NormalizedName = "User"
                         },
                         new
                         {
@@ -532,6 +726,55 @@ namespace KPFS.Data.Migrations
                             Name = "Admin",
                             NormalizedName = "Admin"
                         });
+                });
+
+            modelBuilder.Entity("KPFS.Data.Entities.TemporaryInvestment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("ShortName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DeletedBy");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("TemporaryInvestments");
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.User", b =>
@@ -557,6 +800,9 @@ namespace KPFS.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -612,17 +858,18 @@ namespace KPFS.Data.Migrations
                         {
                             Id = "668f96df-8e03-11ee-b507-e86a64b47aae",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b178d7df-fa4f-4e97-9db6-16099c47c565",
+                            ConcurrencyStamp = "efa24e94-3d2d-4d11-90a0-b8cb03a0dc6d",
                             Email = "pawan.nogariya@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Super",
+                            IsActive = true,
                             LastName = "Admin",
                             LockoutEnabled = true,
                             NormalizedEmail = "PAWAN.NOGARIYA@GMAIL.COM",
                             NormalizedUserName = "PAWAN.NOGARIYA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIYI/YenMLFVahcfxpbV6Mb3UxlceR0I1IMCl6YQqQCtHla1nm25KRY3n7K1bwkztA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKdX0KrCQVPffI56Vo+LWPM222A5zpFlfWekjFc0xwMRN+9Gtg0VbhbHtdrUAWhAYQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bcaa17ee-da04-42b2-aa59-62d48b475c53",
+                            SecurityStamp = "ebc7ce13-e2f0-4534-b198-b49e3688e93c",
                             TwoFactorEnabled = true,
                             UserName = "pawan.nogariya"
                         });
@@ -973,6 +1220,52 @@ namespace KPFS.Data.Migrations
                     b.Navigation("DeletedByUser");
 
                     b.Navigation("Fund");
+
+                    b.Navigation("UpdateByUser");
+                });
+
+            modelBuilder.Entity("KPFS.Data.Entities.PortfolioCompany", b =>
+                {
+                    b.HasOne("KPFS.Data.Entities.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KPFS.Data.Entities.User", "DeletedByUser")
+                        .WithMany()
+                        .HasForeignKey("DeletedBy");
+
+                    b.HasOne("KPFS.Data.Entities.User", "UpdateByUser")
+                        .WithMany()
+                        .HasForeignKey("UpdatedBy");
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("DeletedByUser");
+
+                    b.Navigation("UpdateByUser");
+                });
+
+            modelBuilder.Entity("KPFS.Data.Entities.TemporaryInvestment", b =>
+                {
+                    b.HasOne("KPFS.Data.Entities.User", "CreatedByUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KPFS.Data.Entities.User", "DeletedByUser")
+                        .WithMany()
+                        .HasForeignKey("DeletedBy");
+
+                    b.HasOne("KPFS.Data.Entities.User", "UpdateByUser")
+                        .WithMany()
+                        .HasForeignKey("UpdatedBy");
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("DeletedByUser");
 
                     b.Navigation("UpdateByUser");
                 });

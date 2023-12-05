@@ -4,6 +4,8 @@ using KPFS.Business.Services.Interfaces;
 using KPFS.Data;
 using KPFS.Data.Entities;
 using KPFS.Data.Repositories;
+using KPFS.Web;
+using KPFS.Web.AppSettings;
 using KPFS.Web.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -14,6 +16,10 @@ using NLog.Web;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("appsettings.json")
+                 .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+                 .AddJsonFile($"appsettings.Local.json", optional: true);
 
 var configuration = builder.Configuration;
 
@@ -58,6 +64,9 @@ builder.Services.AddAuthentication(options =>
 
 var emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfigurationDto>();
 builder.Services.AddSingleton(emailConfig);
+
+builder.Services.Configure<AppSettings>(configuration.GetSection("App"));
+builder.Services.Configure<JwtSettings>(configuration.GetSection("JWT"));
 
 // services
 builder.Services.AddScoped<IEmailService, EmailService>();

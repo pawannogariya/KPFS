@@ -1,3 +1,4 @@
 **/bin/*
 **/obj/*
 .vs/
+Server/KPFS.Web/appsettings.Local.json

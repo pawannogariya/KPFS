@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using KPFS.Business.Models;
 using KPFS.Business.Services.Interfaces;
-using KPFS.Common.Extensions;
+using KPFS.Data.Constants;
 using KPFS.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -20,67 +22,36 @@ namespace KPFS.Web.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IEmailService _emailService;
-        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
+        private readonly JwtSettings _jwtSettings;
 
         public AuthenticationController(
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
             IEmailService emailService,
             SignInManager<User> signInManager,
-            IConfiguration configuration,
-            IMapper mapper) : base(userManager)
+            IMapper mapper,
+            IOptions<JwtSettings> jwtSettings) : base(userManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _emailService = emailService;
-            _configuration = configuration;
             _mapper = mapper;
+            _jwtSettings = jwtSettings.Value;
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<ResponseDto<UserDto>>> Register([FromBody] RegisterUserDto model)
         {
-            var userExist = await _userManager.FindByEmailAsync(model.Email);
-            if (userExist != null)
-            {
-                return BuildFailureResponse<UserDto>("User already exists");
-            }
+            return await RegisterUser(model);
+        }
 
-            User user = new()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username,
-                TwoFactorEnabled = true
-            };
-
-            if (await _roleManager.RoleExistsAsync(model.Role))
-            {
-                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-                if (!result.Succeeded)
-                {
-                    var errors = string.Join(Environment.NewLine, result.Errors.Select(x => $"{x.Code}: {x.Description}"));
-                    return BuildFailureResponse<UserDto>(errors);
-                }
-
-                await _userManager.AddToRoleAsync(user, model.Role);
-
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
-                var message = new MessageDto(new string[] { user.Email! }, "KPFS: Confirmation email link", confirmationLink!);
-                _emailService.SendEmail(message);
-
-                return BuildResponse(_mapper.Map<UserDto>(user));
-            }
-            else
-            {
-                return BuildFailureResponse<UserDto>("This role doesn't exist.");
-            }
+        [HttpPost("admin-register")]
+        [Authorize(Roles = Roles.Admin)]
+        public async Task<ActionResult<ResponseDto<UserDto>>> AdminRegister([FromBody] AdminRegisterUserDto model)
+        {
+            return await RegisterUser(model);
         }
 
         [HttpGet("confirm-email")]
@@ -110,7 +81,7 @@ namespace KPFS.Web.Controllers
         {
             var user = await _userManager.FindByEmailAsync(loginModel.Email);
 
-            if (user == null)
+            if (user == null || !user.IsActive)
             {
                 return BuildFailureResponse<LoginResponseDto>($"Login failed. Cannot find user with the email id {loginModel.Email}!");
             }
@@ -205,17 +176,70 @@ namespace KPFS.Web.Controllers
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetJwtSecret()));
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
 
             var token = new JwtSecurityToken(
-                issuer: _configuration.GetJwtValidIssuer(),
-                audience: _configuration.GetJwtValidAudience(),
+                issuer: _jwtSettings.ValidIssuer,
+                audience: _jwtSettings.ValidAudience,
                 expires: DateTime.Now.AddDays(2),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
             return token;
+        }
+
+        private async Task<ActionResult<ResponseDto<UserDto>>> RegisterUser(RegisterUserDto model)
+        {
+            var role = (model as AdminRegisterUserDto)?.Role;
+
+            role = string.IsNullOrEmpty(role) ? Roles.User : role;
+
+            var userExist = await _userManager.FindByEmailAsync(model.Email);
+            if (userExist != null)
+            {
+                if (!userExist.IsActive)
+                {
+                    return BuildFailureResponse<UserDto>("User already exists but in-active");
+                }
+
+                return BuildFailureResponse<UserDto>("User already exists");
+            }
+
+            User user = new()
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Email = model.Email,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = model.Username,
+                TwoFactorEnabled = true,
+                IsActive = true
+            };
+
+            if (await _roleManager.RoleExistsAsync(role))
+            {
+                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+                if (!result.Succeeded)
+                {
+                    var errors = string.Join(Environment.NewLine, result.Errors.Select(x => $"{x.Code}: {x.Description}"));
+                    return BuildFailureResponse<UserDto>(errors);
+                }
+
+                await _userManager.AddToRoleAsync(user, role);
+
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
+                var message = new MessageDto(new string[] { user.Email! }, "KPFS: Confirmation email link", confirmationLink!);
+                _emailService.SendEmail(message);
+
+                return BuildResponse(_mapper.Map<UserDto>(user));
+            }
+            else
+            {
+                return BuildFailureResponse<UserDto>("This role doesn't exist.");
+            }
         }
     }
 }

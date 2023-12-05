@@ -1,19 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using KPFS.Data.Entities.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using KPFS.Data.Entities.Base;
 
 namespace KPFS.Data.Entities
 {
     public class Drawdown : EntityBase<int>
     {
         [Required]
-        [StringLength(100)]
-        public string Name { get; set; }
-
+        [StringLength(15)]
+        public string ShortName { get; set; }
 
         [Required]
         [StringLength(100)]
-        public DateTime Date { get; set; }
+        public string Name { get; set; }
+
+        [Required]
+        public DateTime NoticeDate { get; set; }
+
+        [Required]
+        [StringLength(1000)]
+        public string Method { get; set; }
+
+        [Required]
+        [StringLength(1000)]
+        public string Notes { get; set; }
 
         [Required]
         public int FundId { get; set; }

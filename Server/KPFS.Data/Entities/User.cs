@@ -5,12 +5,15 @@ namespace KPFS.Data.Entities
 {
     public class User : IdentityUser
     {
-        [MaxLength(100)]
+        [StringLength(100)]
         [Required]
         public string FirstName { get; set; }
 
-        [MaxLength(100)]
+        [StringLength(100)]
         [Required]
-        public string LastName { get; set; }   
+        public string LastName { get; set; }
+
+        [Required]
+        public bool IsActive { get; set; }
     }
 }

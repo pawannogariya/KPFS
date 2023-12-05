@@ -7,6 +7,10 @@ namespace KPFS.Data.Entities
     public class Closure : EntityBase<int>
     {
         [Required]
+        [StringLength(15)]
+        public string ShortName { get; set; }
+
+        [Required]
         [StringLength(100)]
         public string Name { get; set; }
 

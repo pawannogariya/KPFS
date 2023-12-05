@@ -5,8 +5,11 @@ namespace KPFS.Data.Entities
 {
     public class FundHouse : EntityBase<int>
     {
-        [StringLength(100)]
+        [StringLength(50)]
+        public string ShortName { get; set; }
 
-        public string Name { get; set; }    
+
+        [StringLength(100)]
+        public string FullName { get; set; }    
     }
 }

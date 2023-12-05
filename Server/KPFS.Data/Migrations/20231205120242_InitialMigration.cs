@@ -46,6 +46,7 @@ namespace KPFS.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LastName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
@@ -210,7 +211,9 @@ namespace KPFS.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    ShortName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FullName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedBy = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -246,14 +249,114 @@ namespace KPFS.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "PortfolioCompanies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ShortName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SebiIndustrySector = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedBy = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeletedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PortfolioCompanies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PortfolioCompanies_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PortfolioCompanies_AspNetUsers_DeletedBy",
+                        column: x => x.DeletedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PortfolioCompanies_AspNetUsers_UpdatedBy",
+                        column: x => x.UpdatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TemporaryInvestments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ShortName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedBy = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeletedBy = table.Column<string>(type: "varchar(255)", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemporaryInvestments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemporaryInvestments_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TemporaryInvestments_AspNetUsers_DeletedBy",
+                        column: x => x.DeletedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TemporaryInvestments_AspNetUsers_UpdatedBy",
+                        column: x => x.UpdatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Funds",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FundHouseId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    ShortName = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    FullName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SebiRegistrationNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    InvestmentManagerName = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SponserName = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MerchantBankerName = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    LegalAdvisorName = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    FundHouseId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
@@ -299,9 +402,13 @@ namespace KPFS.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ShortName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     BankName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     AccountNumber = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Purpose = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     FundId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "varchar(255)", nullable: false)
@@ -349,6 +456,8 @@ namespace KPFS.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ShortName = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Date = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -450,9 +559,15 @@ namespace KPFS.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ShortName = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Date = table.Column<DateTime>(type: "datetime(6)", maxLength: 100, nullable: false),
+                    NoticeDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Method = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Notes = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     FundId = table.Column<int>(type: "int", nullable: false),
                     ClosureId = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "varchar(255)", nullable: false)
@@ -506,9 +621,70 @@ namespace KPFS.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    UniqueKey = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    FolioNo = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    LastName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsCarryClass = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Class = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ForfeitAndTransferDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    Salutation = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    InvestorName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ModeOfHolding = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Email2 = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IdentityPanNumber = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TaxPanNumber = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ContactNo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Address = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Address1 = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Address2 = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    City = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    State = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Pincode = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    BankAccountType = table.Column<int>(type: "int", nullable: false),
+                    OtherBankAccountType = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    BankName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IFSCCode = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    MICRCode = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AccountNumber = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TaxStatus = table.Column<int>(type: "int", nullable: false),
+                    SetupFees = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ManagementFees = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    OperatingExpenses = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SebiInvestorType1 = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SebiInvestorType2 = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SebiInvestorType3 = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CapitalCommitment = table.Column<double>(type: "double", nullable: false),
+                    CapitalContribution = table.Column<double>(type: "double", nullable: false),
+                    KpfsRecordStatus = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    KpfsIncompleteRecordRemark = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     FundId = table.Column<int>(type: "int", nullable: false),
                     ClosureId = table.Column<int>(type: "int", nullable: false),
@@ -562,15 +738,15 @@ namespace KPFS.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "ada877bb-8dda-11ee-b507-e86a64b47aae", "1", "Normal", "Normal" },
+                    { "ada877bb-8dda-11ee-b507-e86a64b47aae", "1", "User", "User" },
                     { "b9ba635b-8dda-11ee-b507-e86a64b47aae", "2", "Reviewer", "Reviewer" },
                     { "c1170fd6-8dda-11ee-b507-e86a64b47aae", "3", "Admin", "Admin" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "668f96df-8e03-11ee-b507-e86a64b47aae", 0, "b178d7df-fa4f-4e97-9db6-16099c47c565", "pawan.nogariya@gmail.com", true, "Super", "Admin", true, null, "PAWAN.NOGARIYA@GMAIL.COM", "PAWAN.NOGARIYA@GMAIL.COM", "AQAAAAEAACcQAAAAEIYI/YenMLFVahcfxpbV6Mb3UxlceR0I1IMCl6YQqQCtHla1nm25KRY3n7K1bwkztA==", null, false, "bcaa17ee-da04-42b2-aa59-62d48b475c53", true, "pawan.nogariya" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "668f96df-8e03-11ee-b507-e86a64b47aae", 0, "efa24e94-3d2d-4d11-90a0-b8cb03a0dc6d", "pawan.nogariya@gmail.com", true, "Super", true, "Admin", true, null, "PAWAN.NOGARIYA@GMAIL.COM", "PAWAN.NOGARIYA@GMAIL.COM", "AQAAAAEAACcQAAAAEKdX0KrCQVPffI56Vo+LWPM222A5zpFlfWekjFc0xwMRN+9Gtg0VbhbHtdrUAWhAYQ==", null, false, "ebc7ce13-e2f0-4534-b198-b49e3688e93c", true, "pawan.nogariya" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -579,37 +755,8 @@ namespace KPFS.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "FundHouses",
-                columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "IsDeleted", "Name", "UpdatedBy", "UpdatedOn" },
-                values: new object[] { 1, "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7313), null, null, false, "KPFS Fund House", null, null });
-
-            migrationBuilder.InsertData(
-                table: "Funds",
-                columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "FundHouseId", "IsDeleted", "Name", "UpdatedBy", "UpdatedOn" },
-                values: new object[] { 1, "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7332), null, null, 1, false, "KPFS Fund", null, null });
-
-            migrationBuilder.InsertData(
-                table: "BankAccounts",
-                columns: new[] { "Id", "AccountNumber", "BankName", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "FundId", "IsDeleted", "UpdatedBy", "UpdatedOn" },
-                values: new object[,]
-                {
-                    { 1, "12345678", "SBI", "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7355), null, null, 1, false, null, null },
-                    { 2, "48395847", "ICICI", "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7356), null, null, 1, false, null, null },
-                    { 3, "49573625", "HDFC", "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7357), null, null, 1, false, null, null }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Closures",
-                columns: new[] { "Id", "CreatedBy", "CreatedOn", "Date", "DeletedBy", "DeletedOn", "FundId", "IsDeleted", "Name", "UpdatedBy", "UpdatedOn" },
-                values: new object[] { 1, "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7388), null, null, null, 1, false, "Default Closure", null, null });
-
-            migrationBuilder.InsertData(
-                table: "FundManagers",
-                columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "Email", "FundId", "IsDeleted", "ManagerFirstName", "ManagerLastName", "UpdatedBy", "UpdatedOn" },
-                values: new object[,]
-                {
-                    { 1, "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7375), null, null, "pawan.nogariya@gmail.com", 1, false, "John", "Edward", null, null },
-                    { 2, "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 11, 29, 11, 15, 16, 117, DateTimeKind.Utc).AddTicks(7377), null, null, "pawan.nogariya@gmail.com", 1, false, "Rohit", "Sharma", null, null }
-                });
+                columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "FullName", "IsDeleted", "ShortName", "UpdatedBy", "UpdatedOn" },
+                values: new object[] { 1, "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 12, 5, 12, 2, 42, 463, DateTimeKind.Utc).AddTicks(4635), null, null, "KPFS Fund House", false, "KPFS", null, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -792,6 +939,36 @@ namespace KPFS.Data.Migrations
                 name: "IX_Investors_UpdatedBy",
                 table: "Investors",
                 column: "UpdatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PortfolioCompanies_CreatedBy",
+                table: "PortfolioCompanies",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PortfolioCompanies_DeletedBy",
+                table: "PortfolioCompanies",
+                column: "DeletedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PortfolioCompanies_UpdatedBy",
+                table: "PortfolioCompanies",
+                column: "UpdatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemporaryInvestments_CreatedBy",
+                table: "TemporaryInvestments",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemporaryInvestments_DeletedBy",
+                table: "TemporaryInvestments",
+                column: "DeletedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemporaryInvestments_UpdatedBy",
+                table: "TemporaryInvestments",
+                column: "UpdatedBy");
         }
 
         /// <inheritdoc />
@@ -823,6 +1000,12 @@ namespace KPFS.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Investors");
+
+            migrationBuilder.DropTable(
+                name: "PortfolioCompanies");
+
+            migrationBuilder.DropTable(
+                name: "TemporaryInvestments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

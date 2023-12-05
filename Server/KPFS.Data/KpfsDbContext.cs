@@ -18,6 +18,8 @@ namespace KPFS.Data
         public DbSet<Closure> Closures { get; set; }
         public DbSet<FundManager> FundManagers { get; set; }
         public DbSet<Drawdown> Drawdowns { get; set; }
+        public DbSet<TemporaryInvestment> TemporaryInvestments { get; set; }
+        public DbSet<PortfolioCompany> PortfolioCompanies { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -31,7 +33,7 @@ namespace KPFS.Data
 
             builder.Entity<Role>().HasData
             (
-                new Role() { Id = "ada877bb-8dda-11ee-b507-e86a64b47aae", Name = Constants.Roles.Normal, ConcurrencyStamp = "1", NormalizedName = Constants.Roles.Normal },
+                new Role() { Id = "ada877bb-8dda-11ee-b507-e86a64b47aae", Name = Constants.Roles.User, ConcurrencyStamp = "1", NormalizedName = Constants.Roles.User },
                 new Role() { Id = "b9ba635b-8dda-11ee-b507-e86a64b47aae", Name = Constants.Roles.Reviewer, ConcurrencyStamp = "2", NormalizedName = Constants.Roles.Reviewer },
                 new Role() { Id = "c1170fd6-8dda-11ee-b507-e86a64b47aae", Name = Constants.Roles.Admin, ConcurrencyStamp = "3", NormalizedName = Constants.Roles.Admin }
             );
@@ -51,7 +53,8 @@ namespace KPFS.Data
                    NormalizedEmail = "pawan.nogariya@gmail.com".ToUpper(),
                    PasswordHash = passwordHasher.HashPassword(null, "P@ssword123"),
                    TwoFactorEnabled = true,
-                   LockoutEnabled = true
+                   LockoutEnabled = true,
+                   IsActive= true
                }
            );
 
@@ -63,31 +66,31 @@ namespace KPFS.Data
 
             builder.Entity<FundHouse>().HasData
             (
-                new FundHouse() { Id = 1, Name = "KPFS Fund House", CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
+                new FundHouse() { Id = 1,ShortName= "KPFS",FullName = "KPFS Fund House", CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
             );
 
-            builder.Entity<Fund>().HasData
-            (
-                new Fund() { Id = 1, Name = "KPFS Fund", FundHouseId = 1, CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
-            );
+            //builder.Entity<Fund>().HasData
+            //(
+            //    new Fund() { Id = 1, Name = "KPFS Fund", FundHouseId = 1, CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
+            //);
 
-            builder.Entity<BankAccount>().HasData
-           (
-               new BankAccount() { Id = 1, BankName = "SBI", AccountNumber = "12345678", FundId = 1, CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false },
-               new BankAccount() { Id = 2, BankName = "ICICI", AccountNumber = "48395847", FundId = 1, CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false },
-               new BankAccount() { Id = 3, BankName = "HDFC", AccountNumber = "49573625", FundId = 1, CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
-           );
+            //  builder.Entity<BankAccount>().HasData
+            // (
+            //     new BankAccount() { Id = 1, BankName = "SBI", AccountNumber = "12345678", FundId = 1, CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false },
+            //     new BankAccount() { Id = 2, BankName = "ICICI", AccountNumber = "48395847", FundId = 1, CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false },
+            //     new BankAccount() { Id = 3, BankName = "HDFC", AccountNumber = "49573625", FundId = 1, CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
+            // );
 
-            builder.Entity<FundManager>().HasData
-          (
-              new FundManager() { Id = 1, FundId = 1, ManagerFirstName = "John", ManagerLastName = "Edward", Email = "pawan.nogariya@gmail.com", CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false },
-              new FundManager() { Id = 2, FundId = 1, ManagerFirstName = "Rohit", ManagerLastName = "Sharma", Email = "pawan.nogariya@gmail.com", CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
-          );
+            //  builder.Entity<FundManager>().HasData
+            //(
+            //    new FundManager() { Id = 1, FundId = 1, ManagerFirstName = "John", ManagerLastName = "Edward", Email = "pawan.nogariya@gmail.com", CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false },
+            //    new FundManager() { Id = 2, FundId = 1, ManagerFirstName = "Rohit", ManagerLastName = "Sharma", Email = "pawan.nogariya@gmail.com", CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
+            //);
 
-            builder.Entity<Closure>().HasData
-          (
-           new Closure() { Id = 1, FundId = 1, Name = "Default Closure", CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
-          );
+            //  builder.Entity<Closure>().HasData
+            //(
+            // new Closure() { Id = 1, FundId = 1, Name = "Default Closure", CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
+            //);
         }
     }
 }
