@@ -15,7 +15,6 @@ namespace KPFS.Web.Controllers
     public class MasterDataController : ApiBaseController
     {
         private readonly IMasterDataService masterDataService;
-
         public MasterDataController(
             IMasterDataService masterDataService,
             UserManager<User> userManager) : base(userManager)

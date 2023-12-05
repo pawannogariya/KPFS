@@ -1,6 +1,7 @@
 using KPFS.Business.Models;
 using KPFS.Business.Services.Implementations;
 using KPFS.Business.Services.Interfaces;
+using KPFS.Common;
 using KPFS.Data;
 using KPFS.Data.Entities;
 using KPFS.Data.Repositories;
@@ -14,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
 using System.Text;
+using System.Xml.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +69,15 @@ builder.Services.AddSingleton(emailConfig);
 
 builder.Services.Configure<AppSettings>(configuration.GetSection("App"));
 builder.Services.Configure<JwtSettings>(configuration.GetSection("JWT"));
+
+MasterData? masterData = new MasterData();  
+XmlSerializer serializer = new XmlSerializer(typeof(MasterData));
+using (FileStream fileStream = new FileStream("MasterData.xml", FileMode.Open))
+{
+    masterData = serializer.Deserialize(fileStream) as MasterData;
+}
+
+builder.Services.AddSingleton(masterData);
 
 // services
 builder.Services.AddScoped<IEmailService, EmailService>();

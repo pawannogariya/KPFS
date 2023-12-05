@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterData>
+  <TransactionTypes>
+    <TransactionType Value="Contribution">
+      <TransactionSubType Value="Contribution Received against Drawdown" IsCredit="true"></TransactionSubType>
+      <TransactionSubType Value="Contribution Received in Excess/Advance" IsCredit="true"></TransactionSubType>
+      <TransactionSubType Value="Contribution Refunded" IsCredit="false"></TransactionSubType>
+    </TransactionType>
+    <TransactionType Value="Distribution">
+      <TransactionSubType Value="Income Distribution - TDS" IsCredit="false"></TransactionSubType>
+      <TransactionSubType Value="Income Distribution - Bank" IsCredit="false"></TransactionSubType>
+      <TransactionSubType Value="Capital Distribution - Bank" IsCredit="false"></TransactionSubType>
+    </TransactionType>
+    <TransactionType Value="Investment">
+      <TransactionSubType Value="Portfolio Investment" IsCredit="false"></TransactionSubType>
+      <TransactionSubType Value="Temporary Investment" IsCredit="false"></TransactionSubType>
+    </TransactionType>
+    <TransactionType Value="Divestment">
+      <TransactionSubType Value="Portfolio Divestment" IsCredit="true"></TransactionSubType>
+      <TransactionSubType Value="Temporary Divestment" IsCredit="true"></TransactionSubType>
+    </TransactionType>
+    <TransactionType Value="Income">
+      <TransactionSubType Value="Income from Portfolio" IsCredit="true">
+        <Type Value="Capital Gains"></Type>
+        <Type Value="Interest Income"></Type>
+        <Type Value="Dividend Income"></Type>
+        <Type Value="Other"></Type>
+      </TransactionSubType>
+      <TransactionSubType Value="Income from Temporary Investment" IsCredit="true">
+        <Type Value="Capital Gains"></Type>
+        <Type Value="Interest Income"></Type>
+        <Type Value="Dividend Income"></Type>
+        <Type Value="Other"></Type>
+      </TransactionSubType>
+    </TransactionType>
+    <TransactionType Value="Expenses">
+      <TransactionSubType Value="Operating Expenses" IsCredit="false"></TransactionSubType>
+      <TransactionSubType Value="Management Fees" IsCredit="false"></TransactionSubType>
+      <TransactionSubType Value="Organisational or Setup Expenses" IsCredit="false"></TransactionSubType>
+      <TransactionSubType Value="Statutory Expenses" IsCredit="false"></TransactionSubType>
+    </TransactionType>
+    <TransactionType Value="Contra - Interbank Transfer">
+    </TransactionType>
+    <TransactionType Value="Others - Ignored">
+    </TransactionType>
+    <TransactionType Value="Unidentified Transactions">
+    </TransactionType>
+  </TransactionTypes>
+  <ModeOfHoldings>
+    <ModeOfHolding Value="Single"/>
+    <ModeOfHolding Value="Joint"/>
+    <ModeOfHolding Value="Anyone"/>
+    <ModeOfHolding Value="Survivor"/>
+  </ModeOfHoldings>
+  <TaxOptions>
+    <TaxOption Value="Resident"/>
+    <TaxOption Value="Non-Resident"/>
+  </TaxOptions>
+  <BankAccountTypes>
+    <BankAccountType Value="Savings"/>
+    <BankAccountType Value="Current"/>
+    <BankAccountType Value="NRO - Savings"/>
+    <BankAccountType Value="NRE"/>
+    <BankAccountType Value="Others"/>
+  </BankAccountTypes>
+  <KpfsRecordStatuses>
+    <KpfsRecordStatus Value="Complete"/>
+    <KpfsRecordStatus Value="Missing Mandatory Info"/>
+  </KpfsRecordStatuses>
+</MasterData>
+
