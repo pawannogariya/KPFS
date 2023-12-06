@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KPFS.Data.Migrations
 {
     [DbContext(typeof(KpfsDbContext))]
-    [Migration("20231205120242_InitialMigration")]
+    [Migration("20231206064546_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -347,7 +347,7 @@ namespace KPFS.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            CreatedOn = new DateTime(2023, 12, 5, 12, 2, 42, 463, DateTimeKind.Utc).AddTicks(4635),
+                            CreatedOn = new DateTime(2023, 12, 6, 6, 45, 44, 947, DateTimeKind.Utc).AddTicks(1184),
                             FullName = "KPFS Fund House",
                             IsDeleted = false,
                             ShortName = "KPFS"
@@ -858,7 +858,7 @@ namespace KPFS.Data.Migrations
                         {
                             Id = "668f96df-8e03-11ee-b507-e86a64b47aae",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "efa24e94-3d2d-4d11-90a0-b8cb03a0dc6d",
+                            ConcurrencyStamp = "aa85c211-ff2d-4627-a0b3-33ed9fd8412d",
                             Email = "pawan.nogariya@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Super",
@@ -867,9 +867,9 @@ namespace KPFS.Data.Migrations
                             LockoutEnabled = true,
                             NormalizedEmail = "PAWAN.NOGARIYA@GMAIL.COM",
                             NormalizedUserName = "PAWAN.NOGARIYA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKdX0KrCQVPffI56Vo+LWPM222A5zpFlfWekjFc0xwMRN+9Gtg0VbhbHtdrUAWhAYQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFOQpW9XafdotIcWwD5C2Hq7RHX5zO+/aysMrUR/RBDFlWCbUBXYXERk8HJxPL7oZg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ebc7ce13-e2f0-4534-b198-b49e3688e93c",
+                            SecurityStamp = "3ccc66c9-39fa-4e48-b20f-f515ca02058a",
                             TwoFactorEnabled = true,
                             UserName = "pawan.nogariya"
                         });
@@ -957,8 +957,6 @@ namespace KPFS.Data.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId");
-
                     b.ToTable("AspNetUserRoles", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUserRole<string>");
@@ -988,6 +986,8 @@ namespace KPFS.Data.Migrations
             modelBuilder.Entity("KPFS.Data.Entities.UserRole", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<string>");
+
+                    b.HasIndex("RoleId");
 
                     b.HasDiscriminator().HasValue("UserRole");
 
@@ -1297,21 +1297,6 @@ namespace KPFS.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("KPFS.Data.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KPFS.Data.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
                     b.HasOne("KPFS.Data.Entities.User", null)
@@ -1321,9 +1306,38 @@ namespace KPFS.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("KPFS.Data.Entities.UserRole", b =>
+                {
+                    b.HasOne("KPFS.Data.Entities.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KPFS.Data.Entities.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("KPFS.Data.Entities.Fund", b =>
                 {
                     b.Navigation("BankAccounts");
+                });
+
+            modelBuilder.Entity("KPFS.Data.Entities.Role", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("KPFS.Data.Entities.User", b =>
+                {
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

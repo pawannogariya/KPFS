@@ -35,7 +35,7 @@ namespace KPFS.Web.Controllers
         [HttpGet("users")]
         public async Task<ActionResult<ResponseDto<IEnumerable<UserDto>>>> GetAllUsers()
         {
-            return BuildResponse(_mapper.Map<IEnumerable<UserDto>>(await _userManager.Users.ToListAsync()));
+            return BuildResponse(_mapper.Map<IEnumerable<UserDto>>(await _userManager.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).ToListAsync()));
         }
 
         [HttpPost("update-user")]

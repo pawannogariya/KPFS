@@ -25,6 +25,20 @@ namespace KPFS.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<User>()
+                .HasMany(x => x.UserRoles);
+
+            builder.Entity<UserRole>()
+                .HasOne(x => x.User)
+                  .WithMany(x => x.UserRoles)
+                  .HasForeignKey(x => x.UserId);
+
+            builder.Entity<UserRole>()
+                .HasOne(x => x.Role)
+                  .WithMany(x => x.UserRoles)
+                  .HasForeignKey(x => x.RoleId);
+
             SeedData(builder);
         }
 
@@ -54,7 +68,7 @@ namespace KPFS.Data
                    PasswordHash = passwordHasher.HashPassword(null, "P@ssword123"),
                    TwoFactorEnabled = true,
                    LockoutEnabled = true,
-                   IsActive= true
+                   IsActive = true
                }
            );
 
@@ -66,7 +80,7 @@ namespace KPFS.Data
 
             builder.Entity<FundHouse>().HasData
             (
-                new FundHouse() { Id = 1,ShortName= "KPFS",FullName = "KPFS Fund House", CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
+                new FundHouse() { Id = 1, ShortName = "KPFS", FullName = "KPFS Fund House", CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae", CreatedOn = DateTime.UtcNow, IsDeleted = false }
             );
 
             //builder.Entity<Fund>().HasData

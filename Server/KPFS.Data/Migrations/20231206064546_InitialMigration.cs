@@ -746,7 +746,7 @@ namespace KPFS.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "668f96df-8e03-11ee-b507-e86a64b47aae", 0, "efa24e94-3d2d-4d11-90a0-b8cb03a0dc6d", "pawan.nogariya@gmail.com", true, "Super", true, "Admin", true, null, "PAWAN.NOGARIYA@GMAIL.COM", "PAWAN.NOGARIYA@GMAIL.COM", "AQAAAAEAACcQAAAAEKdX0KrCQVPffI56Vo+LWPM222A5zpFlfWekjFc0xwMRN+9Gtg0VbhbHtdrUAWhAYQ==", null, false, "ebc7ce13-e2f0-4534-b198-b49e3688e93c", true, "pawan.nogariya" });
+                values: new object[] { "668f96df-8e03-11ee-b507-e86a64b47aae", 0, "aa85c211-ff2d-4627-a0b3-33ed9fd8412d", "pawan.nogariya@gmail.com", true, "Super", true, "Admin", true, null, "PAWAN.NOGARIYA@GMAIL.COM", "PAWAN.NOGARIYA@GMAIL.COM", "AQAAAAEAACcQAAAAEFOQpW9XafdotIcWwD5C2Hq7RHX5zO+/aysMrUR/RBDFlWCbUBXYXERk8HJxPL7oZg==", null, false, "3ccc66c9-39fa-4e48-b20f-f515ca02058a", true, "pawan.nogariya" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -756,7 +756,7 @@ namespace KPFS.Data.Migrations
             migrationBuilder.InsertData(
                 table: "FundHouses",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "FullName", "IsDeleted", "ShortName", "UpdatedBy", "UpdatedOn" },
-                values: new object[] { 1, "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 12, 5, 12, 2, 42, 463, DateTimeKind.Utc).AddTicks(4635), null, null, "KPFS Fund House", false, "KPFS", null, null });
+                values: new object[] { 1, "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 12, 6, 6, 45, 44, 947, DateTimeKind.Utc).AddTicks(1184), null, null, "KPFS Fund House", false, "KPFS", null, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
