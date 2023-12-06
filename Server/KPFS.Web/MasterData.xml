@@ -1,49 +1,49 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <MasterData>
   <TransactionTypes>
-    <TransactionType Value="Contribution">
-      <TransactionSubType Value="Contribution Received against Drawdown" IsCredit="true"></TransactionSubType>
-      <TransactionSubType Value="Contribution Received in Excess/Advance" IsCredit="true"></TransactionSubType>
-      <TransactionSubType Value="Contribution Refunded" IsCredit="false"></TransactionSubType>
+    <TransactionType Value="Contribution" IsActive="true">
+      <TransactionSubType Value="Contribution Received against Drawdown" IsCredit="true" IsActive="true"></TransactionSubType>
+      <TransactionSubType Value="Contribution Received in Excess/Advance" IsCredit="true" IsActive="true"></TransactionSubType>
+      <TransactionSubType Value="Contribution Refunded" IsCredit="false" IsActive="true"></TransactionSubType>
     </TransactionType>
-    <TransactionType Value="Distribution">
-      <TransactionSubType Value="Income Distribution - TDS" IsCredit="false"></TransactionSubType>
-      <TransactionSubType Value="Income Distribution - Bank" IsCredit="false"></TransactionSubType>
-      <TransactionSubType Value="Capital Distribution - Bank" IsCredit="false"></TransactionSubType>
+    <TransactionType Value="Distribution" IsActive="true">
+      <TransactionSubType Value="Income Distribution - TDS" IsCredit="false" IsActive="true"></TransactionSubType>
+      <TransactionSubType Value="Income Distribution - Bank" IsCredit="false" IsActive="true"></TransactionSubType>
+      <TransactionSubType Value="Capital Distribution - Bank" IsCredit="false" IsActive="true"></TransactionSubType>
     </TransactionType>
-    <TransactionType Value="Investment">
-      <TransactionSubType Value="Portfolio Investment" IsCredit="false"></TransactionSubType>
-      <TransactionSubType Value="Temporary Investment" IsCredit="false"></TransactionSubType>
+    <TransactionType Value="Investment" IsActive="true">
+      <TransactionSubType Value="Portfolio Investment" IsCredit="false" IsActive="true"></TransactionSubType>
+      <TransactionSubType Value="Temporary Investment" IsCredit="false" IsActive="true"></TransactionSubType>
     </TransactionType>
-    <TransactionType Value="Divestment">
-      <TransactionSubType Value="Portfolio Divestment" IsCredit="true"></TransactionSubType>
-      <TransactionSubType Value="Temporary Divestment" IsCredit="true"></TransactionSubType>
+    <TransactionType Value="Divestment" IsActive="true">
+      <TransactionSubType Value="Portfolio Divestment" IsCredit="true" IsActive="true"></TransactionSubType>
+      <TransactionSubType Value="Temporary Divestment" IsCredit="true" IsActive="true"></TransactionSubType>
     </TransactionType>
-    <TransactionType Value="Income">
-      <TransactionSubType Value="Income from Portfolio" IsCredit="true">
-        <Type Value="Capital Gains"></Type>
-        <Type Value="Interest Income"></Type>
-        <Type Value="Dividend Income"></Type>
-        <Type Value="Other"></Type>
+    <TransactionType Value="Income" IsActive="true">
+      <TransactionSubType Value="Income from Portfolio" IsCredit="true" IsActive="true">
+        <IncomeType Value="Capital Gains" IsActive="true"></IncomeType>
+        <IncomeType Value="Interest Income" IsActive="true"></IncomeType>
+        <IncomeType Value="Dividend Income" IsActive="true"></IncomeType>
+        <IncomeType Value="Other" IsActive="true"></IncomeType>
       </TransactionSubType>
-      <TransactionSubType Value="Income from Temporary Investment" IsCredit="true">
-        <Type Value="Capital Gains"></Type>
-        <Type Value="Interest Income"></Type>
-        <Type Value="Dividend Income"></Type>
-        <Type Value="Other"></Type>
+      <TransactionSubType Value="Income from Temporary Investment" IsCredit="true" IsActive="true">
+        <IncomeType Value="Capital Gains" IsActive="true"></IncomeType>
+        <IncomeType Value="Interest Income" IsActive="true"></IncomeType>
+        <IncomeType Value="Dividend Income" IsActive="true"></IncomeType>
+        <IncomeType Value="Other" IsActive="true"></IncomeType>
       </TransactionSubType>
     </TransactionType>
-    <TransactionType Value="Expenses">
-      <TransactionSubType Value="Operating Expenses" IsCredit="false"></TransactionSubType>
-      <TransactionSubType Value="Management Fees" IsCredit="false"></TransactionSubType>
-      <TransactionSubType Value="Organisational or Setup Expenses" IsCredit="false"></TransactionSubType>
-      <TransactionSubType Value="Statutory Expenses" IsCredit="false"></TransactionSubType>
+    <TransactionType Value="Expenses" IsActive="true">
+      <TransactionSubType Value="Operating Expenses" IsCredit="false" IsActive="true"></TransactionSubType>
+      <TransactionSubType Value="Management Fees" IsCredit="false" IsActive="true"></TransactionSubType>
+      <TransactionSubType Value="Organisational or Setup Expenses" IsCredit="false" IsActive="true"></TransactionSubType>
+      <TransactionSubType Value="Statutory Expenses" IsCredit="false" IsActive="true"></TransactionSubType>
     </TransactionType>
-    <TransactionType Value="Contra - Interbank Transfer">
+    <TransactionType Value="Contra - Interbank Transfer" IsActive="true">
     </TransactionType>
-    <TransactionType Value="Others - Ignored">
+    <TransactionType Value="Others - Ignored" IsActive="true">
     </TransactionType>
-    <TransactionType Value="Unidentified Transactions">
+    <TransactionType Value="Unidentified Transactions" IsActive="true">
     </TransactionType>
   </TransactionTypes>
   <ModeOfHoldings>

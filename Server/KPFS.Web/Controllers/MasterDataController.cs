@@ -1,7 +1,7 @@
 ﻿using KPFS.Business.Dtos;
 using KPFS.Business.Models;
 using KPFS.Business.Services.Interfaces;
-using KPFS.Data.Constants;
+using KPFS.Common;
 using KPFS.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,15 +11,18 @@ namespace KPFS.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = Roles.Admin)]
+    [Authorize]
     public class MasterDataController : ApiBaseController
     {
         private readonly IMasterDataService masterDataService;
+        private readonly MasterData _masterData;
         public MasterDataController(
             IMasterDataService masterDataService,
-            UserManager<User> userManager) : base(userManager)
+            UserManager<User> userManager,
+            MasterData masterData) : base(userManager)
         {
             this.masterDataService = masterDataService;
+            _masterData = masterData;   
         }
 
         [HttpGet("fund-houses")]
@@ -51,6 +54,12 @@ namespace KPFS.Web.Controllers
         public async Task<ActionResult<ResponseDto<IEnumerable<FundManagerDto>>>> GetFundManagers(int fundId)
         {
             return BuildResponse<IEnumerable<FundManagerDto>>(await masterDataService.GetFundManagersAsync(fundId));
+        }
+
+        [HttpGet("data")]
+        public ActionResult<ResponseDto<MasterData>> GetMasterData()
+        {
+            return BuildResponse(_masterData);
         }
     }
 }

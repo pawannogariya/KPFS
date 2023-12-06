@@ -19,30 +19,36 @@ namespace KPFS.Common
 
         [XmlArray("KpfsRecordStatuses")]
         public List<KpfsRecordStatus> KpfsRecordStatuses { get; set; }
-
     }
 
-    public class TransactionType : ValueAttributeBase
+    public class TransactionType : EntryBase
     {
         [XmlElement("TransactionSubType")]
         public List<TransactionSubType> TransactionSubTypes { get; set; }
     }
 
-    public class TransactionSubType : ValueAttributeBase
+    public class TransactionSubType : EntryBase
     {
 
         [XmlAttribute("IsCredit")]
         public bool IsCredit { get; set; }
+
+        [XmlElement("IncomeType")]
+        public List<IncomeType> IncomeTypes { get; set; }
     }
 
-    public class ModeOfHolding : ValueAttributeBase { }
-    public class BankAccountType : ValueAttributeBase { }
-    public class TaxOption : ValueAttributeBase { }
-    public class KpfsRecordStatus : ValueAttributeBase { }
+    public class ModeOfHolding : EntryBase { }
+    public class BankAccountType : EntryBase { }
+    public class TaxOption : EntryBase { }
+    public class KpfsRecordStatus : EntryBase { }
+    public class IncomeType : EntryBase { }
 
-    public class ValueAttributeBase
+    public class EntryBase 
     {
         [XmlAttribute("Value")]
         public string Value { get; set; }
+
+        [XmlAttribute("IsActive")]
+        public bool IsActive { get; set; }
     }
 }
