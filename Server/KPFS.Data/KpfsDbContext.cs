@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KPFS.Data
 {
-    public class KpfsDbContext : IdentityDbContext<User, Role, string>
+    public class KpfsDbContext : IdentityDbContext<User, Role, string, IdentityUserClaim<string>,UserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public KpfsDbContext(DbContextOptions<KpfsDbContext> options) : base(options)
         {

@@ -48,11 +48,24 @@ namespace KPFS.Web.Controllers
                 return BuildFailureResponse<bool>("Cannot find user");
             }
 
+            if (userDto.Role == Roles.Admin)
+            {
+                return BuildFailureResponse<bool>("User cannot be assigned to admin role");
+            }
+
             user.FirstName = userDto.FirstName;
             user.LastName = userDto.LastName;
             user.IsActive = userDto.IsActive;
 
             await _userManager.UpdateAsync(user);
+
+            var userCurrentRole = (await _userManager.GetRolesAsync(user)).First();
+
+            if (userCurrentRole != userDto.Role)
+            {
+                await _userManager.RemoveFromRoleAsync(user, userCurrentRole);
+                await _userManager.AddToRoleAsync(user, userDto.Role);
+            }
 
             return BuildResponse(true);
         }

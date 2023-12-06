@@ -158,8 +158,6 @@ namespace KPFS.Data.Migrations
                     UserId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RoleId = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Discriminator = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -746,17 +744,17 @@ namespace KPFS.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "IsActive", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "668f96df-8e03-11ee-b507-e86a64b47aae", 0, "aa85c211-ff2d-4627-a0b3-33ed9fd8412d", "pawan.nogariya@gmail.com", true, "Super", true, "Admin", true, null, "PAWAN.NOGARIYA@GMAIL.COM", "PAWAN.NOGARIYA@GMAIL.COM", "AQAAAAEAACcQAAAAEFOQpW9XafdotIcWwD5C2Hq7RHX5zO+/aysMrUR/RBDFlWCbUBXYXERk8HJxPL7oZg==", null, false, "3ccc66c9-39fa-4e48-b20f-f515ca02058a", true, "pawan.nogariya" });
+                values: new object[] { "668f96df-8e03-11ee-b507-e86a64b47aae", 0, "5e797b32-72f3-458e-b55c-bf97e3dcc528", "pawan.nogariya@gmail.com", true, "Super", true, "Admin", true, null, "PAWAN.NOGARIYA@GMAIL.COM", "PAWAN.NOGARIYA@GMAIL.COM", "AQAAAAEAACcQAAAAEHW6fbSbiLkHQ4O9r458x7XH+OfaXj6Y1RNnQ4sIwcMaNT1tZzRQiPrX64B8M0HaNA==", null, false, "c6328858-fecf-4e11-8b02-009a5d35bebd", true, "pawan.nogariya" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
-                columns: new[] { "RoleId", "UserId", "Discriminator" },
-                values: new object[] { "c1170fd6-8dda-11ee-b507-e86a64b47aae", "668f96df-8e03-11ee-b507-e86a64b47aae", "UserRole" });
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "c1170fd6-8dda-11ee-b507-e86a64b47aae", "668f96df-8e03-11ee-b507-e86a64b47aae" });
 
             migrationBuilder.InsertData(
                 table: "FundHouses",
                 columns: new[] { "Id", "CreatedBy", "CreatedOn", "DeletedBy", "DeletedOn", "FullName", "IsDeleted", "ShortName", "UpdatedBy", "UpdatedOn" },
-                values: new object[] { 1, "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 12, 6, 6, 45, 44, 947, DateTimeKind.Utc).AddTicks(1184), null, null, "KPFS Fund House", false, "KPFS", null, null });
+                values: new object[] { 1, "668f96df-8e03-11ee-b507-e86a64b47aae", new DateTime(2023, 12, 6, 16, 25, 37, 287, DateTimeKind.Utc).AddTicks(7317), null, null, "KPFS Fund House", false, "KPFS", null, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
