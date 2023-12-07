@@ -2,7 +2,7 @@
 
 namespace KPFS.Business.Models
 {
-    public class AdminRegisterUserDto : RegisterUserDto
+    public class AddUserDto : RegisterUserDto
     {
         [Required(ErrorMessage = "Role is required")]
         public string? Role { get; set; }

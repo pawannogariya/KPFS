@@ -12,7 +12,7 @@ namespace KPFS.Web.Controllers
         {
             get
             {
-                if (HttpContext == null)
+                if (HttpContext == null || HttpContext.User == null)
                 {
                     return null;
                 }

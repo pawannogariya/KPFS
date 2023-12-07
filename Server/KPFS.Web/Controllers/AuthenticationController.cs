@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Transactions;
 
 namespace KPFS.Web.Controllers
 {
@@ -67,20 +68,33 @@ namespace KPFS.Web.Controllers
 
             if (await _roleManager.RoleExistsAsync(Roles.User))
             {
-                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-                if (!result.Succeeded)
+                using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    var errors = string.Join(Environment.NewLine, result.Errors.Select(x => $"{x.Code}: {x.Description}"));
-                    return BuildFailureResponse<UserDto>(errors);
+                    try
+                    {
+                        IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+                        if (!result.Succeeded)
+                        {
+                            var errors = string.Join(Environment.NewLine, result.Errors.Select(x => $"{x.Code}: {x.Description}"));
+                            return BuildFailureResponse<UserDto>(errors);
+                        }
+
+                        await _userManager.AddToRoleAsync(user, Roles.User);
+
+                        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                        var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
+                        var message = new MessageDto(new string[] { user.Email! }, "KPFS: Confirmation email link", confirmationLink!);
+                        _emailService.SendEmail(message);
+
+                        scope.Complete();
+                    }
+                    catch
+                    {
+                        scope.Dispose();
+                        throw;
+                    }
                 }
-
-                await _userManager.AddToRoleAsync(user, Roles.User);
-
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
-                var message = new MessageDto(new string[] { user.Email! }, "KPFS: Confirmation email link", confirmationLink!);
-                _emailService.SendEmail(message);
 
                 return BuildResponse(_mapper.Map<UserDto>(user));
             }

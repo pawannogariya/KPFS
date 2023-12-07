@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Transactions;
 
 namespace KPFS.Web.Controllers
 {
@@ -39,7 +40,7 @@ namespace KPFS.Web.Controllers
         }
 
         [HttpPost("update-user")]
-        public async Task<ActionResult<ResponseDto<bool>>> UpdateUser(UserDto userDto)
+        public async Task<ActionResult<ResponseDto<bool>>> UpdateUser(UpdateUserDto userDto)
         {
             var user = await _userManager.FindByEmailAsync(userDto.Email);
 
@@ -48,30 +49,43 @@ namespace KPFS.Web.Controllers
                 return BuildFailureResponse<bool>("Cannot find user");
             }
 
-            if (userDto.Role == Roles.Admin)
+            if (CurrentUser.Email != userDto.Email && userDto.Role == Roles.Admin)
             {
                 return BuildFailureResponse<bool>("User cannot be assigned to admin role");
             }
 
-            user.FirstName = userDto.FirstName;
-            user.LastName = userDto.LastName;
-            user.IsActive = userDto.IsActive;
-
-            await _userManager.UpdateAsync(user);
-
-            var userCurrentRole = (await _userManager.GetRolesAsync(user)).First();
-
-            if (userCurrentRole != userDto.Role)
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                await _userManager.RemoveFromRoleAsync(user, userCurrentRole);
-                await _userManager.AddToRoleAsync(user, userDto.Role);
+                try
+                {
+                    user.FirstName = userDto.FirstName;
+                    user.LastName = userDto.LastName;
+                    user.IsActive = userDto.IsActive;
+
+                    await _userManager.UpdateAsync(user);
+
+                    var userCurrentRole = (await _userManager.GetRolesAsync(user)).First();
+
+                    if (CurrentUser.Email != userDto.Email && userCurrentRole != userDto.Role)
+                    {
+                        await _userManager.RemoveFromRoleAsync(user, userCurrentRole);
+                        await _userManager.AddToRoleAsync(user, userDto.Role);
+                    }
+
+                    scope.Complete();
+                }
+                catch
+                {
+                    scope.Dispose();
+                    throw;
+                }
             }
 
             return BuildResponse(true);
         }
 
         [HttpPost("add-user")]
-        public async Task<ActionResult<ResponseDto<UserDto>>> AddUser([FromBody] AdminRegisterUserDto model)
+        public async Task<ActionResult<ResponseDto<UserDto>>> AddUser([FromBody] AddUserDto model)
         {
             if (model.Role == Roles.Admin)
             {
