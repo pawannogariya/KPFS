@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace KPFS.Data
 {
-    public class KpfsDbContext : IdentityDbContext<User, Role, string, IdentityUserClaim<string>,UserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
+    public class KpfsDbContext : IdentityDbContext<User, Role, string, IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public KpfsDbContext(DbContextOptions<KpfsDbContext> options) : base(options)
         {
@@ -39,12 +40,11 @@ namespace KPFS.Data
                   .WithMany(x => x.UserRoles)
                   .HasForeignKey(x => x.RoleId);
 
-            SeedData(builder);
+            //SeedData(builder);
         }
 
-        private static void SeedData(ModelBuilder builder)
+        private void SeedData(ModelBuilder builder)
         {
-
             builder.Entity<Role>().HasData
             (
                 new Role() { Id = "ada877bb-8dda-11ee-b507-e86a64b47aae", Name = Constants.Roles.User, ConcurrencyStamp = "1", NormalizedName = Constants.Roles.User },
@@ -52,25 +52,27 @@ namespace KPFS.Data
                 new Role() { Id = "c1170fd6-8dda-11ee-b507-e86a64b47aae", Name = Constants.Roles.Admin, ConcurrencyStamp = "3", NormalizedName = Constants.Roles.Admin }
             );
 
+            var adminEmail = "pawan.nogariya@gmail.com";
+            var adminPassword = "P@ssword123";
             var passwordHasher = new PasswordHasher<User>();
             builder.Entity<User>().HasData
-           (
-               new User()
-               {
-                   Id = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                   FirstName = "Super",
-                   LastName = "Admin",
-                   UserName = "pawan.nogariya",
-                   Email = "pawan.nogariya@gmail.com",
-                   EmailConfirmed = true,
-                   NormalizedUserName = "pawan.nogariya@gmail.com".ToUpper(),
-                   NormalizedEmail = "pawan.nogariya@gmail.com".ToUpper(),
-                   PasswordHash = passwordHasher.HashPassword(null, "P@ssword123"),
-                   TwoFactorEnabled = true,
-                   LockoutEnabled = true,
-                   IsActive = true
-               }
-           );
+            (
+                new User()
+                {
+                    Id = "668f96df-8e03-11ee-b507-e86a64b47aae",
+                    FirstName = "Super",
+                    LastName = "Admin",
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    EmailConfirmed = true,
+                    NormalizedUserName = adminEmail.ToUpper(),
+                    NormalizedEmail = adminEmail.ToUpper(),
+                    PasswordHash = passwordHasher.HashPassword(null, adminPassword),
+                    TwoFactorEnabled = true,
+                    LockoutEnabled = true,
+                    IsActive = true
+                }
+            );
 
             builder.Entity<UserRole>().HasData
              (

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using K4os.Hash.xxHash;
 using KPFS.Business.Dtos;
 using KPFS.Business.Models;
 using KPFS.Data.Entities;
@@ -12,6 +11,13 @@ namespace KPFS.Web
         {
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.Role, act => act.MapFrom(x => x.UserRoles.Select(u => u.Role).First().Name));
+
+            CreateMap<RegisterUserDto, User>()
+                .IncludeAllDerived()
+                .ForMember(dest => dest.UserName, act => act.MapFrom(x => x.Email))
+                .ForMember(dest => dest.TwoFactorEnabled, act => act.MapFrom(x => true))
+                .ForMember(dest => dest.IsActive, act => act.MapFrom(x => true))
+                .ForMember(dest => dest.SecurityStamp, act => act.MapFrom(x => Guid.NewGuid().ToString()));
 
             CreateMap<FundHouse, FundHouseDto>();
             CreateMap<Fund, FundDto>();

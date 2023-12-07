@@ -338,17 +338,6 @@ namespace KPFS.Data.Migrations
                     b.HasIndex("UpdatedBy");
 
                     b.ToTable("FundHouses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedBy = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            CreatedOn = new DateTime(2023, 12, 6, 16, 25, 37, 287, DateTimeKind.Utc).AddTicks(7317),
-                            FullName = "KPFS Fund House",
-                            IsDeleted = false,
-                            ShortName = "KPFS"
-                        });
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.FundManager", b =>
@@ -700,29 +689,6 @@ namespace KPFS.Data.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "ada877bb-8dda-11ee-b507-e86a64b47aae",
-                            ConcurrencyStamp = "1",
-                            Name = "User",
-                            NormalizedName = "User"
-                        },
-                        new
-                        {
-                            Id = "b9ba635b-8dda-11ee-b507-e86a64b47aae",
-                            ConcurrencyStamp = "2",
-                            Name = "Reviewer",
-                            NormalizedName = "Reviewer"
-                        },
-                        new
-                        {
-                            Id = "c1170fd6-8dda-11ee-b507-e86a64b47aae",
-                            ConcurrencyStamp = "3",
-                            Name = "Admin",
-                            NormalizedName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.TemporaryInvestment", b =>
@@ -849,27 +815,6 @@ namespace KPFS.Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5e797b32-72f3-458e-b55c-bf97e3dcc528",
-                            Email = "pawan.nogariya@gmail.com",
-                            EmailConfirmed = true,
-                            FirstName = "Super",
-                            IsActive = true,
-                            LastName = "Admin",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "PAWAN.NOGARIYA@GMAIL.COM",
-                            NormalizedUserName = "PAWAN.NOGARIYA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHW6fbSbiLkHQ4O9r458x7XH+OfaXj6Y1RNnQ4sIwcMaNT1tZzRQiPrX64B8M0HaNA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "c6328858-fecf-4e11-8b02-009a5d35bebd",
-                            TwoFactorEnabled = true,
-                            UserName = "pawan.nogariya"
-                        });
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.UserRole", b =>
@@ -885,13 +830,6 @@ namespace KPFS.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "668f96df-8e03-11ee-b507-e86a64b47aae",
-                            RoleId = "c1170fd6-8dda-11ee-b507-e86a64b47aae"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

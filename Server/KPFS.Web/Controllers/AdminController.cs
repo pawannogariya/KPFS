@@ -103,35 +103,37 @@ namespace KPFS.Web.Controllers
                 return BuildFailureResponse<UserDto>("User already exists");
             }
 
-            User user = new()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username,
-                TwoFactorEnabled = true,
-                IsActive = true
-            };
-
             if (await _roleManager.RoleExistsAsync(model.Role))
             {
-                IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-                if (!result.Succeeded)
+                var user = _mapper.Map<User>(model);
+
+                using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    var errors = string.Join(Environment.NewLine, result.Errors.Select(x => $"{x.Code}: {x.Description}"));
-                    return BuildFailureResponse<UserDto>(errors);
+                    try
+                    {
+                        IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+                        if (!result.Succeeded)
+                        {
+                            var errors = string.Join(Environment.NewLine, result.Errors.Select(x => $"{x.Code}: {x.Description}"));
+                            return BuildFailureResponse<UserDto>(errors);
+                        }
+
+                        await _userManager.AddToRoleAsync(user, model.Role);
+
+                        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                        var confirmationLink = Url.Action(nameof(AuthenticationController.ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
+                        var message = new MessageDto(new string[] { user.Email! }, "KPFS: Confirmation email link", confirmationLink!);
+                        _emailService.SendEmail(message);
+
+                        return BuildResponse(_mapper.Map<UserDto>(user));
+                    }
+                    catch
+                    {
+                        scope.Dispose();
+                        throw;
+                    }
                 }
-
-                await _userManager.AddToRoleAsync(user, model.Role);
-
-                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                var confirmationLink = Url.Action(nameof(AuthenticationController.ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
-                var message = new MessageDto(new string[] { user.Email! }, "KPFS: Confirmation email link", confirmationLink!);
-                _emailService.SendEmail(message);
-
-                return BuildResponse(_mapper.Map<UserDto>(user));
             }
             else
             {

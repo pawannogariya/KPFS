@@ -67,10 +67,10 @@ builder.Services.AddAuthentication(options =>
 var emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfigurationDto>();
 builder.Services.AddSingleton(emailConfig);
 
-builder.Services.Configure<AppSettings>(configuration.GetSection("App"));
+builder.Services.Configure<ApplicationSettings>(configuration.GetSection("App"));
 builder.Services.Configure<JwtSettings>(configuration.GetSection("JWT"));
 
-MasterData? masterData = new MasterData();  
+MasterData? masterData = new MasterData();
 XmlSerializer serializer = new XmlSerializer(typeof(MasterData));
 using (FileStream fileStream = new FileStream("MasterData.xml", FileMode.Open))
 {
@@ -125,6 +125,11 @@ builder.Services.AddSwaggerGen(option =>
 });
 
 var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    await DataSeeder.Initialize(scope);
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

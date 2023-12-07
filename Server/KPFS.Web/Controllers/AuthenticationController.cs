@@ -55,23 +55,14 @@ namespace KPFS.Web.Controllers
                 return BuildFailureResponse<UserDto>("User already exists");
             }
 
-            User user = new()
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Email = model.Email,
-                SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.Username,
-                TwoFactorEnabled = true,
-                IsActive = true
-            };
-
             if (await _roleManager.RoleExistsAsync(Roles.User))
             {
                 using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
                     try
                     {
+                        var user = _mapper.Map<User>(model);
+
                         IdentityResult result = await _userManager.CreateAsync(user, model.Password);
                         if (!result.Succeeded)
                         {
@@ -88,6 +79,8 @@ namespace KPFS.Web.Controllers
                         _emailService.SendEmail(message);
 
                         scope.Complete();
+
+                        return BuildResponse(_mapper.Map<UserDto>(user));
                     }
                     catch
                     {
@@ -95,8 +88,6 @@ namespace KPFS.Web.Controllers
                         throw;
                     }
                 }
-
-                return BuildResponse(_mapper.Map<UserDto>(user));
             }
             else
             {
