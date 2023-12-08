@@ -2,7 +2,8 @@
 {
     public class ApplicationSettings
     {
-        public string BasePath { get; set; }
+        public string BaseAppPath { get; set; }
+        public string BaseApiPath { get; set; }
         public AdminCredentials AdminCredentials { get; set; }
     }
 

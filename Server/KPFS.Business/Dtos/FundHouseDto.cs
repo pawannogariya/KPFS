@@ -1,7 +1,11 @@
-﻿namespace KPFS.Business.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KPFS.Business.Dtos
 {
     public class FundHouseDto
     {
-        public string Name { get; set; }
+        public string ShortName { get; set; }
+
+        public string FullName { get; set; }
     }
 }

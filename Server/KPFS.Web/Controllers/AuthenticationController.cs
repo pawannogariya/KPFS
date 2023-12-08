@@ -3,6 +3,7 @@ using KPFS.Business.Models;
 using KPFS.Business.Services.Interfaces;
 using KPFS.Data.Constants;
 using KPFS.Data.Entities;
+using KPFS.Web.AppSettings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -24,6 +25,7 @@ namespace KPFS.Web.Controllers
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
         private readonly JwtSettings _jwtSettings;
+        private readonly ApplicationSettings _applicationSettings;
 
         public AuthenticationController(
             UserManager<User> userManager,
@@ -31,7 +33,8 @@ namespace KPFS.Web.Controllers
             IEmailService emailService,
             SignInManager<User> signInManager,
             IMapper mapper,
-            IOptions<JwtSettings> jwtSettings) : base(userManager)
+            IOptions<JwtSettings> jwtSettings,
+            IOptions<ApplicationSettings> applicationSettings) : base(userManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -39,6 +42,7 @@ namespace KPFS.Web.Controllers
             _emailService = emailService;
             _mapper = mapper;
             _jwtSettings = jwtSettings.Value;
+            _applicationSettings = applicationSettings.Value;
         }
 
         [HttpPost("register")]
@@ -74,7 +78,10 @@ namespace KPFS.Web.Controllers
 
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                        var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
+                        //var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
+
+                        var confirmationLink = $"{_applicationSettings.BaseAppPath}/confirm-email?token={token}&email={user.Email}";
+
                         var message = new MessageDto(new string[] { user.Email! }, "KPFS: Confirmation email link", confirmationLink!);
                         _emailService.SendEmail(message);
 
