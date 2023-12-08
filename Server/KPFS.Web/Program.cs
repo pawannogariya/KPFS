@@ -131,7 +131,9 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins(configuration["App:BaseAppPath"], configuration["App:BaseApiPath"]);
+            policy.WithOrigins(configuration["App:BaseAppPath"])
+            .AllowAnyMethod()
+            .AllowAnyHeader();
         });
 });
 
