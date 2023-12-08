@@ -1,0 +1,31 @@
+﻿<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark px-3" style="background-color: cadetblue !important;" *ngIf="user">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a class="nav-item nav-link" routerLink="/single-entry" routerLinkActive="active">Single Entry</a>
+        <a class="nav-item nav-link" routerLink="/multiple-entry" routerLinkActive="active">Multiple Entry</a>
+        <a class="nav-item nav-link" routerLink="/review" routerLinkActive="active" *ngIf="isAdmin">Review</a>
+        <a class="nav-item nav-link" routerLink="/user" routerLinkActive="active" *ngIf="isAdmin">User</a>
+    </div>
+    <div class="navbar-collapse collapse">
+    </div>
+    <div class="navbar-nav pull-right" style="color:white ;">
+            {{user.firstName}} {{user.lastName}} ({{user.role}}).
+    </div>
+    <div class="navbar-nav pull-right">
+        <button class="btn btn-link nav-item nav-link active" (click)="logout()">Logout</button>
+    </div>
+    <!-- {{user | json}} -->
+</nav>
+
+<!-- main app container -->
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
+
+<!-- credits -->
+<div class="text-center mt-4">
+    <p>
+        <!-- <a href="#" target="_blank">Help</a> -->
+    </p>    
+</div>
