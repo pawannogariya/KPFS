@@ -126,6 +126,15 @@ builder.Services.AddSwaggerGen(option =>
 
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins(configuration["App:BaseAppPath"]);
+        });
+});
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -139,6 +148,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 
