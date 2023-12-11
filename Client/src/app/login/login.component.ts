@@ -53,23 +53,32 @@ export class LoginComponent implements OnInit {
 
         this.loading = true;
         debugger;
-        this.authenticationService.login(this.f.username.value, this.f.password.value);
-            //.pipe(first())
-            // .subscribe({
-            //     next: () => {
-            //         this.isLogin=true;
-            //         this.submitted = false;
-            //         this.loading = false;
-            //         this.c.username.setValue(this.f.username.value);
-            //         // // get return url from query parameters or default to home page
-            //         // const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-            //         // this.router.navigateByUrl(returnUrl);
-            //     },
-            //     error: error => {
-            //         this.error = error;
-            //         this.loading = false;
-            //     }
-            // });
+        this.authenticationService.login(this.f.username.value, this.f.password.value)
+            .pipe(first())
+            .subscribe({
+                next: (response) => {
+                    debugger;
+                    this.isLogin=true;
+                    this.submitted = false;
+                    this.loading = false;
+                    this.c.username.setValue(this.f.username.value);
+                    if(response.isSuccess && response.data)
+                    {
+                            localStorage.setItem('user', JSON.stringify(response.data));
+                            // get return url from query parameters or default to home page
+                            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                            this.router.navigateByUrl(returnUrl);
+                    }
+                    else
+                    {
+                        //Need to display message
+                    }
+                },
+                error: error => {
+                    this.error = error;
+                    this.loading = false;
+                }
+            });
     }
 
     onCodeSubmit() {
@@ -81,14 +90,25 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        this.authenticationService.login2Factor(this.f.username.value, this.f.password.value)
+        this.authenticationService.login2Factor(this.c.username.value, this.c.code.value)
             .pipe(first())
             .subscribe({
-                next: () => {
+                next: (response) => {
                     this.isLogin=true;
-                    // get return url from query parameters or default to home page
-                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                    this.router.navigateByUrl(returnUrl);
+                        this.submitted = false;
+                        this.loading = false;
+                    if(response.isSuccess)
+                    {
+                        localStorage.setItem('user', JSON.stringify(response.data));
+                        // get return url from query parameters or default to home page
+                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                        this.router.navigateByUrl(returnUrl);
+                    }
+                    else
+                    {
+                        //Need to display message
+                        alert(response.message);
+                    }
                 },
                 error: error => {
                     this.error = error;
