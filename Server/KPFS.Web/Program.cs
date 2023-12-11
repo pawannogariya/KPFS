@@ -8,12 +8,14 @@ using KPFS.Data.Repositories;
 using KPFS.Web;
 using KPFS.Web.AppSettings;
 using KPFS.Web.Filters;
+using KPFS.Web.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
+using RazorEngineCore;
 using System.Text;
 using System.Xml.Serialization;
 
@@ -133,7 +135,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins(configuration["App:BaseAppPath"])
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .AllowCredentials();
         });
 });
 
@@ -160,4 +163,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+EmailTemplateCompiler.CompileEmailTemplates();
+
+
 app.Run();
+

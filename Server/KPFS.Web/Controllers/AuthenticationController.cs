@@ -4,6 +4,7 @@ using KPFS.Business.Services.Interfaces;
 using KPFS.Data.Constants;
 using KPFS.Data.Entities;
 using KPFS.Web.AppSettings;
+using KPFS.Web.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -78,11 +79,11 @@ namespace KPFS.Web.Controllers
 
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                        //var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
-
                         var confirmationLink = $"{_applicationSettings.BaseAppPath}/confirm-email?token={token}&email={user.Email}";
 
-                        var message = new MessageDto(new string[] { user.Email! }, "KPFS: Confirmation email link", confirmationLink!);
+                        var messageContent = await EmailContentHelper.GetUserEmailConfirmationEmailContent(confirmationLink);
+
+                        var message = new MessageDto(new string[] { user.Email! }, messageContent.Subject, messageContent.Body);
                         _emailService.SendEmail(message);
 
                         scope.Complete();
@@ -137,13 +138,15 @@ namespace KPFS.Web.Controllers
             await _signInManager.SignOutAsync();
             var signResult = await _signInManager.PasswordSignInAsync(user, loginModel.Password, false, true);
 
-            if (user.TwoFactorEnabled)
+            if (signResult.RequiresTwoFactor)
             {
                 if (await _userManager.CheckPasswordAsync(user, loginModel.Password))
                 {
                     var token = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultEmailProvider);
 
-                    var message = new MessageDto(new string[] { user.Email! }, "OTP Confrimation", token);
+                    var messageContent = await EmailContentHelper.GetUserLoginOptEmailContent(token);
+
+                    var message = new MessageDto(new string[] { user.Email! }, messageContent.Subject, messageContent.Body);
                     _emailService.SendEmail(message);
 
                     return BuildResponse<LoginResponseDto>();
@@ -180,13 +183,18 @@ namespace KPFS.Web.Controllers
             }
             else
             {
+                if(signResult.IsNotAllowed)
+                {
+                    return BuildFailureResponse<LoginResponseDto>("User is not allowed to login!");
+                }
+
                 return BuildFailureResponse<LoginResponseDto>("Login Failed. Email or password is wrong!");
             }
         }
 
         [HttpPost]
         [Route("login-2fa")]
-        public async Task<ActionResult<ResponseDto<LoginResponseDto>>> LoginWithOTP(string code, string email)
+        public async Task<ActionResult<ResponseDto<LoginResponseDto>>> LoginWithOTP(string code)
         {
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
 
