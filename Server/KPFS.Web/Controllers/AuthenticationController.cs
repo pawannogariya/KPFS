@@ -137,7 +137,7 @@ namespace KPFS.Web.Controllers
             await _signInManager.SignOutAsync();
             var signResult = await _signInManager.PasswordSignInAsync(user, loginModel.Password, false, true);
 
-            if (user.TwoFactorEnabled)
+            if (signResult.RequiresTwoFactor)
             {
                 if (await _userManager.CheckPasswordAsync(user, loginModel.Password))
                 {
@@ -186,7 +186,7 @@ namespace KPFS.Web.Controllers
 
         [HttpPost]
         [Route("login-2fa")]
-        public async Task<ActionResult<ResponseDto<LoginResponseDto>>> LoginWithOTP(string code, string email)
+        public async Task<ActionResult<ResponseDto<LoginResponseDto>>> LoginWithOTP(string code)
         {
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
 
@@ -211,11 +211,15 @@ namespace KPFS.Web.Controllers
 
                     var jwtToken = GetToken(authClaims);
 
+                    var userDto = _mapper.Map<UserDto>(user);
+                    userDto.Role = userRoles.First();
+
                     return BuildResponse(new LoginResponseDto()
                     {
                         Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
-                        Expiration = jwtToken.ValidTo
-                    });
+                        Expiration = jwtToken.ValidTo,
+                        User = userDto
+                    }); 
                 }
             }
 

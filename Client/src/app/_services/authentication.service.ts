@@ -27,21 +27,22 @@ export class AuthenticationService {
     login(username: string, password: string) {
         debugger;
         //return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
-        return this.http.post<any>('https://localhost:7226/api/authentication/login', {email: username,password: password })
+        return this.http.post<any>('https://localhost:7226/api/authentication/login', {email: username,password: password }, {observe:'response',withCredentials:true})
         //.subscribe(user=>{
-            .pipe(map((user) => {
+            .pipe(map((httpResponse) => {
                 //store user details and jwt token in local storage to keep user logged in between page refreshes
                 // localStorage.setItem('user', JSON.stringify(user));
                 // this.userSubject.next(user);
-                return user;
+                return httpResponse.body;
             }));
     }
 
     login2Factor(email: string, code: string) {
         //return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
         //https://localhost:7226/api/authentication/login-2fa?code=sdfsdfsdf&email=sdfsdfsd
-        return this.http.post<any>(`https://localhost:7226/api/authentication/login-2fa?code=${code}&email=${email}`, {})
-            .pipe(map(user => {
+        return this.http.post<any>(`https://localhost:7226/api/authentication/login-2fa?code=${code}`, {}, {observe:'response',withCredentials:true})
+            .pipe(map(httpResponse => {
+                var user = httpResponse.body;
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('user', JSON.stringify(user));
                 this.userSubject.next(user);

@@ -133,7 +133,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins(configuration["App:BaseAppPath"])
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .AllowCredentials();
         });
 });
 
