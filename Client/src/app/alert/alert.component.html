@@ -1,0 +1,35 @@
+<div class="alert-custom-content-wrap alert-custom alert-custom-box">
+  <div>
+    <div class="alert-custom-header">
+      <h2 class="alert-custom-header-text">{{title}}</h2>
+      <span class="flex-row gap-10" style="justify-content: end; align-items: center;">           
+        <button [mat-dialog-close]="true" mat-icon-button> <img class="img-fluid" style="width:18px"
+            src="./assets/readiness-checklist-icons/close.svg" alt=""> </button>
+      </span>
+    </div>
+      <div class="alert-custom-content-text">
+        <div class="alert-custom-nuetral" *ngIf="status == ''">
+          <img class="img-fluid" src="./assets/readiness-checklist-icons/Icon_success.svg"
+            alt="">
+            {{message}}
+        </div>
+        <div class="alert-custom-error" *ngIf="status == 'error'">
+          <img class="img-fluid margin-left-10" src="./assets/readiness-checklist-icons/Icon_erorr.svg"
+            alt="">
+            {{message}}
+        </div>        
+      </div>
+      <div class="grid-container-btn-wrap padding-left-20 padding-right-20">
+        <div class="grid-container">
+            <div class="grid-row">   
+              <div class="grid-lg-6"></div>              
+                <div class="grid-lg-6 text-right">                                                      
+                    <button (click)="dialogRef.close()"  mat-raised-button class="btn-custom btn-custom-primary margin-left-10">
+                      Close 
+                   </button>                
+                </div>
+            </div>        
+        </div>
+    </div>
+  </div>
+</div>

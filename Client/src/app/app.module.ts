@@ -19,13 +19,28 @@ import { ReviewComponent } from './feature_components/review';
 import { RegistrationComponent } from './registration';
 import { UserComponent } from './feature_components/user';
 import { AddUserComponent } from './feature_components/add-user';
+import { AlertComponent } from './alert/alert.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table'  
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
-        AppRoutingModule
+        MatCardModule,
+        MatTableModule,
+        AppRoutingModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatPaginatorModule,
+        FlexLayoutModule
     ],
     declarations: [
         AppComponent,
@@ -36,6 +51,7 @@ import { AddUserComponent } from './feature_components/add-user';
         SingleEntryComponent,
         MultipleEntryComponent,
         ReviewComponent,
+        AlertComponent,
         UserComponent,
         AddUserComponent
     ],
