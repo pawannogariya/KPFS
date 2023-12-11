@@ -58,16 +58,20 @@ export class LoginComponent implements OnInit {
             .subscribe({
                 next: (response) => {
                     debugger;
+                    this.isLogin=true;
+                    this.submitted = false;
+                    this.loading = false;
                     this.c.username.setValue(this.f.username.value);
-                    if(response.isSuccess)
+                    if(response.isSuccess && response.data)
                     {
-                            this.isLogin=true;
-                            this.submitted = false;
-                            this.loading = false;
                             localStorage.setItem('user', JSON.stringify(response.data));
                             // get return url from query parameters or default to home page
                             const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
                             this.router.navigateByUrl(returnUrl);
+                    }
+                    else
+                    {
+                        //Need to display message
                     }
                 },
                 error: error => {
@@ -90,15 +94,20 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: (response) => {
-                    if(response.isSuccess)
-                    {
-                        this.isLogin=true;
+                    this.isLogin=true;
                         this.submitted = false;
                         this.loading = false;
+                    if(response.isSuccess)
+                    {
                         localStorage.setItem('user', JSON.stringify(response.data));
                         // get return url from query parameters or default to home page
                         const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
                         this.router.navigateByUrl(returnUrl);
+                    }
+                    else
+                    {
+                        //Need to display message
+                        alert(response.message);
                     }
                 },
                 error: error => {
