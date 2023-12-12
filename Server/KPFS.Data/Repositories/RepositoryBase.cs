@@ -74,9 +74,11 @@ namespace KPFS.Data.Repositories
             foreach (var entity in entities)
             {
                 entity.MarkAsUpdatedBy(user);
-                this.Context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                this.Context.Entry(entity).State = EntityState.Modified;
 
                 this.Context.Entry(entity).Property(e => e.IsDeleted).IsModified = false;
+                this.Context.Entry(entity).Property(e => e.DeletedBy).IsModified = false;
+                this.Context.Entry(entity).Property(e => e.DeletedOn).IsModified = false;
                 this.Context.Entry(entity).Property(e => e.CreatedOn).IsModified = false;
                 this.Context.Entry(entity).Property(e => e.CreatedBy).IsModified = false;
             }
@@ -106,8 +108,16 @@ namespace KPFS.Data.Repositories
             {
                 entity.MarkAsDeleted(user);
                 this.Context.Attach(entity);
-                this.Context.Entry(entity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                this.Context.Entry(entity).State = EntityState.Modified;
+
                 this.Context.Entry(entity).Property(e => e.IsDeleted).IsModified = true;
+                this.Context.Entry(entity).Property(e => e.DeletedBy).IsModified = true;
+                this.Context.Entry(entity).Property(e => e.DeletedOn).IsModified = true;
+
+                this.Context.Entry(entity).Property(e => e.CreatedOn).IsModified = false;
+                this.Context.Entry(entity).Property(e => e.CreatedBy).IsModified = false;
+                this.Context.Entry(entity).Property(e => e.UpdatedBy).IsModified = false;
+                this.Context.Entry(entity).Property(e => e.UpdatedOn).IsModified = false;
             }
 
             await this.Context.SaveChangesAsync();

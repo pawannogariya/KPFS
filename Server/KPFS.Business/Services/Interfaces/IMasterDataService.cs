@@ -9,5 +9,6 @@ namespace KPFS.Business.Services.Interfaces
         public Task<IEnumerable<BankAccountDto>> GetAllBankAccountsAsync();
         public Task<IEnumerable<BankAccountDto>> GetFundBankAccountsAsync(int fundId);
         public Task<IEnumerable<FundManagerDto>> GetFundManagersAsync(int fundId);
+        public Task AddOrUpdateFundHouseAsync(FundHouseDto fundHouse);
     }
 }
