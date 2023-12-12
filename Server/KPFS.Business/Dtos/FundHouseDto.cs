@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using KPFS.Business.Models;
 
 namespace KPFS.Business.Dtos
 {
-    public class FundHouseDto
+    public class FundHouseDto : DtoBase
     {
         public string ShortName { get; set; }
 

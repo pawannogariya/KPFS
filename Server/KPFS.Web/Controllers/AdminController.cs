@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using KPFS.Business.Dtos;
 using KPFS.Business.Models;
 using KPFS.Business.Services.Interfaces;
 using KPFS.Data.Constants;
 using KPFS.Data.Entities;
+using KPFS.Data.Repositories;
 using KPFS.Web.AppSettings;
 using KPFS.Web.Helpers;
 using Microsoft.AspNetCore.Authorization;
@@ -24,19 +26,22 @@ namespace KPFS.Web.Controllers
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
         private readonly ApplicationSettings _applicationSettings;
+        private readonly IMasterDataService _masterDataService;
 
         public AdminController(
             UserManager<User> userManager,
             IMapper mapper,
             RoleManager<Role> roleManager,
             IEmailService emailService,
-            IOptions<ApplicationSettings> applicationSettings) : base(userManager)
+            IOptions<ApplicationSettings> applicationSettings,
+            IMasterDataService masterDataService) : base(userManager)
         {
             _userManager = userManager;
             _mapper = mapper;
             _roleManager = roleManager;
             _emailService = emailService;
             _applicationSettings = applicationSettings.Value;
+            _masterDataService = masterDataService;
         }
 
         [HttpGet("users")]
@@ -150,6 +155,14 @@ namespace KPFS.Web.Controllers
             {
                 return BuildFailureResponse<UserDto>($"Role {model.Role} doesn't exist.");
             }
+        }
+
+        [HttpPost("add-update-fund-house")]
+        public async Task<ActionResult<ResponseDto<string>>> AddUpdateFundHouse([FromBody] FundHouseDto fundHouse)
+        {
+            await _masterDataService.AddOrUpdateFundHouseAsync(fundHouse);
+
+            return BuildResponse(string.Empty);
         }
     }
 }
