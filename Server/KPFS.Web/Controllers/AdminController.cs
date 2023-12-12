@@ -3,10 +3,13 @@ using KPFS.Business.Models;
 using KPFS.Business.Services.Interfaces;
 using KPFS.Data.Constants;
 using KPFS.Data.Entities;
+using KPFS.Web.AppSettings;
+using KPFS.Web.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Transactions;
 
 namespace KPFS.Web.Controllers
@@ -20,17 +23,20 @@ namespace KPFS.Web.Controllers
         private readonly RoleManager<Role> _roleManager;
         private readonly IEmailService _emailService;
         private readonly IMapper _mapper;
+        private readonly ApplicationSettings _applicationSettings;
 
         public AdminController(
             UserManager<User> userManager,
             IMapper mapper,
             RoleManager<Role> roleManager,
-            IEmailService emailService) : base(userManager)
+            IEmailService emailService,
+            IOptions<ApplicationSettings> applicationSettings) : base(userManager)
         {
             _userManager = userManager;
             _mapper = mapper;
             _roleManager = roleManager;
             _emailService = emailService;
+            _applicationSettings = applicationSettings.Value;
         }
 
         [HttpGet("users")]
@@ -122,9 +128,14 @@ namespace KPFS.Web.Controllers
 
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                        var confirmationLink = Url.Action(nameof(AuthenticationController.ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
-                        var message = new MessageDto(new string[] { user.Email! }, "KPFS: Confirmation email link", confirmationLink!);
+                        var confirmationLink = $"{_applicationSettings.BaseAppPath}/confirm-email?token={token}&email={user.Email}";
+
+                        var messageContent = await EmailContentHelper.GetUserEmailConfirmationEmailContentAsync(confirmationLink);
+
+                        var message = new MessageDto(new string[] { user.Email! }, messageContent.Subject, messageContent.Body);
                         _emailService.SendEmail(message);
+
+                        scope.Complete();
 
                         return BuildResponse(_mapper.Map<UserDto>(user));
                     }
@@ -137,7 +148,7 @@ namespace KPFS.Web.Controllers
             }
             else
             {
-                return BuildFailureResponse<UserDto>("This role doesn't exist.");
+                return BuildFailureResponse<UserDto>($"Role {model.Role} doesn't exist.");
             }
         }
     }
