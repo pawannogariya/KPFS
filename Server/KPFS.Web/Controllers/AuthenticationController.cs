@@ -81,7 +81,7 @@ namespace KPFS.Web.Controllers
 
                         var confirmationLink = $"{_applicationSettings.BaseAppPath}/confirm-email?token={token}&email={user.Email}";
 
-                        var messageContent = await EmailContentHelper.GetUserEmailConfirmationEmailContent(confirmationLink);
+                        var messageContent = await EmailContentHelper.GetUserEmailConfirmationEmailContentAsync(confirmationLink);
 
                         var message = new MessageDto(new string[] { user.Email! }, messageContent.Subject, messageContent.Body);
                         _emailService.SendEmail(message);
@@ -144,7 +144,7 @@ namespace KPFS.Web.Controllers
                 {
                     var token = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultEmailProvider);
 
-                    var messageContent = await EmailContentHelper.GetUserLoginOptEmailContent(token);
+                    var messageContent = await EmailContentHelper.GetUserLoginOptEmailContentAsync(token);
 
                     var message = new MessageDto(new string[] { user.Email! }, messageContent.Subject, messageContent.Body);
                     _emailService.SendEmail(message);

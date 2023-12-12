@@ -6,28 +6,26 @@ namespace KPFS.Web.Helpers
 {
     public static class EmailContentHelper
     {
-        public static async Task<EmailMessageContentDto> GetUserLoginOptEmailContent(string otp)
+        public static async Task<EmailMessageContentDto> GetUserLoginOptEmailContentAsync(string otp)
         {
-            IRazorEngineCompiledTemplate compiledTemplate = await RazorEngineCompiledTemplate.LoadFromFileAsync(GetCompiledTemplateFilePath(nameof(EmailContentResource.LoginOtpEmailBody)));
-            string result = compiledTemplate.Run(new
+            return await GetEmailContentInternalAsync(nameof(EmailContentResource.LoginOtpEmailBody), new
             {
                 LoginOtp = otp
             });
-
-            return new EmailMessageContentDto()
-            {
-                Subject = EmailContentResource.LoginOtpEmailSubject,
-                Body = result
-            };
         }
 
-        public static async Task<EmailMessageContentDto> GetUserEmailConfirmationEmailContent(string confirmEmailLink)
+        public static async Task<EmailMessageContentDto> GetUserEmailConfirmationEmailContentAsync(string confirmEmailLink)
         {
-            IRazorEngineCompiledTemplate compiledTemplate = await RazorEngineCompiledTemplate.LoadFromFileAsync(GetCompiledTemplateFilePath(nameof(EmailContentResource.UserEmailConfirmationEmailBody)));
-            string result = compiledTemplate.Run(new
+            return await GetEmailContentInternalAsync(nameof(EmailContentResource.UserEmailConfirmationEmailBody), new
             {
                 ConfirmEmailLink = confirmEmailLink
             });
+        }
+
+        private static async Task<EmailMessageContentDto> GetEmailContentInternalAsync(string resourceKey, object model)
+        {
+            IRazorEngineCompiledTemplate compiledTemplate = await RazorEngineCompiledTemplate.LoadFromFileAsync(GetCompiledTemplateFilePath(resourceKey));
+            string result = compiledTemplate.Run(model);
 
             return new EmailMessageContentDto()
             {
