@@ -4,6 +4,7 @@ using KPFS.Business.Services.Interfaces;
 using KPFS.Data.Constants;
 using KPFS.Data.Entities;
 using KPFS.Web.AppSettings;
+using KPFS.Web.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -78,11 +79,11 @@ namespace KPFS.Web.Controllers
 
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                        //var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authentication", new { token, email = user.Email }, Request.Scheme);
-
                         var confirmationLink = $"{_applicationSettings.BaseAppPath}/confirm-email?token={token}&email={user.Email}";
 
-                        var message = new MessageDto(new string[] { user.Email! }, "KPFS: Confirmation email link", confirmationLink!);
+                        var messageContent = await EmailContentHelper.GetUserEmailConfirmationEmailContentAsync(confirmationLink);
+
+                        var message = new MessageDto(new string[] { user.Email! }, messageContent.Subject, messageContent.Body);
                         _emailService.SendEmail(message);
 
                         scope.Complete();
@@ -143,7 +144,9 @@ namespace KPFS.Web.Controllers
                 {
                     var token = await _userManager.GenerateTwoFactorTokenAsync(user, TokenOptions.DefaultEmailProvider);
 
-                    var message = new MessageDto(new string[] { user.Email! }, "OTP Confrimation", token);
+                    var messageContent = await EmailContentHelper.GetUserLoginOptEmailContentAsync(token);
+
+                    var message = new MessageDto(new string[] { user.Email! }, messageContent.Subject, messageContent.Body);
                     _emailService.SendEmail(message);
 
                     return BuildResponse<LoginResponseDto>();
@@ -180,6 +183,11 @@ namespace KPFS.Web.Controllers
             }
             else
             {
+                if(signResult.IsNotAllowed)
+                {
+                    return BuildFailureResponse<LoginResponseDto>("User is not allowed to login!");
+                }
+
                 return BuildFailureResponse<LoginResponseDto>("Login Failed. Email or password is wrong!");
             }
         }

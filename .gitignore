@@ -2,3 +2,6 @@
 **/obj/*
 .vs/
 Server/KPFS.Web/appsettings.Local.json
+.angular/cache
+Client/.angular/cache/*
+Client/node_modules/*

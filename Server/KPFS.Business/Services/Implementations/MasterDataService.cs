@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using KPFS.Business.Dtos;
 using KPFS.Business.Services.Interfaces;
+using KPFS.Data.Entities;
 using KPFS.Data.Repositories;
 
 namespace KPFS.Business.Services.Implementations
@@ -49,6 +50,11 @@ namespace KPFS.Business.Services.Implementations
         public async Task<IEnumerable<FundManagerDto>> GetFundManagersAsync(int fundId)
         {
             return mapper.Map<IEnumerable<FundManagerDto>>(await this.fundManagerRepository.GetFundManagersAsync(fundId));
+        }
+
+        public async Task AddOrUpdateFundHouseAsync(FundHouseDto fundHouse)
+        {
+            await fundHouseRepository.CreateOrUpdateAsync(mapper.Map<FundHouse>(fundHouse));
         }
     }
 }
