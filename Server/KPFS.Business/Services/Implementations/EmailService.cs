@@ -1,6 +1,7 @@
 ﻿using KPFS.Business.Models;
 using KPFS.Business.Services.Interfaces;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Logging;
 using MimeKit;
 
 namespace KPFS.Business.Services.Implementations
@@ -8,7 +9,12 @@ namespace KPFS.Business.Services.Implementations
     public class EmailService : IEmailService
     {
         private readonly EmailConfigurationDto _emailConfig;
-        public EmailService(EmailConfigurationDto emailConfig) => _emailConfig = emailConfig;
+        private readonly ILogger<EmailService> _logger;
+        public EmailService(EmailConfigurationDto emailConfig, ILogger<EmailService> logger)
+        {
+            _emailConfig = emailConfig;
+            _logger = logger;
+        }
         public void SendEmail(MessageDto message)
         {
             var emailMessage = CreateEmailMessage(message);
@@ -38,9 +44,9 @@ namespace KPFS.Business.Services.Implementations
 
                 client.Send(mailMessage);
             }
-            catch
+            catch(Exception ex)
             {
-                //log an error message or throw an exception or both.
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
             finally
