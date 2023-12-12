@@ -56,6 +56,10 @@ namespace KPFS.Web.Controllers
                 {
                     return BuildFailureResponse<UserDto>("User already exists but is in-active");
                 }
+                if (!userExist.EmailConfirmed)
+                {
+                    return BuildFailureResponse<UserDto>("User already exists but it's not confirmed.");
+                }
 
                 return BuildFailureResponse<UserDto>("User already exists");
             }
@@ -79,7 +83,7 @@ namespace KPFS.Web.Controllers
 
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                        var confirmationLink = $"{_applicationSettings.BaseAppPath}/confirm-email?token={token}&email={user.Email}";
+                        var confirmationLink = $"{_applicationSettings.BaseAppPath}/confirm-email/{token}/{user.Email}";
 
                         var messageContent = await EmailContentHelper.GetUserEmailConfirmationEmailContentAsync(confirmationLink);
 
@@ -133,6 +137,11 @@ namespace KPFS.Web.Controllers
             if (user == null || !user.IsActive)
             {
                 return BuildFailureResponse<LoginResponseDto>($"Login failed. Cannot find user with the email id {loginModel.Email}!");
+            }
+
+            if (!user.EmailConfirmed)
+            {
+                return BuildFailureResponse<LoginResponseDto>($"Login failed. User is not confirmed with the email id {loginModel.Email}!");
             }
 
             await _signInManager.SignOutAsync();
