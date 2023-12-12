@@ -8,6 +8,7 @@ using KPFS.Data.Repositories;
 using KPFS.Web;
 using KPFS.Web.AppSettings;
 using KPFS.Web.Filters;
+using KPFS.Web.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,12 @@ var connectionString = builder.Configuration.GetConnectionString("Default");
 
 builder.Services.AddDbContext<KpfsDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
-builder.Services.AddIdentity<User, Role>()
+builder.Services.AddIdentity<User, Role>(options =>
+{
+    options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
+    options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+    options.SignIn.RequireConfirmedEmail = true;
+})
     .AddEntityFrameworkStores<KpfsDbContext>()
     .AddDefaultTokenProviders();
 
@@ -161,4 +167,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+EmailTemplateCompiler.CompileEmailTemplates();
+
+
 app.Run();
+
