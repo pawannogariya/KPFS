@@ -21,19 +21,31 @@ import { UserComponent } from './feature_components/user';
 import { AddUserComponent } from './feature_components/add-user';
 import { AlertComponent } from './alert/alert.component';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table'  
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MasterComponent } from './master';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
+        BrowserAnimationsModule,
         MatCardModule,
+        MatTabsModule,
         MatTableModule,
         AppRoutingModule,
         MatSelectModule,
@@ -53,16 +65,21 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         ReviewComponent,
         AlertComponent,
         UserComponent,
+        MasterComponent,
         AddUserComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
 
-        // provider used to create fake backend
-        fakeBackendProvider
+        // // provider used to create fake backend
+        // fakeBackendProvider
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    entryComponents: [
+        AddUserComponent
+      ]
 })
 
 export class AppModule { }

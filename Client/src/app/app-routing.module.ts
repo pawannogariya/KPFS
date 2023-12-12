@@ -11,10 +11,12 @@ import { MultipleEntryComponent } from './feature_components/multiple-entry';
 import { ReviewComponent } from './feature_components/review';
 import { RegistrationComponent } from './registration';
 import { UserComponent } from './feature_components/user';
+import { MasterComponent } from './master';
+import { ConfirmationEmailComponent } from './confirmation-email';
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'home',
         component: HomeComponent,
         canActivate: [AuthGuard]
     },
@@ -49,6 +51,16 @@ const routes: Routes = [
         data: { roles: [Role.Admin] }
     },
     {
+        path: 'master',
+        component: MasterComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.Admin] }
+    },
+    {
+        path: 'confirm-email/:token/:email',
+        component: ConfirmationEmailComponent,
+    },
+    {
         path: 'login',
         component: LoginComponent
     },
@@ -56,8 +68,12 @@ const routes: Routes = [
         path: 'registration',
         component: RegistrationComponent
     },
+    {
+        path: '',
+        component: LoginComponent
+    },
     // otherwise redirect to home
-    { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

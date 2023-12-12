@@ -3,43 +3,32 @@
     <div class="dialog-custom-header">
       <h2 class="dialog-custom-header-text">Users</h2>
     </div>
-
+    <button mat-raised-button (click)="addUserDialog()">Add User</button>
+      <br>
+    
     <div class="mt-1">
-      <!-- <h2 class="mat-h2"> History</h2> -->
+      <!-- <h2 class="mat-h2"> Users</h2> -->
       <mat-card-content style="max-height: 400px;overflow: auto;">
         <div fxLayout="column">
-          <table mat-table [dataSource]="historyresult">
-            <ng-container matColumnDef="date">
+          <table mat-table [dataSource]="userresult">
+            <ng-container matColumnDef="firstName">
               <th mat-header-cell *matHeaderCellDef class="column-5"> First Name </th>
-              <td mat-cell *matCellDef="let item">{{item?.createdDate | date: 'dd/MM/yyyy'}}</td>
+              <td mat-cell *matCellDef="let item">{{item?.firstName}}</td>
             </ng-container>
   
-            <ng-container matColumnDef="description">
+            <ng-container matColumnDef="lastName">
               <th mat-header-cell *matHeaderCellDef class="column-5"> Last Name </th>
-              <td mat-cell *matCellDef="let item"> <span *ngIf="item.subCapability != null && item.capability != null"><b>{{item?.subCapability.name}}</b> in {{item?.capability.name}} </span>
-                <span *ngIf="item.subCapability == null && item.capability == null"><b> {{item.activityName}} </b> </span>
-              </td>
+              <td mat-cell *matCellDef="let item">{{item?.lastName}}</td>
             </ng-container>
   
-            <ng-container matColumnDef="status">
+            <ng-container matColumnDef="email">
               <th mat-header-cell *matHeaderCellDef class="column-5"> Email </th>
-              <td mat-cell *matCellDef="let item">
-                {{getstatusName(item.statusId)}}
-              </td>
+              <td mat-cell *matCellDef="let item">{{item?.email}}</td>
             </ng-container>
   
-            <ng-container matColumnDef="user">
+            <ng-container matColumnDef="role">
               <th mat-header-cell *matHeaderCellDef class="column-5"> Role </th>
-              <td mat-cell *matCellDef="let item">
-                {{item.users?.firstName}} {{item.users?.lastName}}
-              </td>
-            </ng-container>
-  
-            <ng-container matColumnDef="user">
-              <th mat-header-cell *matHeaderCellDef class="column-5"> Status </th>
-              <td mat-cell *matCellDef="let item">
-                {{item.users?.firstName}} {{item.users?.lastName}}
-              </td>
+              <td mat-cell *matCellDef="let item">{{item?.role}}</td>
             </ng-container>
             
             <!-- <ng-container matColumnDef="actions">
@@ -52,9 +41,9 @@
               </td>
             </ng-container> -->
   
-            <tr mat-header-row *matHeaderRowDef="historyColumns">
+            <tr mat-header-row *matHeaderRowDef="userColumns">
             </tr>
-            <tr mat-row *matRowDef="let row; columns: historyColumns;">
+            <tr mat-row *matRowDef="let row; columns: userColumns;">
             </tr>
           </table>
         </div>

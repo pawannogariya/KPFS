@@ -1,13 +1,11 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CustomvalidationService } from '@app/_services/custom-validation.service';
-import { Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { Clipboard } from '@angular/cdk/clipboard';
 import {  PageEvent } from '@angular/material/paginator';
 //import { AlertsService } from '@app/_services/alerts.service';
 import { DataDtoRange, DataDtoFilter } from '@app/_services/dto/response.dto';
 import { MasterService } from '@app/_services/master.service';
+import { AddUserComponent } from '../add-user';
 
 //@Component({ templateUrl: 'user.component.html' })
 @Component({
@@ -17,17 +15,19 @@ import { MasterService } from '@app/_services/master.service';
 })
 export class UserComponent implements OnInit {
 
-  historyColumns: string[] = ['date', 'description', 'status', 'user'];
-  historyresult: IHistory[] = [];
+  userColumns: string[] = ['firstName', 'lastName', 'email', 'role'];
+  userresult: IUsers[] = [];
   checklistId: number;
-  historyData:any;
+  userData:any;
   discription:string[];
   selectedStatusName:string;
   public range: DataDtoRange = new DataDtoRange();
   public filter: DataDtoFilter = new DataDtoFilter();
-  statusName: any = [{id:0,name:'Not reviewed'},{id:1,name:'Not ready'},{id:2,name:'Minimally ready'},
-    {id:3,name:'Partially ready'},{id:4,name:'Mostly ready'},{id:5,name:'Completely ready'}];
-  public constructor(
+  statusName: any = [{id:0,name:''}];
+  pdialogConfig: MatDialogConfig;
+  dialogWithForm: MatDialogRef<AddUserComponent>;
+ 
+  constructor(private dialogModel: MatDialog,
     private clipboard: Clipboard,
     //public readonly alertsService: AlertsService,
     public readonly masterService:MasterService,
@@ -41,14 +41,15 @@ export class UserComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
-    this.loadHistory();
+    this.loadUsers();
   }
 
-  public async loadHistory() {
-    this.historyData = this.masterService.getAllUsers().then(r => {
-      if (r.success) {
-        this.historyresult = r.data;
-        this.range.total = r.dataTotalCount;
+  public async loadUsers() {
+    debugger;
+    this.userData = this.masterService.getAllUsers().then(response => {
+      if (response.isSuccess) {
+        this.userresult = response.data;
+        this.range.total = response.dataTotalCount;
       }
     });
   } 
@@ -56,7 +57,7 @@ export class UserComponent implements OnInit {
   public async onPage(event: PageEvent) {
     this.range.limit = event.pageSize;
     this.range.offset = event.pageIndex * event.pageSize;
-    await this.loadHistory();
+    await this.loadUsers();
   }
 
   getstatusName(statusId:number) {
@@ -65,13 +66,37 @@ export class UserComponent implements OnInit {
       return data[0].name;
     }
     return null;
-  } 
+  }
+  
+  simpleDialog: MatDialogRef<AddUserComponent>;
+
+  addUserDialog() {
+
+    let dialogRef = this.dialogModel.open(AddUserComponent, {
+      //panelClass: 'fullscreen-dialog',
+        height: '80%',
+        width: '50%',
+    });
+    
+    // When user close the dialog
+    dialogRef.afterClosed().subscribe(result => {
+      debugger;
+      console.log('You have closed the dialog');
+      if (result) {
+        this.loadUsers();
+      }
+    });
+
+    }
 
   }
 
-  export interface IHistory {
-    createdDate: Date;
-    discription : string;
-    status: string;
-    userName:string;
+  export interface IUsers {
+    email: string
+    emailConfirmed: boolean
+    firstName: string
+    id: string
+    isActive: boolean
+    lastName: string
+    role: string
   }

@@ -1,11 +1,12 @@
 ﻿<!-- nav -->
 <nav class="navbar navbar-expand navbar-dark bg-dark px-3" style="background-color: cadetblue !important;" *ngIf="user">
     <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a class="nav-item nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
         <a class="nav-item nav-link" routerLink="/single-entry" routerLinkActive="active">Single Entry</a>
         <a class="nav-item nav-link" routerLink="/multiple-entry" routerLinkActive="active">Multiple Entry</a>
         <a class="nav-item nav-link" routerLink="/review" routerLinkActive="active" *ngIf="isAdmin">Review</a>
         <a class="nav-item nav-link" routerLink="/user" routerLinkActive="active" *ngIf="isAdmin">User</a>
+        <!-- <a class="nav-item nav-link" routerLink="/master" routerLinkActive="active" *ngIf="isAdmin">Master Data</a> -->
     </div>
     <div class="navbar-collapse collapse">
     </div>

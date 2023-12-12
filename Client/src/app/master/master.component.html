@@ -1,0 +1,38 @@
+﻿<div class="header-navigation-wrap">
+    <div class="grid-container">
+      <div class="grid-row">
+        <div class="flex-row">
+          <div class="float-left gap-10" style="display: flex;flex-direction: row; align-items: center;">
+            <a routerLink="/landingpage" mat-icon-button><img class="img-fluid" src="./assets/readiness-checklist-icons/arrow_back.svg"
+              alt=""></a>   
+            <h2 class="custom-header">"Master Data"</h2>
+            <span class="{{0 ==0? 'tag': 'sub-tag'}}">Data</span>
+          </div>
+        </div>    
+      </div>
+      <div class="flex-row flex-away">
+        <div>
+          <div class="header-navigation-tab-bar navigation-tab-bar-left float-left">
+            <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+              <a routerLink="/capability" queryParamsHandling="merge" preserveQueryParams="true" routerLinkActive="active" #rla="routerLinkActive" mat-tab-link>
+                <img class="img-fluid margin-right-10"
+                  src="./assets/readiness-checklist-icons/ecg.svg" alt=""> Funds
+              </a>
+              <a routerLink="/full-reference" queryParamsHandling="merge" preserveQueryParams="true" routerLinkActive="active" mat-tab-link>
+                <img class="img-fluid margin-right-10"
+                  src="./assets/readiness-checklist-icons/fact_check.svg" alt="">Sub-Funds
+              </a>           
+            </nav>
+            <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+          </div>
+        </div>
+        <div>         
+          <div class="header-navigation-tab-bar navigation-tab-bar-left">
+            <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+              <a mat-tab-link (click)="addUserDialog()">Add User</a>       
+            </nav>  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

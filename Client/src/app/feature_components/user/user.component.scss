@@ -1,3 +1,9 @@
+.fullscreen-dialog {
+  max-width: 50% !important;
+  z-index: auto;
+  left: '10px';
+  top: '10px';
+}
 .mat-mdc-row .mat-mdc-cell {
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;

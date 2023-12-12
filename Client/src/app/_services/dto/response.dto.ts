@@ -3,7 +3,7 @@ import { IDto } from './base.dto';
 export interface IResponse<TData> extends IDto {
   data: TData;
   dataTotalCount: number;
-  success: boolean;
+  isSuccess: boolean;
   message: string;
   systemMessage: string;
   errors: any;

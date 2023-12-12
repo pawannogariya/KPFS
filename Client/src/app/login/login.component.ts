@@ -64,10 +64,11 @@ export class LoginComponent implements OnInit {
                     this.c.username.setValue(this.f.username.value);
                     if(response.isSuccess && response.data)
                     {
-                            localStorage.setItem('user', JSON.stringify(response.data));
-                            // get return url from query parameters or default to home page
-                            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                            this.router.navigateByUrl(returnUrl);
+                        localStorage.setItem('user', JSON.stringify(response.data.user));
+                        localStorage.setItem('token', JSON.stringify(response.data.token));
+                        // get return url from query parameters or default to home page
+                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
+                        this.router.navigateByUrl(returnUrl);
                     }
                     else
                     {
@@ -99,9 +100,10 @@ export class LoginComponent implements OnInit {
                         this.loading = false;
                     if(response.isSuccess)
                     {
-                        localStorage.setItem('user', JSON.stringify(response.data));
+                        localStorage.setItem('user', JSON.stringify(response.data.user));
+                        localStorage.setItem('token', JSON.stringify(response.data.token));
                         // get return url from query parameters or default to home page
-                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
                         this.router.navigateByUrl(returnUrl);
                     }
                     else

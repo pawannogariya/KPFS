@@ -3,13 +3,16 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
+import { ApiService } from './api.service';
+import { IResponse } from './dto/response.dto';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-    constructor(private http: HttpClient) { }
+    constructor(private readonly apiService: ApiService,
+        private http: HttpClient) { }
 
-    getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
+    getAll(): Promise<IResponse<User[]>> {
+        return this.apiService.get<IResponse<User[]>>("/users");
     }
 
     getById(id: number) {
