@@ -5,7 +5,11 @@ import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/_services';
 
-@Component({ templateUrl: 'login.component.html' })
+@Component({
+    selector: 'app-login',
+    templateUrl: 'login.component.html',
+    styleUrls: ['login.component.scss']
+  })
 export class LoginComponent implements OnInit {
     loginForm!: FormGroup;
     codeForm!: FormGroup;
@@ -22,7 +26,7 @@ export class LoginComponent implements OnInit {
     ) {
         // redirect to home if already logged in
         if (this.authenticationService.userValue) {
-            this.router.navigate(['/']);
+            this.router.navigate(['/home']);
         }
     }
 
@@ -67,7 +71,7 @@ export class LoginComponent implements OnInit {
                         localStorage.setItem('user', JSON.stringify(response.data.user));
                         localStorage.setItem('token', JSON.stringify(response.data.token));
                         // get return url from query parameters or default to home page
-                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
+                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
                         this.router.navigateByUrl(returnUrl);
                     }
                     else
@@ -103,7 +107,7 @@ export class LoginComponent implements OnInit {
                         localStorage.setItem('user', JSON.stringify(response.data.user));
                         localStorage.setItem('token', JSON.stringify(response.data.token));
                         // get return url from query parameters or default to home page
-                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
+                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
                         this.router.navigateByUrl(returnUrl);
                     }
                     else

@@ -6,7 +6,11 @@ import { IAddUserDto } from '@app/_services/dto/registration.dto';
 import { RegistrationService } from '@app/_services/registration.service';
 import { first } from 'rxjs';
 
-@Component({ templateUrl: 'add-user.component.html' })
+@Component({
+  selector: 'app-add-user',
+  templateUrl: 'add-user.component.html',
+  styleUrls: ['add-user.component.scss']
+})
 export class AddUserComponent implements OnInit {
 
   addUserForm!: FormGroup;

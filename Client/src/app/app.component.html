@@ -1,5 +1,18 @@
-﻿<!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark px-3" style="background-color: cadetblue !important;" *ngIf="user">
+﻿<div class="container">
+    <div class="header">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h2> KPFS Exp Tool</h2>
+            </div>
+            <div *ngIf="authenticationService.userValue" class="col-md-3" style="color: white;">
+                {{user.firstName}} {{user.lastName}} ({{user.role}}).
+                    <button class="btn btn-primary" (click)="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark px-3 mt-3" style="background-color: cadetblue !important;" *ngIf="user">
     <div class="navbar-nav">
         <a class="nav-item nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
         <a class="nav-item nav-link" routerLink="/single-entry" routerLinkActive="active">Single Entry</a>
@@ -8,14 +21,14 @@
         <a class="nav-item nav-link" routerLink="/user" routerLinkActive="active" *ngIf="isAdmin">User</a>
         <!-- <a class="nav-item nav-link" routerLink="/master" routerLinkActive="active" *ngIf="isAdmin">Master Data</a> -->
     </div>
-    <div class="navbar-collapse collapse">
+    <!-- <div class="navbar-collapse collapse">
     </div>
     <div class="navbar-nav pull-right" style="color:white ;">
             {{user.firstName}} {{user.lastName}} ({{user.role}}).
     </div>
     <div class="navbar-nav pull-right">
         <button class="btn btn-link nav-item nav-link active" (click)="logout()">Logout</button>
-    </div>
+    </div> -->
     <!-- {{user | json}} -->
 </nav>
 
@@ -29,4 +42,12 @@
     <p>
         <!-- <a href="#" target="_blank">Help</a> -->
     </p>    
+</div>
+<!-- <div class="content">
+    <router-outlet></router-outlet>
+</div> -->
+
+  <div class="footer">
+    <h2>KPFS Exp - Footer</h2>
+  </div>
 </div>

@@ -3,7 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RegistrationService } from '@app/_services/registration.service';
 import { first } from 'rxjs';
 
-@Component({ templateUrl: 'confirmation-email.component.html' })
+@Component({
+  selector: 'app-confirmation-email',
+  templateUrl: 'confirmation-email.component.html',
+  styleUrls: ['confirmation-email.component.scss']
+})
 export class ConfirmationEmailComponent implements OnInit {
   token: string;
   email:string;

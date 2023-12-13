@@ -74,7 +74,6 @@ export class UserComponent implements OnInit {
 
     let dialogRef = this.dialogModel.open(AddUserComponent, {
       //panelClass: 'fullscreen-dialog',
-        height: '80%',
         width: '50%',
     });
     

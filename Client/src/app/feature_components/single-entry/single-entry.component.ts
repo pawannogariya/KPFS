@@ -4,7 +4,11 @@ import { first } from 'rxjs/operators';
 import { User } from '@app/_models';
 import { UserService } from '@app/_services';
 
-@Component({ templateUrl: 'single-entry.component.html' })
+@Component({
+    selector: 'app-single-entry',
+    templateUrl: 'single-entry.component.html',
+    styleUrls: ['single-entry.component.scss']
+  })
 export class SingleEntryComponent implements OnInit {
     loading = false;
     users: User[] = [];

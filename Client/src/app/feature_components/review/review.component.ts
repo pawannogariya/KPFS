@@ -4,7 +4,11 @@ import { first } from 'rxjs/operators';
 import { User } from '@app/_models';
 import { UserService } from '@app/_services';
 
-@Component({ templateUrl: 'review.component.html' })
+@Component({
+    selector: 'app-review',
+    templateUrl: 'review.component.html',
+    styleUrls: ['review.component.scss']
+  })
 export class ReviewComponent implements OnInit {
     loading = false;
     users: User[] = [];
