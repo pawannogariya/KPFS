@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KPFS.Data.Entities
 {
-    public class UserRole : IdentityUserRole<string>
+    public class UserRole : IdentityUserRole<int>
     {
         [ForeignKey(nameof(UserId))]
         public virtual User User { get; set; }

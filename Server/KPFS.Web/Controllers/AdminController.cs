@@ -4,7 +4,6 @@ using KPFS.Business.Models;
 using KPFS.Business.Services.Interfaces;
 using KPFS.Data.Constants;
 using KPFS.Data.Entities;
-using KPFS.Data.Repositories;
 using KPFS.Web.AppSettings;
 using KPFS.Web.Helpers;
 using Microsoft.AspNetCore.Authorization;
@@ -160,7 +159,25 @@ namespace KPFS.Web.Controllers
         [HttpPost("add-update-fund-house")]
         public async Task<ActionResult<ResponseDto<string>>> AddUpdateFundHouse([FromBody] FundHouseDto fundHouse)
         {
-            await _masterDataService.AddOrUpdateFundHouseAsync(fundHouse);
+            if(fundHouse.IsNew && await _masterDataService.DoesFundHouseExistAsync(fundHouse.ShortName))
+            {
+                return BuildFailureResponse<string>($"Fund house '{fundHouse.ShortName}' already exists.");
+            }
+
+            await _masterDataService.AddOrUpdateFundHouseAsync(fundHouse, CurrentUser);
+
+            return BuildResponse(string.Empty);
+        }
+
+        [HttpPost("add-update-fund")]
+        public async Task<ActionResult<ResponseDto<string>>> AddUpdateFund([FromBody] FundDto fund)
+        {
+            if (fund.IsNew && await _masterDataService.DoesFundExistAsync(fund.ShortName, fund.FundHouseId))
+            {
+                return BuildFailureResponse<string>($"Fund '{fund.ShortName}' already exists in the fund house.");
+            }
+
+            await _masterDataService.AddOrUpdateFundAsync(fund, CurrentUser);
 
             return BuildResponse(string.Empty);
         }
