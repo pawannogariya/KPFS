@@ -1,25 +1,81 @@
-﻿<div class="container">
-    <div class="header">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <h2> KPFS Exp Tool</h2>
-            </div>
-            <div *ngIf="authenticationService.userValue" class="col-md-3" style="color: white;">
-                {{user.firstName}} {{user.lastName}} ({{user.role}}).
-                    <button class="btn btn-primary" (click)="logout()">Logout</button>
-            </div>
+﻿<div class="container p-0 d-block position-fixed top-0" *ngIf="user">
+  <!-- nav -->
+  <nav
+    class="navbar navbar-expand d-block navbar-dark bg-dark gray-text py-4 float-start side-navbar"
+    *ngIf="user"
+  >
+    <div class="px-4">
+      <div class="d-flex align-items-center">
+        <mat-icon fontIcon="computer" class="white-text"></mat-icon>
+        <div class="white-text fs-5 fw-semibold ms-3 text-uppercase">
+          KPFS Exp
         </div>
+      </div>
+      <div class="gray-text mt-2">Dashboard</div>
+      <!-- <div class="w-100 d-flex align-items-center justify-content-between mt-3">
+        <div class="nav-line"></div>
+        <div class="nav-minimize d-flex align-items-center cursor-pointer">
+          <mat-icon fontIcon="chevron_left" class="gray-text"></mat-icon>
+          <span class="">Minimize</span>
+        </div>
+      </div> -->
     </div>
-
-    <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark px-3 mt-3" style="background-color: cadetblue !important;" *ngIf="user">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
-        <a class="nav-item nav-link" routerLink="/single-entry" routerLinkActive="active">Single Entry</a>
-        <a class="nav-item nav-link" routerLink="/multiple-entry" routerLinkActive="active">Multiple Entry</a>
-        <a class="nav-item nav-link" routerLink="/review" routerLinkActive="active" *ngIf="isAdmin">Review</a>
-        <a class="nav-item nav-link" routerLink="/user" routerLinkActive="active" *ngIf="isAdmin">User</a>
-        <!-- <a class="nav-item nav-link" routerLink="/master" routerLinkActive="active" *ngIf="isAdmin">Master Data</a> -->
+    <div class="">
+      <div class="text-uppercase py-3 px-4">Main Menu</div>
+    </div>
+    <div class="navbar-nav flex-column">
+      <div class="py-2 px-4 links d-flex align-items-center">
+        <mat-icon class="material-icons-outlined">home</mat-icon>
+        <a
+          class="nav-item nav-link"
+          routerLink="/home"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+      </div>
+      <div class="py-2 px-4 links d-flex align-items-center">
+        <mat-icon class="material-icons-outlined">person_add</mat-icon>
+        <a
+          class="nav-item nav-link"
+          routerLink="/single-entry"
+          routerLinkActive="active"
+          >Single Entry</a
+        >
+      </div>
+      <div class="py-2 px-4 links d-flex align-items-center">
+        <mat-icon class="material-icons-outlined">group_add</mat-icon>
+        <a
+          class="nav-item nav-link"
+          routerLink="/multiple-entry"
+          routerLinkActive="active"
+          >Multiple Entry</a
+        >
+      </div>
+      <div class="py-2 px-4 links d-flex align-items-center">
+        <mat-icon class="material-icons-outlined">reviews</mat-icon>
+        <a
+          class="nav-item nav-link"
+          routerLink="/review"
+          routerLinkActive="active"
+          *ngIf="isAdmin"
+          >Review</a
+        >
+      </div>
+      <div class="py-2 px-4 links d-flex align-items-center">
+        <mat-icon class="material-icons-outlined">person</mat-icon>
+        <a
+          class="nav-item nav-link"
+          routerLink="/user"
+          routerLinkActive="active"
+          *ngIf="isAdmin"
+          >User</a
+        >
+      </div>
+      <!-- <div class="py-2 px-4 links">
+        <button mat-button (click)="logout()">Log Out</button>
+      </div> -->
+      <!-- <a class="nav-item nav-link" routerLink="/master" routerLinkActive="active" *ngIf="isAdmin">Master Data</a> -->
     </div>
     <!-- <div class="navbar-collapse collapse">
     </div>
@@ -30,24 +86,61 @@
         <button class="btn btn-link nav-item nav-link active" (click)="logout()">Logout</button>
     </div> -->
     <!-- {{user | json}} -->
-</nav>
+  </nav>
+  <div class="header float-start">
+    <div class="row align-items-center py-2 px-3" id="main-header">
+      <div class="col-md-5 mx-auto">
+        <h2 class="m-0 d-flex align-items-center">
+          Welcome Back, {{ user.firstName }} {{ user.lastName }}
+          <mat-icon class="ms-2 material-icons-outlined">handshake</mat-icon>
+        </h2>
+      </div>
+      <div
+        *ngIf="authenticationService.userValue"
+        class="col-md-7 d-flex justify-content-between align-items-center"
+      >
+        <mat-form-field appearance="outline" class="search-input">
+          <mat-label>Search Anything</mat-label>
+          <input type="text" matInput placeholder="Search Anything" />
+        </mat-form-field>
+        <div class="divider-line"></div>
+        <mat-icon class="material-icons-outlined">sms</mat-icon>
+        <mat-icon class="material-icons-outlined">notifications</mat-icon>
+        <div class="header-profile d-flex align-items-center gap-3">
+          <img src="../assets/face16.jpg" alt="face" class="rounded-circle" />
+          {{ user.firstName }} {{ user.lastName }}
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon fontIcon="arrow_drop_down"></mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>Profile</button>
+            <button mat-menu-item (click)="logout()">Log Out</button>
+          </mat-menu>
+        </div>
+        <!-- {{ user.firstName }} {{ user.lastName }} ({{ user.role }}).
+        <button class="btn btn-primary" (click)="logout()">Logout</button> -->
+      </div>
+    </div>
+    <div class="container p-2 inner-container" id="main-container">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- <div class="footer bg-dark text-center position-fixed bottom-0 w-100 py-3" id="footer">
+      <h2 class="m-0">KPFS Exp - Footer</h2>
+    </div> -->
+  </div>
 
 <!-- main app container -->
-<div class="container">
-    <router-outlet></router-outlet>
-</div>
 
-<!-- credits -->
-<div class="text-center mt-4">
+  <!-- credits -->
+  <div class="text-center">
     <p>
-        <!-- <a href="#" target="_blank">Help</a> -->
-    </p>    
-</div>
-<!-- <div class="content">
+      <!-- <a href="#" target="_blank">Help</a> -->
+    </p>
+  </div>
+  <!-- <div class="content">
     <router-outlet></router-outlet>
 </div> -->
-
-  <div class="footer">
-    <h2>KPFS Exp - Footer</h2>
-  </div>
+</div>
+<div *ngIf="!user">
+  <router-outlet></router-outlet>
 </div>

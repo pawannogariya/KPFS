@@ -1,0 +1,45 @@
+.body-text {
+    color: #c4c8cc !important;
+}
+.card-line {
+    height: 100%;
+    width: 4px;
+    background-color: #4d5bd4;
+}
+.card-line.card-line-second {
+    background-color: #70bbc0;
+}
+.info-name {
+    color: #c4c8cc;
+    font-weight: 600;
+}
+.total-number {
+    color: #1f2536;
+    font-size: 20px;
+    font-weight: 700;
+}
+.card-inner-img  img {
+    height: 35px;
+    width: 35px;
+}
+.header-navigation-wrap {
+    .card-footer {
+        color: #c4c8cc;
+    }
+    .percentage {
+        color: #58b187;
+        font-weight: 600;
+    }
+    .percentage.percentage-second {
+        color: #d23131;
+    }
+}
+
+
+::ng-deep .mat-tab-label {
+    width: 50%;
+}
+
+::ng-deep .mat-tab-body-content {
+    padding: 15px 0;
+}

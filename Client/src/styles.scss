@@ -1,6 +1,160 @@
 /* You can add global styles to this file, and also import other style files */
-html, body{
-    height: 100%;
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
+:root {
+    --bg-main-color: #f5f7fa;
+    --text-first-color: #ffffff8c;
+}
+
+html,
+body {
+    height: 100vh;
     padding: 0;
     margin: 0;
-   }
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat' !important;
+    background-color: var(--bg-main-color);
+}
+
+h2,
+h4,
+.mat-button,
+.mat-form-field,
+.mat-menu-content,
+.mat-menu-item,
+.mat-card,
+.mat-tab-group,
+.mat-tab-label-content,
+.mat-table,
+.mat-paginator-container,
+.mat-card-title,
+.mat-label,
+.mat-button-wrapper {
+    font-family: 'Montserrat' !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.white-text {
+    color: var(--bg-main-color);
+}
+
+.gray-text {
+    color: var(--text-first-color);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.user-badge {
+    background: aquamarine;
+    padding: 3px 5px;
+    border-radius: 12px;
+    color: #005b3c;
+}
+
+.reviewer-badge {
+    background: #f8bfff;
+    padding: 3px 5px;
+    border-radius: 12px;
+    color: #9400a7;
+}
+
+.admin-badge {
+    background: #cbd6ff;
+    padding: 3px 5px;
+    border-radius: 12px;
+    color: #002dd5;
+}
+
+// Auth CSS Start Here 
+.limiter {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container-login100 {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #9053c7;
+    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+}
+
+.wrap-login100 {
+    width: 960px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    height: 90vh;
+}
+
+.login100-form-title {
+    font-size: 24px;
+    color: #333333;
+    line-height: 1.2;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+.btn-ht {
+    height: 50px;
+}
+
+.round-input {
+        .mat-form-field-flex{
+            padding: 0 0.75em 0 1.2em !important;
+            align-items: center;
+        }
+
+        .mat-form-field-outline-start {
+            border-radius: 25px 0 0 25px !important;
+        }
+
+        .mat-form-field-outline-end {
+            border-radius: 0 25px 25px 0 !important;
+        }
+
+        .mat-form-field-outline {
+            background: #e7e7e7 !important;
+            border-radius: 25px !important;
+        }
+
+        .mat-form-field-prefix {
+            margin-right: 5px !important;
+        }
+
+        .mat-icon {
+            color: #666666 !important;
+        }
+}
+// Auth CSS End Here 

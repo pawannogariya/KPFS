@@ -5,8 +5,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { User } from '@app/_models';
+import { Role, User } from '@app/_models';
 import { ApiService } from './api.service';
+import { IUsers } from '@app/feature_components/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -24,6 +25,31 @@ export class AuthenticationService {
 
     public get userValue() {
         return this.userSubject.value;
+    }
+
+    loginOffline()
+    {
+        var  response={
+            isSuccess: true,
+            message: null,
+            data: {
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYmFkaTRuZXRAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiYmFkaTRuZXRAZ21haWwuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZWlkZW50aWZpZXIiOiI2NjhmOTZkZi04ZTAzLTExZWUtYjUwNy1lODZhNjRiNDdhYWUiLCJqdGkiOiJmMDhlZGRkMy0zNmNhLTQ5OTMtOTQ3Ny0xOTY3MTU2NDQ4ODIiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTcwMjgxMzcyMCwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzIyNiIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcyMjYifQ.uhlemKiFkrN_UONkHi5aJrCoZ1SXWxNuVIpcdPzys3k",
+                expiration: "2023-12-17T11:48:40Z",
+                user: {
+                    "id":1,
+                    "username": "badi4net@gmail.com",
+                    "firstName": "Super",
+                    "lastName": "Admin",
+                    "role": Role.Admin,
+                }
+            }
+        }
+
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        localStorage.setItem('token', JSON.stringify(response.data.token));
+        this.apiService.setToken(response.data.token);
+        this.userSubject.next(response.data.user);
+        return response;
     }
 
     login(username: string, password: string) {

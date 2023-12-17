@@ -4,13 +4,16 @@
   left: '10px';
   top: '10px';
 }
-.mat-mdc-row .mat-mdc-cell {
-    border-bottom: 1px solid transparent;
-    border-top: 1px solid transparent;
-    cursor: pointer;
-  }
 
-  .mdc-data-table__header-cell{
+.user-grid-head {
+  ::ng-deep{
+    .mat-form-field-wrapper {
+      padding: 0;
+      font-weight: bold;
+    }
+  } 
+}
 
-    text-align: center;
-  }
+.border-50 {
+  border-radius: 50%;
+}

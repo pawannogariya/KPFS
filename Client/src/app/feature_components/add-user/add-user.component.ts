@@ -18,6 +18,7 @@ export class AddUserComponent implements OnInit {
   submitted = false;
   loading = false;
   error = '';
+  hidePassword = true;
   
     constructor(
       public dialogRef: MatDialogRef<AddUserComponent>,

@@ -1,12 +1,131 @@
-﻿<div class="card mt-4">
-    <h4 class="card-header">Home</h4>
-    <div class="card-body">
-        <p>Your role is: <strong>{{user.role}}</strong>.</p>
-        <p>This page can be accessed by <u>all authenticated users</u>.</p>
-        <p class="mb-1">Current user from secure api end point:</p>
-        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-        <ul *ngIf="userFromApi">
-            <li>{{userFromApi.firstName}} {{userFromApi.lastName}}</li>
-        </ul>
+﻿<!-- <div class="header-navigation-wrap"> -->
+    <div class="row">
+      <div class="col-md-3">
+        <mat-card>
+          <div class="p-2">
+            <div class="row">
+              <div class="col-md-6 d-flex gap-3">
+                <div class="card-line rounded-pill"></div>
+                  <div>
+                    <div class="info-name">Pending</div>
+                    <div class="total-number">100</div>
+                  </div>
+              </div>
+              <div class="col-md-6 d-flex justify-content-end card-inner-img">
+                <img src="../../assets/face16.jpg" alt="" class="rounded">
+              </div>
+            </div>
+            <div class="pt-4 card-footer d-flex align-items-center gap-1">
+               <span class="percentage d-flex align-items-center">
+                <mat-icon fontIcon="arrow_upward" class="fs-5"></mat-icon> +10% </span>
+              Since last week
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-md-3">
+        <mat-card>
+          <div class="p-2">
+            <div class="row">
+              <div class="col-md-6 d-flex gap-3">
+                <div class="card-line card-line-second rounded-pill"></div>
+                  <div>
+                    <div class="info-name">Approved</div>
+                    <div class="total-number">90</div>
+                  </div>
+              </div>
+              <div class="col-md-6 d-flex justify-content-end card-inner-img">
+                <img src="../../assets/face16.jpg" alt="" class="rounded">
+              </div>
+            </div>
+            <div class="pt-4 card-footer d-flex align-items-center gap-1">
+               <span class="percentage percentage-second d-flex align-items-center">
+                <mat-icon fontIcon="south" class="fs-5"></mat-icon> 90% </span>
+                 Since last week
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-md-3">
+        <mat-card>
+          <div class="p-2">
+            <div class="row">
+              <div class="col-md-6 d-flex gap-3">
+                <div class="card-line card-line-second rounded-pill"></div>
+                  <div>
+                    <div class="info-name">Rejected</div>
+                    <div class="total-number">10</div>
+                  </div>
+              </div>
+              <div class="col-md-6 d-flex justify-content-end card-inner-img">
+                <img src="../../assets/face16.jpg" alt="" class="rounded">
+              </div>
+            </div>
+            <div class="pt-4 card-footer d-flex align-items-center gap-1">
+               <span class="percentage percentage-second d-flex align-items-center">
+                <mat-icon fontIcon="south" class="fs-5"></mat-icon> 10% </span>
+                 Since last week
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div class="col-md-3">
+        <mat-card>
+          <div class="p-2">
+            <div class="row">
+              <div class="col-md-6 d-flex gap-3">
+                <div class="card-line card-line-second rounded-pill"></div>
+                  <div>
+                    <div class="info-name">Rejected</div>
+                    <div class="total-number">10</div>
+                  </div>
+              </div>
+              <div class="col-md-6 d-flex justify-content-end card-inner-img">
+                <img src="../../assets/face16.jpg" alt="" class="rounded">
+              </div>
+            </div>
+            <div class="pt-4 card-footer d-flex align-items-center gap-1">
+               <span class="percentage percentage-second d-flex align-items-center">
+                <mat-icon fontIcon="south" class="fs-5"></mat-icon> 10% </span>
+                 Since last week
+            </div>
+          </div>
+        </mat-card>
+      </div>
     </div>
-</div>
+    <div class="my-3">
+      <mat-tab-group>
+        <mat-tab label="Users"><app-user></app-user></mat-tab>
+        <mat-tab label="Fund"><app-user></app-user></mat-tab>
+        <mat-tab label="Sub-Fund"><app-user></app-user></mat-tab>
+      </mat-tab-group>
+    </div>
+    <!-- <div class="grid-container">
+      <div class="grid-row">
+        <div class="flex-row">
+          <div class="float-left gap-10" style="display: flex;flex-direction: row; align-items: center;">
+            <a routerLink="/landingpage" mat-icon-button><img class="img-fluid" src="./assets/readiness-checklist-icons/arrow_back.svg"
+              alt=""></a>   
+            <h3 class="custom-header">Master Data Tabs</h3>
+          </div>
+        </div>    
+      </div>
+      <div class="flex-row flex-away">
+        <div>
+          <div class="header-navigation-tab-bar navigation-tab-bar-left float-left">
+            <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+              <a routerLink="/capability" queryParamsHandling="merge" preserveQueryParams="true" routerLinkActive="active" #rla="routerLinkActive" mat-tab-link>
+                <img class="img-fluid margin-right-10"
+                  src="./assets/readiness-checklist-icons/ecg.svg" alt=""> Tab1
+              </a>
+              <a routerLink="/full-reference" queryParamsHandling="merge" preserveQueryParams="true" routerLinkActive="active" mat-tab-link>
+                <img class="img-fluid margin-right-10"
+                  src="./assets/readiness-checklist-icons/fact_check.svg" alt="">Tab2
+              </a>           
+            </nav>
+            <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->

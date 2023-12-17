@@ -37,6 +37,10 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NgTiltModule } from '@geometricpanda/angular-tilt';
 
 @NgModule({
     imports: [
@@ -52,7 +56,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MatButtonModule,
         MatDialogModule,
         MatPaginatorModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        MatInputModule,
+        MatIconModule,
+        MatMenuModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
+        NgTiltModule
     ],
     declarations: [
         AppComponent,

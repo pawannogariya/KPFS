@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, HostListener, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
     submitted = false;
     isLogin=false;
     error = '';
+    passwordField = true;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
+            username: ['', [Validators.required, Validators.email]],
             password: ['', Validators.required]
         });
         this.codeForm = this.formBuilder.group({
@@ -48,42 +49,55 @@ export class LoginComponent implements OnInit {
     get c() { return this.codeForm.controls; }
 
     onSubmit() {
-        this.submitted = true;
-
         // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
+        if (this.loginForm.valid) {
+            var response:any={};// this.authenticationService.loginOffline();
+            response.isSuccess=false;
+            debugger;
+            if(response.isSuccess && response.data)
+            {
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+                localStorage.setItem('token', JSON.stringify(response.data.token));
+                // get return url from query parameters or default to home page
+                const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+                this.router.navigateByUrl(returnUrl);
+            }
+            else
+            {
+                this.submitted = true;
+                this.loading = true;
+                this.authenticationService.login(this.f.username.value, this.f.password.value)
+                //.pipe(first())
+                .subscribe({
+                    next: (response) => {
+                        debugger;
+                        this.submitted = false;
+                        this.loading = false;
+                        if(response.isSuccess){
+                            this.isLogin=true;
+                            this.c.username.setValue(this.f.username.value);
+                            if(response.data && response.data.user && response.data.token)
+                            {
+                                localStorage.setItem('user', JSON.stringify(response.data.user));
+                                localStorage.setItem('token', JSON.stringify(response.data.token));
+                                // get return url from query parameters or default to home page
+                                const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+                                this.router.navigateByUrl(returnUrl);
+                            }
+                        }
+                        else
+                        {
+                            //Need to display message
+                            this.error=response.message;
+                        }
+                    },
+                    error: error => {
+                        this.error = error;
+                        this.loading = false;
+                    }
+                });
+            }
         }
-
-        this.loading = true;
-        debugger;
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
-            .pipe(first())
-            .subscribe({
-                next: (response) => {
-                    debugger;
-                    this.isLogin=true;
-                    this.submitted = false;
-                    this.loading = false;
-                    this.c.username.setValue(this.f.username.value);
-                    if(response.isSuccess && response.data)
-                    {
-                        localStorage.setItem('user', JSON.stringify(response.data.user));
-                        localStorage.setItem('token', JSON.stringify(response.data.token));
-                        // get return url from query parameters or default to home page
-                        const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
-                        this.router.navigateByUrl(returnUrl);
-                    }
-                    else
-                    {
-                        //Need to display message
-                    }
-                },
-                error: error => {
-                    this.error = error;
-                    this.loading = false;
-                }
-            });
     }
 
     onCodeSubmit() {
@@ -121,5 +135,19 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                 }
             });
+    }
+
+    @HostListener('window:resize', ['$event'])
+    getScreenSize(event?) {
+        setTimeout(() => {
+            const screenHeight = window.innerHeight;
+            const header = document.getElementById('main-header')?.clientHeight;
+            const footer = document.getElementById('footer')?.clientHeight;
+            const finalHeight = screenHeight - (header + footer);
+            const mainContainer = document.getElementById('main-container');
+            if (mainContainer && !isNaN(finalHeight)) {                
+                mainContainer.style.height = finalHeight + "px";
+            }
+        }, 500);
     }
 }
