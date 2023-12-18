@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using KPFS.Data.Entities.Base;
+﻿using KPFS.Data.Entities.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace KPFS.Data.Entities
 {

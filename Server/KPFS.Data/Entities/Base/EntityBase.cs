@@ -1,19 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KPFS.Data.Entities.Base
 {
     public class EntityBase<TId>
     {
+        [Required]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public TId Id { get; set; }
+
         public bool IsNew => Id.Equals(default(TId));
 
-        public string CreatedBy { get; set; }
+        [Required]
+        public int CreatedBy { get; set; }
+
+        [Required]
         public DateTime CreatedOn { get; set; }
-        public string? UpdatedBy { get; set; }
+
+        public int? UpdatedBy { get; set; }
         public DateTime? UpdatedOn { get; set; }
 
         public bool IsDeleted { get; set; }
-        public string? DeletedBy { get; set; }
+        public int? DeletedBy { get; set; }
         public DateTime? DeletedOn { get; set; }
 
         [ForeignKey(nameof(CreatedBy))]

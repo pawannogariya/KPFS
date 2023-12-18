@@ -94,6 +94,7 @@ builder.Services.AddTransient<FundHouseRepository>();
 builder.Services.AddTransient<FundRepository>();
 builder.Services.AddTransient<BankAccountRepository>();
 builder.Services.AddTransient<FundManagerRepository>();
+builder.Services.AddTransient<RoleRepository>();
 
 
 builder.Services.AddControllers(options =>

@@ -4,12 +4,14 @@
     {
         public string BaseAppPath { get; set; }
         public string BaseApiPath { get; set; }
-        public AdminCredentials AdminCredentials { get; set; }
+        public Admin[] AdminCredentials { get; set; }
     }
 
-    public class AdminCredentials
+    public class Admin
     {
         public string Email { get; set;}
         public string Password { get; set;}
+        public string? FirstName { get; set;}
+        public string? LastName { get; set;}
     }
 }

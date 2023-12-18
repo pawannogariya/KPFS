@@ -1,9 +1,7 @@
 ﻿namespace KPFS.Business.Models
 {
-    public class UserDto
+    public class UserDto : DtoBase
     {
-        public string Id { get; set; }
-
         public string Email { get; set; }
 
         public string FirstName { get; set; }
