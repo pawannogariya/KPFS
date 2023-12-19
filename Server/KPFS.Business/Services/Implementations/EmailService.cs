@@ -8,12 +8,12 @@ namespace KPFS.Business.Services.Implementations
 {
     public class EmailService : IEmailService
     {
-        private readonly EmailConfigurationDto _emailConfig;
-        private readonly ILogger<EmailService> _logger;
+        private readonly EmailConfigurationDto emailConfig;
+        private readonly ILogger<EmailService> logger;
         public EmailService(EmailConfigurationDto emailConfig, ILogger<EmailService> logger)
         {
-            _emailConfig = emailConfig;
-            _logger = logger;
+            this.emailConfig = emailConfig;
+            this.logger = logger;
         }
         public void SendEmail(MessageDto message)
         {
@@ -24,7 +24,7 @@ namespace KPFS.Business.Services.Implementations
         private MimeMessage CreateEmailMessage(MessageDto message)
         {
             var emailMessage = new MimeMessage();
-            emailMessage.From.Add(new MailboxAddress("KPFS EXP", _emailConfig.From));
+            emailMessage.From.Add(new MailboxAddress("KPFS EXP", emailConfig.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = message.Content };
@@ -37,16 +37,16 @@ namespace KPFS.Business.Services.Implementations
             using var client = new SmtpClient();
             try
             {
-                client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, true);//MailKit.Security.SecureSocketOptions.StartTlsWhenAvailable);
+                client.Connect(emailConfig.SmtpServer, emailConfig.Port, true);//MailKit.Security.SecureSocketOptions.StartTlsWhenAvailable);
                 
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
+                client.Authenticate(emailConfig.UserName, emailConfig.Password);
 
                 client.Send(mailMessage);
             }
             catch(Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
+                logger.LogError(ex, ex.Message);
                 throw;
             }
             finally

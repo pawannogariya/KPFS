@@ -46,31 +46,11 @@ namespace KPFS.Web
                             await dbContext.Roles.AddAsync(new Role()
                             {
                                 Id = 3,
-                                Name = Data.Constants.Roles.Investor,
-                                DisplayName = Data.Constants.Roles.Investor,
-                                ConcurrencyStamp = "3",
-                                NormalizedName = Data.Constants.Roles.Investor.ToUpper(),
-                                HierarchyOrder = 2
-                            });
-
-                            await dbContext.Roles.AddAsync(new Role()
-                            {
-                                Id = 4,
-                                Name = Data.Constants.Roles.FundAdmin,
-                                DisplayName = "Fund Admin",
-                                ConcurrencyStamp = "4",
-                                NormalizedName = Data.Constants.Roles.FundAdmin.ToUpper(),
-                                HierarchyOrder = 3
-                            });
-
-                            await dbContext.Roles.AddAsync(new Role()
-                            {
-                                Id = 5,
                                 Name = Data.Constants.Roles.Admin,
                                 DisplayName = Data.Constants.Roles.Admin,
-                                ConcurrencyStamp = "5",
+                                ConcurrencyStamp = "3",
                                 NormalizedName = Data.Constants.Roles.Admin.ToUpper(),
-                                HierarchyOrder = 4
+                                HierarchyOrder = 2
                             });
                         }
 
@@ -82,24 +62,6 @@ namespace KPFS.Web
                                 adminId = adminId + 1;
                                 var passwordHasher = new PasswordHasher<User>();
 
-
-                                //var user = new User()
-                                //{
-                                //    Id = adminId,
-                                //    FirstName = string.IsNullOrWhiteSpace(admin.FirstName) ? "Super" : admin.FirstName,
-                                //    LastName = string.IsNullOrWhiteSpace(admin.LastName) ? "Admin" : admin.LastName,
-                                //    UserName = admin.Email,
-                                //    Email = admin.Email,
-                                //    EmailConfirmed = true,
-                                //    NormalizedUserName = admin.Email.ToUpper(),
-                                //    NormalizedEmail = admin.Email.ToUpper(),
-                                //    PasswordHash = passwordHasher.HashPassword(null, admin.Password),
-                                //    TwoFactorEnabled = true,
-                                //    LockoutEnabled = true,
-                                //    IsActive = true
-                                //};
-
-                                //await userManager.CreateAsync(user, model.Password);
 
                                 await dbContext.Users.AddAsync(new User()
                                 {
@@ -121,7 +83,7 @@ namespace KPFS.Web
                                 await dbContext.UserRoles.AddAsync(new UserRole()
                                 {
                                     UserId = adminId,
-                                    RoleId = 5
+                                    RoleId = 3
                                 });
                             }
                         }

@@ -1,12 +1,13 @@
 ﻿using KPFS.Data.Entities;
 using KPFS.Data.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace KPFS.Data.Repositories
 {
     public class BankAccountRepository : EntityRepositoryBase<BankAccount, int>
     {
-        public BankAccountRepository(KpfsDbContext context) : base(context)
+        public BankAccountRepository(KpfsDbContext context, IConfiguration configuration) : base(context, configuration)
         {
         }
 

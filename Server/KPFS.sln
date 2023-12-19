@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34316.72
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KPFS.Web", "KPFS.Web\KPFS.Web.csproj", "{AC8ED8B1-12B0-47AF-94DC-EEDC84983627}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KPFS.Api", "KPFS.Api\KPFS.Api.csproj", "{AC8ED8B1-12B0-47AF-94DC-EEDC84983627}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KPFS.Business", "KPFS.Business\KPFS.Business.csproj", "{D234D023-F47D-4D62-8342-87035F595079}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KPFS.Data", "KPFS.Data\KPFS.Data.csproj", "{69ABA37E-0A0B-42C5-B043-2D35737BB6FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KPFS.Common", "KPFS.Common\KPFS.Common.csproj", "{FB854C21-7AC0-4E2F-9365-48FD70E7CE21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KPFS.Common", "KPFS.Common\KPFS.Common.csproj", "{FB854C21-7AC0-4E2F-9365-48FD70E7CE21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

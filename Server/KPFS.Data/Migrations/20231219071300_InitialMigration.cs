@@ -78,6 +78,44 @@ namespace KPFS.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "PortfolioCompanyMasters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ShortName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    SebiIndustrySector = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PortfolioCompanyMasters", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TemporaryInvestmentMasters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ShortName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemporaryInvestmentMasters", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -239,88 +277,6 @@ namespace KPFS.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "PortfolioCompanies",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ShortName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    SebiIndustrySector = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedBy = table.Column<int>(type: "int", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PortfolioCompanies", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PortfolioCompanies_AspNetUsers_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PortfolioCompanies_AspNetUsers_DeletedBy",
-                        column: x => x.DeletedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_PortfolioCompanies_AspNetUsers_UpdatedBy",
-                        column: x => x.UpdatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "TemporaryInvestments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ShortName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedBy = table.Column<int>(type: "int", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TemporaryInvestments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TemporaryInvestments_AspNetUsers_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TemporaryInvestments_AspNetUsers_DeletedBy",
-                        column: x => x.DeletedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_TemporaryInvestments_AspNetUsers_UpdatedBy",
-                        column: x => x.UpdatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Funds",
                 columns: table => new
                 {
@@ -439,86 +395,13 @@ namespace KPFS.Data.Migrations
                     Name = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Date = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    FundId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedBy = table.Column<int>(type: "int", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    FundId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Closures", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Closures_AspNetUsers_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Closures_AspNetUsers_DeletedBy",
-                        column: x => x.DeletedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Closures_AspNetUsers_UpdatedBy",
-                        column: x => x.UpdatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Closures_Funds_FundId",
-                        column: x => x.FundId,
-                        principalTable: "Funds",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "FundInvestors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    FundId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedBy = table.Column<int>(type: "int", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FundInvestors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FundInvestors_AspNetUsers_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FundInvestors_AspNetUsers_DeletedBy",
-                        column: x => x.DeletedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_FundInvestors_AspNetUsers_UpdatedBy",
-                        column: x => x.UpdatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_FundInvestors_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FundInvestors_Funds_FundId",
                         column: x => x.FundId,
                         principalTable: "Funds",
                         principalColumn: "Id",
@@ -591,34 +474,11 @@ namespace KPFS.Data.Migrations
                     Notes = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     FundId = table.Column<int>(type: "int", nullable: false),
-                    ClosureId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedBy = table.Column<int>(type: "int", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    ClosureId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Drawdowns", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Drawdowns_AspNetUsers_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Drawdowns_AspNetUsers_DeletedBy",
-                        column: x => x.DeletedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Drawdowns_AspNetUsers_UpdatedBy",
-                        column: x => x.UpdatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Drawdowns_Closures_ClosureId",
                         column: x => x.ClosureId,
@@ -706,41 +566,11 @@ namespace KPFS.Data.Migrations
                     KpfsIncompleteRecordRemark = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     FundId = table.Column<int>(type: "int", nullable: false),
-                    ClosureId = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    CreatedBy = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    UpdatedBy = table.Column<int>(type: "int", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeletedBy = table.Column<int>(type: "int", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    ClosureId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InvestorDetails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_InvestorDetails_AspNetUsers_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_InvestorDetails_AspNetUsers_DeletedBy",
-                        column: x => x.DeletedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_InvestorDetails_AspNetUsers_UpdatedBy",
-                        column: x => x.UpdatedBy,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_InvestorDetails_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InvestorDetails_Closures_ClosureId",
                         column: x => x.ClosureId,
@@ -814,24 +644,9 @@ namespace KPFS.Data.Migrations
                 column: "UpdatedBy");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Closures_CreatedBy",
-                table: "Closures",
-                column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Closures_DeletedBy",
-                table: "Closures",
-                column: "DeletedBy");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Closures_FundId",
                 table: "Closures",
                 column: "FundId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Closures_UpdatedBy",
-                table: "Closures",
-                column: "UpdatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Drawdowns_ClosureId",
@@ -839,24 +654,9 @@ namespace KPFS.Data.Migrations
                 column: "ClosureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Drawdowns_CreatedBy",
-                table: "Drawdowns",
-                column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Drawdowns_DeletedBy",
-                table: "Drawdowns",
-                column: "DeletedBy");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Drawdowns_FundId",
                 table: "Drawdowns",
                 column: "FundId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Drawdowns_UpdatedBy",
-                table: "Drawdowns",
-                column: "UpdatedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FundHouses_CreatedBy",
@@ -878,31 +678,6 @@ namespace KPFS.Data.Migrations
                 name: "IX_FundHouses_UpdatedBy",
                 table: "FundHouses",
                 column: "UpdatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FundInvestors_CreatedBy",
-                table: "FundInvestors",
-                column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FundInvestors_DeletedBy",
-                table: "FundInvestors",
-                column: "DeletedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FundInvestors_FundId",
-                table: "FundInvestors",
-                column: "FundId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FundInvestors_UpdatedBy",
-                table: "FundInvestors",
-                column: "UpdatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_FundInvestors_UserId",
-                table: "FundInvestors",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FundManagers_CreatedBy",
@@ -956,59 +731,9 @@ namespace KPFS.Data.Migrations
                 column: "ClosureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvestorDetails_CreatedBy",
-                table: "InvestorDetails",
-                column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InvestorDetails_DeletedBy",
-                table: "InvestorDetails",
-                column: "DeletedBy");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_InvestorDetails_FundId",
                 table: "InvestorDetails",
                 column: "FundId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InvestorDetails_UpdatedBy",
-                table: "InvestorDetails",
-                column: "UpdatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InvestorDetails_UserId",
-                table: "InvestorDetails",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PortfolioCompanies_CreatedBy",
-                table: "PortfolioCompanies",
-                column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PortfolioCompanies_DeletedBy",
-                table: "PortfolioCompanies",
-                column: "DeletedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PortfolioCompanies_UpdatedBy",
-                table: "PortfolioCompanies",
-                column: "UpdatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TemporaryInvestments_CreatedBy",
-                table: "TemporaryInvestments",
-                column: "CreatedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TemporaryInvestments_DeletedBy",
-                table: "TemporaryInvestments",
-                column: "DeletedBy");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TemporaryInvestments_UpdatedBy",
-                table: "TemporaryInvestments",
-                column: "UpdatedBy");
         }
 
         /// <inheritdoc />
@@ -1036,19 +761,16 @@ namespace KPFS.Data.Migrations
                 name: "Drawdowns");
 
             migrationBuilder.DropTable(
-                name: "FundInvestors");
-
-            migrationBuilder.DropTable(
                 name: "FundManagers");
 
             migrationBuilder.DropTable(
                 name: "InvestorDetails");
 
             migrationBuilder.DropTable(
-                name: "PortfolioCompanies");
+                name: "PortfolioCompanyMasters");
 
             migrationBuilder.DropTable(
-                name: "TemporaryInvestments");
+                name: "TemporaryInvestmentMasters");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

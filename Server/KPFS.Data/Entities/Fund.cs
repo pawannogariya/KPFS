@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KPFS.Data.Entities
 {
-    public class Fund : EntityBase<int>
+    public class Fund : EditEntityBase<int>
     {
         [Required]
         [StringLength(15)]

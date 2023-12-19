@@ -1,12 +1,13 @@
 ﻿using KPFS.Data.Entities;
 using KPFS.Data.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace KPFS.Data.Repositories
 {
     public class RoleRepository : RepositoryBase
     {
-        public RoleRepository(KpfsDbContext context) : base(context)
+        public RoleRepository(KpfsDbContext context, IConfiguration configuration) : base(context, configuration)
         {
         }
 

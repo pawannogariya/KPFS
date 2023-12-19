@@ -1,12 +1,13 @@
 ﻿using KPFS.Data.Entities;
 using KPFS.Data.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace KPFS.Data.Repositories
 {
-    public class FundHouseRepository : EntityRepositoryBase<FundHouse, int>
+    public class FundHouseRepository : EditEntityRepositoryBase<FundHouse, int>
     {
-        public FundHouseRepository(KpfsDbContext context) : base(context)
+        public FundHouseRepository(KpfsDbContext context, IConfiguration configuration) : base(context, configuration)
         {
         }
 
