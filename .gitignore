@@ -1,7 +1,7 @@
 **/bin/*
 **/obj/*
 .vs/
-Server/KPFS.Web/appsettings.Local.json
+Server/KPFS.Api/appsettings.Local.json
 .angular/cache
 Client/.angular/cache/*
 Client/node_modules/*
