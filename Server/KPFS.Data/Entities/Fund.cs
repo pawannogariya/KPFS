@@ -1,10 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using KPFS.Data.Entities.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using KPFS.Data.Entities.Base;
 
 namespace KPFS.Data.Entities
 {
-    public class Fund : EntityBase<int>
+    public class Fund : EditEntityBase<int>
     {
         [Required]
         [StringLength(15)]

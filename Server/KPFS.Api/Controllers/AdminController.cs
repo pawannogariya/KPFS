@@ -4,7 +4,6 @@ using KPFS.Business.Models;
 using KPFS.Business.Services.Interfaces;
 using KPFS.Data.Constants;
 using KPFS.Data.Entities;
-using KPFS.Data.Repositories;
 using KPFS.Web.AppSettings;
 using KPFS.Web.Helpers;
 using Microsoft.AspNetCore.Authorization;
@@ -36,7 +35,7 @@ namespace KPFS.Web.Controllers
             IOptions<ApplicationSettings> applicationSettings,
             IMasterDataService masterDataService) : base(userManager)
         {
-            _userManager = userManager;
+            this._userManager = userManager;
             _mapper = mapper;
             _roleManager = roleManager;
             _emailService = emailService;
@@ -44,13 +43,13 @@ namespace KPFS.Web.Controllers
             _masterDataService = masterDataService;
         }
 
-        [HttpGet("users")]
+        [HttpGet("user/list")]
         public async Task<ActionResult<ResponseDto<IEnumerable<UserDto>>>> GetAllUsers()
         {
             return BuildResponse(_mapper.Map<IEnumerable<UserDto>>(await _userManager.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).ToListAsync()));
         }
 
-        [HttpPost("update-user")]
+        [HttpPost("user/update")]
         public async Task<ActionResult<ResponseDto<bool>>> UpdateUser(UpdateUserDto userDto)
         {
             var user = await _userManager.FindByEmailAsync(userDto.Email);
@@ -95,7 +94,7 @@ namespace KPFS.Web.Controllers
             return BuildResponse(true);
         }
 
-        [HttpPost("add-user")]
+        [HttpPost("user/add")]
         public async Task<ActionResult<ResponseDto<UserDto>>> AddUser([FromBody] AddUserDto model)
         {
             if (model.Role == Roles.Admin)
@@ -157,10 +156,28 @@ namespace KPFS.Web.Controllers
             }
         }
 
-        [HttpPost("add-update-fund-house")]
+        [HttpPost("fund-house/add-update")]
         public async Task<ActionResult<ResponseDto<string>>> AddUpdateFundHouse([FromBody] FundHouseDto fundHouse)
         {
-            await _masterDataService.AddOrUpdateFundHouseAsync(fundHouse);
+            if(fundHouse.IsNew && await _masterDataService.DoesFundHouseExistAsync(fundHouse.ShortName))
+            {
+                return BuildFailureResponse<string>($"Fund house '{fundHouse.ShortName}' already exists.");
+            }
+
+            await _masterDataService.AddOrUpdateFundHouseAsync(fundHouse, CurrentUser);
+
+            return BuildResponse(string.Empty);
+        }
+
+        [HttpPost("fund/add-update")]
+        public async Task<ActionResult<ResponseDto<string>>> AddUpdateFund([FromBody] FundDto fund)
+        {
+            if (fund.IsNew && await _masterDataService.DoesFundExistAsync(fund.ShortName, fund.FundHouseId))
+            {
+                return BuildFailureResponse<string>($"Fund '{fund.ShortName}' already exists in the fund house.");
+            }
+
+            await _masterDataService.AddOrUpdateFundAsync(fund, CurrentUser);
 
             return BuildResponse(string.Empty);
         }

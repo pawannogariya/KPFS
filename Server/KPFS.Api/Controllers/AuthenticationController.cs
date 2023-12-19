@@ -168,18 +168,8 @@ namespace KPFS.Web.Controllers
 
             if (signResult.Succeeded)
             {
-                var authClaims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
                 var userRoles = await _userManager.GetRolesAsync(user);
-                foreach (var role in userRoles)
-                {
-                    authClaims.Add(new Claim(ClaimTypes.Role, role));
-                }
+                var authClaims = GetUserLoginClaimsAsync(user, userRoles);
 
                 var jwtToken = GetToken(authClaims);
 
@@ -192,7 +182,7 @@ namespace KPFS.Web.Controllers
             }
             else
             {
-                if(signResult.IsNotAllowed)
+                if (signResult.IsNotAllowed)
                 {
                     return BuildFailureResponse<LoginResponseDto>("User is not allowed to login!");
                 }
@@ -212,19 +202,8 @@ namespace KPFS.Web.Controllers
             {
                 if (user != null)
                 {
-                    var authClaims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, user.UserName),
-                        new Claim(ClaimTypes.Email, user.Email),
-                        new Claim(ClaimTypes.NameIdentifier, user.Id),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    };
-
                     var userRoles = await _userManager.GetRolesAsync(user);
-                    foreach (var role in userRoles)
-                    {
-                        authClaims.Add(new Claim(ClaimTypes.Role, role));
-                    }
+                    var authClaims = GetUserLoginClaimsAsync(user, userRoles);
 
                     var jwtToken = GetToken(authClaims);
 
@@ -236,7 +215,7 @@ namespace KPFS.Web.Controllers
                         Token = new JwtSecurityTokenHandler().WriteToken(jwtToken),
                         Expiration = jwtToken.ValidTo,
                         User = userDto
-                    }); 
+                    });
                 }
             }
 
@@ -256,6 +235,24 @@ namespace KPFS.Web.Controllers
                 );
 
             return token;
+        }
+
+        private List<Claim> GetUserLoginClaimsAsync(User user, IList<string> userRoles)
+        {
+            var authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
+
+            foreach (var role in userRoles)
+            {
+                authClaims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            return authClaims;
         }
     }
 }

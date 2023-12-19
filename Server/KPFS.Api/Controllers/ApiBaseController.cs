@@ -7,7 +7,7 @@ namespace KPFS.Web.Controllers
 {
     public class ApiBaseController : ControllerBase
     {
-        private readonly UserManager<User> userManager;
+        private readonly UserManager<User> _userManager;
         public User CurrentUser
         {
             get
@@ -17,12 +17,12 @@ namespace KPFS.Web.Controllers
                     return null;
                 }
 
-                return userManager.GetUserAsync(HttpContext.User).Result;
+                return _userManager.GetUserAsync(HttpContext.User).Result;
             }
         }
         public ApiBaseController(UserManager<User> userManager)
         {
-            this.userManager = userManager;
+            this._userManager = userManager;
         }
 
         public ActionResult<ResponseDto<TData>> BuildResponse<TData>(TData? data = default)

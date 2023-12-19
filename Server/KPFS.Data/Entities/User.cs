@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KPFS.Data.Entities
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<int>
     {
         [StringLength(100)]
         [Required]
@@ -15,7 +15,6 @@ namespace KPFS.Data.Entities
 
         [Required]
         public bool IsActive { get; set; }
-
 
         public virtual ICollection<UserRole> UserRoles { get; set; } 
     }

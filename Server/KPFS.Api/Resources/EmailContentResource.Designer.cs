@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KPFS.Web.Resources {
+namespace KPFS.Api.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace KPFS.Web.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KPFS.Web.Resources.EmailContentResource", typeof(EmailContentResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KPFS.Api.Resources.EmailContentResource", typeof(EmailContentResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

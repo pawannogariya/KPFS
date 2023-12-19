@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using KPFS.Data.Entities.Base;
+﻿using KPFS.Data.Entities.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace KPFS.Data.Entities
 {
-    public class FundHouse : EntityBase<int>
+    public class FundHouse : EditEntityBase<int>
     {
         [StringLength(50)]
         public string ShortName { get; set; }

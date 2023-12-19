@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KPFS.Data.Entities
 {
-    public class TemporaryInvestment : EntityBase<int>
+    public class PortfolioCompanyMaster : MasterEntityBase<int>
     {
         [Required]
         [StringLength(50)]
@@ -12,5 +12,10 @@ namespace KPFS.Data.Entities
         [Required]
         [StringLength(100)]
         public string Name { get; set; }
+
+
+        [Required]
+        [StringLength(100)]
+        public string SebiIndustrySector { get; set; }
     }
 }
