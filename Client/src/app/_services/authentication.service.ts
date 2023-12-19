@@ -53,7 +53,6 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        debugger;
         //return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
         return this.http.post<any>(`${environment.apiUrl}/authentication/login`, {email: username,password: password }, {observe:'response',withCredentials:true})
         //.subscribe(user=>{

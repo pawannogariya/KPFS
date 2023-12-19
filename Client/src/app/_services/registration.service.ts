@@ -14,7 +14,6 @@ export class RegistrationService {
     }
 
     registerUser(dto:IRegisterUserDto) {
-        debugger;
         return this.http.post<any>(`${environment.apiUrl}/authentication/register`, dto)
         //.subscribe(user=>{
             .pipe(map((response) => {
@@ -23,7 +22,6 @@ export class RegistrationService {
     }
     
     confirmEmail(email:string,token:string) {
-        debugger;
         return this.http.get<any>(`${environment.apiUrl}/authentication/confirm-email?token=${token}&email=${email}`)
         //.subscribe(user=>{
             .pipe(map((response) => {
@@ -32,7 +30,6 @@ export class RegistrationService {
     }
 
     addUser(dto:IAddUserDto) {
-        debugger;
         return this.http.post<any>(`${environment.apiUrl}/admin/add-user`, dto)
         //.subscribe(user=>{
             .pipe(map((response) => {

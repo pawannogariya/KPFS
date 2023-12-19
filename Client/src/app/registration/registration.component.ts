@@ -46,7 +46,6 @@ export class RegistrationComponent implements OnInit {
     }
   
     onSubmit() {
-      debugger
       //this.submitted = true;
       if (this.registerForm.valid) {
         //this.loading=true;
@@ -60,7 +59,6 @@ export class RegistrationComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: (response) => {
-                    debugger;
                     this.submitted = false;
                     this.loading=false;
                     if(response.isSuccess)

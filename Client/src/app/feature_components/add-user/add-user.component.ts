@@ -48,7 +48,6 @@ export class AddUserComponent implements OnInit {
     }
   
     onSubmit() {
-      debugger
       //this.submitted = true;
       if (this.addUserForm.valid) {
         //this.loading=true;
@@ -69,7 +68,6 @@ export class AddUserComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: (response) => {
-                    debugger;
                     this.submitted = false;
                     this.loading=false;
                     if(response.isSuccess){
