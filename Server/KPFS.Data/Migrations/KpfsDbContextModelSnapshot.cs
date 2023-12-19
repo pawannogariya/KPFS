@@ -88,26 +88,11 @@ namespace KPFS.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("FundId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -119,21 +104,9 @@ namespace KPFS.Data.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("varchar(15)");
 
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime(6)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("DeletedBy");
-
                     b.HasIndex("FundId");
-
-                    b.HasIndex("UpdatedBy");
 
                     b.ToTable("Closures");
                 });
@@ -147,23 +120,8 @@ namespace KPFS.Data.Migrations
                     b.Property<int>("ClosureId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<int>("FundId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Method")
                         .IsRequired()
@@ -188,23 +146,11 @@ namespace KPFS.Data.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("varchar(15)");
 
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime(6)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClosureId");
 
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("DeletedBy");
-
                     b.HasIndex("FundId");
-
-                    b.HasIndex("UpdatedBy");
 
                     b.ToTable("Drawdowns");
                 });
@@ -341,54 +287,6 @@ namespace KPFS.Data.Migrations
                     b.ToTable("FundHouses");
                 });
 
-            modelBuilder.Entity("KPFS.Data.Entities.FundInvestor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("FundId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("DeletedBy");
-
-                    b.HasIndex("FundId");
-
-                    b.HasIndex("UpdatedBy");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("FundInvestors");
-                });
-
             modelBuilder.Entity("KPFS.Data.Entities.FundManager", b =>
                 {
                     b.Property<int>("Id")
@@ -447,7 +345,7 @@ namespace KPFS.Data.Migrations
                     b.ToTable("FundManagers");
                 });
 
-            modelBuilder.Entity("KPFS.Data.Entities.InvestorDetail", b =>
+            modelBuilder.Entity("KPFS.Data.Entities.Investor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -505,18 +403,6 @@ namespace KPFS.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(250)
@@ -556,9 +442,6 @@ namespace KPFS.Data.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsCarryClass")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("KpfsIncompleteRecordRemark")
@@ -637,51 +520,22 @@ namespace KPFS.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClosureId");
 
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("DeletedBy");
-
                     b.HasIndex("FundId");
-
-                    b.HasIndex("UpdatedBy");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("InvestorDetails");
                 });
 
-            modelBuilder.Entity("KPFS.Data.Entities.PortfolioCompany", b =>
+            modelBuilder.Entity("KPFS.Data.Entities.PortfolioCompanyMaster", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
@@ -699,21 +553,9 @@ namespace KPFS.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime(6)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("DeletedBy");
-
-                    b.HasIndex("UpdatedBy");
-
-                    b.ToTable("PortfolioCompanies");
+                    b.ToTable("PortfolioCompanyMasters");
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.Role", b =>
@@ -751,25 +593,13 @@ namespace KPFS.Data.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("KPFS.Data.Entities.TemporaryInvestment", b =>
+            modelBuilder.Entity("KPFS.Data.Entities.TemporaryInvestmentMaster", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int?>("DeletedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Name")
@@ -782,21 +612,9 @@ namespace KPFS.Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedOn")
-                        .HasColumnType("datetime(6)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedBy");
-
-                    b.HasIndex("DeletedBy");
-
-                    b.HasIndex("UpdatedBy");
-
-                    b.ToTable("TemporaryInvestments");
+                    b.ToTable("TemporaryInvestmentMasters");
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.User", b =>
@@ -1009,33 +827,13 @@ namespace KPFS.Data.Migrations
 
             modelBuilder.Entity("KPFS.Data.Entities.Closure", b =>
                 {
-                    b.HasOne("KPFS.Data.Entities.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KPFS.Data.Entities.User", "DeletedByUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedBy");
-
                     b.HasOne("KPFS.Data.Entities.Fund", "Fund")
                         .WithMany()
                         .HasForeignKey("FundId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KPFS.Data.Entities.User", "UpdateByUser")
-                        .WithMany()
-                        .HasForeignKey("UpdatedBy");
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("DeletedByUser");
-
                     b.Navigation("Fund");
-
-                    b.Navigation("UpdateByUser");
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.Drawdown", b =>
@@ -1046,35 +844,15 @@ namespace KPFS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KPFS.Data.Entities.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KPFS.Data.Entities.User", "DeletedByUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedBy");
-
                     b.HasOne("KPFS.Data.Entities.Fund", "Fund")
                         .WithMany()
                         .HasForeignKey("FundId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KPFS.Data.Entities.User", "UpdateByUser")
-                        .WithMany()
-                        .HasForeignKey("UpdatedBy");
-
                     b.Navigation("Closure");
 
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("DeletedByUser");
-
                     b.Navigation("Fund");
-
-                    b.Navigation("UpdateByUser");
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.Fund", b =>
@@ -1131,45 +909,6 @@ namespace KPFS.Data.Migrations
                     b.Navigation("UpdateByUser");
                 });
 
-            modelBuilder.Entity("KPFS.Data.Entities.FundInvestor", b =>
-                {
-                    b.HasOne("KPFS.Data.Entities.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KPFS.Data.Entities.User", "DeletedByUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedBy");
-
-                    b.HasOne("KPFS.Data.Entities.Fund", "Fund")
-                        .WithMany()
-                        .HasForeignKey("FundId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KPFS.Data.Entities.User", "UpdateByUser")
-                        .WithMany()
-                        .HasForeignKey("UpdatedBy");
-
-                    b.HasOne("KPFS.Data.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("DeletedByUser");
-
-                    b.Navigation("Fund");
-
-                    b.Navigation("UpdateByUser");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("KPFS.Data.Entities.FundManager", b =>
                 {
                     b.HasOne("KPFS.Data.Entities.User", "CreatedByUser")
@@ -1201,7 +940,7 @@ namespace KPFS.Data.Migrations
                     b.Navigation("UpdateByUser");
                 });
 
-            modelBuilder.Entity("KPFS.Data.Entities.InvestorDetail", b =>
+            modelBuilder.Entity("KPFS.Data.Entities.Investor", b =>
                 {
                     b.HasOne("KPFS.Data.Entities.Closure", "Closure")
                         .WithMany()
@@ -1209,89 +948,15 @@ namespace KPFS.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KPFS.Data.Entities.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KPFS.Data.Entities.User", "DeletedByUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedBy");
-
                     b.HasOne("KPFS.Data.Entities.Fund", "Fund")
                         .WithMany()
                         .HasForeignKey("FundId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KPFS.Data.Entities.User", "UpdateByUser")
-                        .WithMany()
-                        .HasForeignKey("UpdatedBy");
-
-                    b.HasOne("KPFS.Data.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Closure");
 
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("DeletedByUser");
-
                     b.Navigation("Fund");
-
-                    b.Navigation("UpdateByUser");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("KPFS.Data.Entities.PortfolioCompany", b =>
-                {
-                    b.HasOne("KPFS.Data.Entities.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KPFS.Data.Entities.User", "DeletedByUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedBy");
-
-                    b.HasOne("KPFS.Data.Entities.User", "UpdateByUser")
-                        .WithMany()
-                        .HasForeignKey("UpdatedBy");
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("DeletedByUser");
-
-                    b.Navigation("UpdateByUser");
-                });
-
-            modelBuilder.Entity("KPFS.Data.Entities.TemporaryInvestment", b =>
-                {
-                    b.HasOne("KPFS.Data.Entities.User", "CreatedByUser")
-                        .WithMany()
-                        .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KPFS.Data.Entities.User", "DeletedByUser")
-                        .WithMany()
-                        .HasForeignKey("DeletedBy");
-
-                    b.HasOne("KPFS.Data.Entities.User", "UpdateByUser")
-                        .WithMany()
-                        .HasForeignKey("UpdatedBy");
-
-                    b.Navigation("CreatedByUser");
-
-                    b.Navigation("DeletedByUser");
-
-                    b.Navigation("UpdateByUser");
                 });
 
             modelBuilder.Entity("KPFS.Data.Entities.UserRole", b =>

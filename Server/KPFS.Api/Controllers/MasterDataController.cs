@@ -14,7 +14,7 @@ namespace KPFS.Web.Controllers
     [Authorize]
     public class MasterDataController : ApiBaseController
     {
-        private readonly IMasterDataService masterDataService;
+        private readonly IMasterDataService _masterDataService;
         private readonly MasterData _masterData;
 
         public MasterDataController(
@@ -22,38 +22,38 @@ namespace KPFS.Web.Controllers
             UserManager<User> userManager,
             MasterData masterData) : base(userManager)
         {
-            this.masterDataService = masterDataService;
+            this._masterDataService = masterDataService;
             _masterData = masterData;
         }
 
-        [HttpGet("fund-houses")]
+        [HttpGet("fund-house/list")]
         public async Task<ActionResult<ResponseDto<IEnumerable<FundHouseDto>>>> GetAllFundHouses()
         {
-            return BuildResponse<IEnumerable<FundHouseDto>>(await masterDataService.GetAllFundHousesAsync());
+            return BuildResponse<IEnumerable<FundHouseDto>>(await _masterDataService.GetAllFundHousesAsync());
         }
 
-        [HttpGet("funds")]
+        [HttpGet("fund/list")]
         public async Task<ActionResult<ResponseDto<IEnumerable<FundDto>>>> GetAllFunds(int? fundHouseId)
         {
-            return BuildResponse<IEnumerable<FundDto>>(await masterDataService.GetFundsAsync(fundHouseId));
+            return BuildResponse<IEnumerable<FundDto>>(await _masterDataService.GetFundsAsync(fundHouseId));
         }
 
-        [HttpGet("bank-accounts")]
+        [HttpGet("bank-account/list")]
         public async Task<ActionResult<ResponseDto<IEnumerable<BankAccountDto>>>> GetBankAccounts(int? fundId)
         {
-            return BuildResponse<IEnumerable<BankAccountDto>>(await masterDataService.GetBankAccountsAsync(fundId));
+            return BuildResponse<IEnumerable<BankAccountDto>>(await _masterDataService.GetBankAccountsAsync(fundId));
         }
 
-        [HttpGet("fund-managers")]
+        [HttpGet("fund-manager/list")]
         public async Task<ActionResult<ResponseDto<IEnumerable<FundManagerDto>>>> GetFundManagers(int fundId)
         {
-            return BuildResponse<IEnumerable<FundManagerDto>>(await masterDataService.GetFundManagersAsync(fundId));
+            return BuildResponse<IEnumerable<FundManagerDto>>(await _masterDataService.GetFundManagersAsync(fundId));
         }
 
-        [HttpGet("roles")]
+        [HttpGet("role/list")]
         public async Task<ActionResult<ResponseDto<IEnumerable<RoleDto>>>> GetAllRoles()
         {
-            return BuildResponse<IEnumerable<RoleDto>>(await masterDataService.GetAllRolesAsync());
+            return BuildResponse<IEnumerable<RoleDto>>(await _masterDataService.GetAllRolesAsync());
         }
 
         [HttpGet("data")]

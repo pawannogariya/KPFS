@@ -1,5 +1,5 @@
-﻿using KPFS.Web.Dtos;
-using KPFS.Web.Resources;
+﻿using KPFS.Api.Resources;
+using KPFS.Web.Dtos;
 using RazorEngineCore;
 
 namespace KPFS.Web.Helpers

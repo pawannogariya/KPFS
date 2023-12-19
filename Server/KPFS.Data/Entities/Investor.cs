@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KPFS.Data.Entities
 {
-    public class InvestorDetail : EntityBase<int>
+    public class Investor : EntityBase<int>
     {
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -142,16 +142,10 @@ namespace KPFS.Data.Entities
         [Required]
         public int ClosureId { get; set; }
 
-        [Required]
-        public int UserId { get; set; }
-
         [ForeignKey(nameof(FundId))]
         public virtual Fund Fund { get; set; }
 
         [ForeignKey(nameof(ClosureId))]
         public virtual Closure Closure { get; set; }
-
-        [ForeignKey(nameof(UserId))]
-        public virtual User User { get; set; }
     }
 }

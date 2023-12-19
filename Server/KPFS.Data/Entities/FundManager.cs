@@ -4,7 +4,7 @@ using KPFS.Data.Entities.Base;
 
 namespace KPFS.Data.Entities
 {
-    public class FundManager : EntityBase<int>
+    public class FundManager : EditEntityBase<int>
     {
         [Required]
         [StringLength(100)]

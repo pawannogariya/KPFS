@@ -14,14 +14,12 @@ namespace KPFS.Data
         public DbSet<FundHouse> FundHouses { get; set; }
         public DbSet<Fund> Funds { get; set; }
         public DbSet<BankAccount> BankAccounts { get; set; }
-        public DbSet<InvestorDetail> InvestorDetails { get; set; }
+        public DbSet<Investor> InvestorDetails { get; set; }
         public DbSet<Closure> Closures { get; set; }
         public DbSet<FundManager> FundManagers { get; set; }
         public DbSet<Drawdown> Drawdowns { get; set; }
-        public DbSet<TemporaryInvestment> TemporaryInvestments { get; set; }
-        public DbSet<PortfolioCompany> PortfolioCompanies { get; set; }
-        public DbSet<FundInvestor> FundInvestors { get; set; }
-
+        public DbSet<TemporaryInvestmentMaster> TemporaryInvestmentMasters { get; set; }
+        public DbSet<PortfolioCompanyMaster> PortfolioCompanyMasters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

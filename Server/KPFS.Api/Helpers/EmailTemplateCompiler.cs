@@ -1,4 +1,4 @@
-﻿using KPFS.Web.Resources;
+﻿using KPFS.Api.Resources;
 using RazorEngineCore;
 
 namespace KPFS.Web.Helpers
