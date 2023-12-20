@@ -30,7 +30,7 @@ export class RegistrationService {
     }
 
     addUser(dto:IAddUserDto) {
-        return this.http.post<any>(`${environment.apiUrl}/admin/add-user`, dto)
+        return this.http.post<any>(`${environment.apiUrl}/admin/user/add`, dto)
         //.subscribe(user=>{
             .pipe(map((response) => {
                 return response;
