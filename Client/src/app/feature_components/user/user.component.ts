@@ -80,12 +80,14 @@ export class UserComponent implements OnInit, AfterViewInit {
   simpleDialog: MatDialogRef<AddUserComponent>;
 
   addUserDialog() {
-
     let dialogRef = this.dialogModel.open(AddUserComponent, {
+      disableClose: false,
       //panelClass: 'fullscreen-dialog',
         width: '50%',
     });
-    
+    dialogRef.backdropClick().subscribe(_ => {
+      dialogRef.close();
+    })
     // When user close the dialog
     dialogRef.afterClosed().subscribe(result => {
       console.log('You have closed the dialog');

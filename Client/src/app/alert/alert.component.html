@@ -1,4 +1,18 @@
-<div class="alert-custom-content-wrap alert-custom alert-custom-box">
+<h2 matDialogTitle>{{title}}</h2>
+<mat-dialog-content>
+  <p>{{message}}</p>
+  <!-- <p>Try clicking outside the dialog as well as pressing <kbd>esc</kbd>. You should see the following behaviours occur:</p>
+  <ul>
+    <li>The dialog can be closed by clicking on the backdrop or by the "Dismiss" button.</li>
+    <li>The dialog cannot be closed by the <kbd>esc</kbd> key.</li>
+  </ul> -->
+  <!-- <mat-checkbox (change)="checkboxChange($event)">Toggle <code>disableClose</code></mat-checkbox> -->
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button color="primary" matDialogClose>Ok</button>
+</mat-dialog-actions>
+
+<!-- <div class="alert-custom-content-wrap alert-custom alert-custom-box">
   <div>
     <div class="alert-custom-header">
       <h2 class="alert-custom-header-text">{{title}}</h2>
@@ -32,4 +46,4 @@
         </div>
     </div>
   </div>
-</div>
+</div> -->

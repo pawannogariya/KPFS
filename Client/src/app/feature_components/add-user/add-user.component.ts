@@ -1,6 +1,7 @@
 ﻿import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AlertsService } from '@app/_services/alerts.service';
 import { CustomvalidationService } from '@app/_services/custom-validation.service';
 import { IAddUserDto } from '@app/_services/dto/registration.dto';
 import { RegistrationService } from '@app/_services/registration.service';
@@ -24,9 +25,15 @@ export class AddUserComponent implements OnInit {
       public dialogRef: MatDialogRef<AddUserComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
       private fb: FormBuilder,
+      private alertsService:AlertsService,
       private customValidator: CustomvalidationService,
       private registrationService: RegistrationService
-    ) { }
+    ) {
+      dialogRef.disableClose = false;
+      dialogRef.backdropClick().subscribe(_ => {
+      dialogRef.close();
+    })
+     }
   
     ngOnInit() {
       this.addUserForm = this.fb.group({
@@ -63,7 +70,7 @@ export class AddUserComponent implements OnInit {
         // "firstName": "string",
         // "lastName": "string",
         // "role": "string"
-
+        this.loading = true;
         this.registrationService.addUser(this.addUserDto)
             .pipe(first())
             .subscribe({
@@ -71,11 +78,11 @@ export class AddUserComponent implements OnInit {
                     this.submitted = false;
                     this.loading=false;
                     if(response.isSuccess){
-                      alert("User added and confirmation link has been sent.");
+                      this.alertsService.showInfo("User added and confirmation link has been sent.","Message","");
                       this.dialogRef.close(true);
                     }
                     else
-                      alert(response.message);
+                    this.alertsService.showInfo(response.message);
                 },
                 error: error => {
                   this.loading=false;
