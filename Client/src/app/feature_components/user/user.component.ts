@@ -28,63 +28,7 @@ export class UserComponent implements OnInit, AfterViewInit {
   pdialogConfig: MatDialogConfig;
   dialogWithForm: MatDialogRef<AddUserComponent>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  // usersData: IUsers[] = [
-  //   {
-  //     "id": "21e83156-e8fb-4e54-b5d7-89fad9d6597e",
-  //     "email": "badi4net3@gmail.com",
-  //     "firstName": "User",
-  //     "lastName": "User",
-  //     "isActive": true,
-  //     "role": "User",
-  //     "emailConfirmed": false
-  //   },
-  //   {
-  //       "id": "5c1d97d9-9baa-472a-8eec-2ff9271e12bd",
-  //       "email": "badi4net2@gmail.com",
-  //       "firstName": "Sarfaraz",
-  //       "lastName": "Badi",
-  //       "isActive": true,
-  //       "role": "Reviewer",
-  //       "emailConfirmed": true
-  //   },
-  //   {
-  //     "id": "668f96df-8e03-11ee-b507-e86a64b47aae",
-  //     "email": "badi4net@gmail.com",
-  //     "firstName": "Super",
-  //     "lastName": "Admin",
-  //     "isActive": true,
-  //     "role": "Admin",
-  //     "emailConfirmed": true
-  //   },
-  //   {
-  //       "id": "8b322f95-3fb2-4d36-ad2d-aa3dbcbd1d32",
-  //       "email": "badi4net1@gmail.com",
-  //       "firstName": "Sarfaraz",
-  //       "lastName": "Badi",
-  //       "isActive": true,
-  //       "role": "User",
-  //       "emailConfirmed": false
-  //   },
-  //   {
-  //     "id": "668f96df-8e03-11ee-b507-e86a64b47aae",
-  //     "email": "badi4net@gmail.com",
-  //     "firstName": "Super",
-  //     "lastName": "Admin",
-  //     "isActive": true,
-  //     "role": "Admin",
-  //     "emailConfirmed": true
-  //   },
-  //   {
-  //       "id": "8b322f95-3fb2-4d36-ad2d-aa3dbcbd1d32",
-  //       "email": "badi4net1@gmail.com",
-  //       "firstName": "Sarfaraz",
-  //       "lastName": "Badi",
-  //       "isActive": true,
-  //       "role": "User",
-  //       "emailConfirmed": false
-  //   }
-  // ]
- 
+  
   constructor(private dialogModel: MatDialog,
     private clipboard: Clipboard,
     //public readonly alertsService: AlertsService,
@@ -108,46 +52,9 @@ export class UserComponent implements OnInit, AfterViewInit {
   }
 
   public async loadUsers() {
-    debugger;
-  //   const userresult =[
-  //     {
-  //         "id": "21e83156-e8fb-4e54-b5d7-89fad9d6597e",
-  //         "email": "badi4net3@gmail.com",
-  //         "firstName": "User",
-  //         "lastName": "User",
-  //         "isActive": true,
-  //         "role": "User",
-  //         "emailConfirmed": false
-  //     },
-  //     {
-  //         "id": "5c1d97d9-9baa-472a-8eec-2ff9271e12bd",
-  //         "email": "badi4net2@gmail.com",
-  //         "firstName": "Sarfaraz",
-  //         "lastName": "Badi",
-  //         "isActive": true,
-  //         "role": "Reviewer",
-  //         "emailConfirmed": true
-  //     },
-  //     {
-  //         "id": "668f96df-8e03-11ee-b507-e86a64b47aae",
-  //         "email": "badi4net@gmail.com",
-  //         "firstName": "Super",
-  //         "lastName": "Admin",
-  //         "isActive": true,
-  //         "role": "Admin",
-  //         "emailConfirmed": true
-  //     },
-  //     {
-  //         "id": "8b322f95-3fb2-4d36-ad2d-aa3dbcbd1d32",
-  //         "email": "badi4net1@gmail.com",
-  //         "firstName": "Sarfaraz",
-  //         "lastName": "Badi",
-  //         "isActive": true,
-  //         "role": "User",
-  //         "emailConfirmed": false
-  //     }
-  // ]
-    this.userData = this.masterService.getAllUsers().then(response => {
+    // this.userresult = new MatTableDataSource(this.getStaticUserData());
+    // return;
+      this.userData = this.masterService.getAllUsers().then(response => {
       if (response.isSuccess) {
         //this.userresult = response.data;
         this.userresult = new MatTableDataSource(response.data);
@@ -181,7 +88,6 @@ export class UserComponent implements OnInit, AfterViewInit {
     
     // When user close the dialog
     dialogRef.afterClosed().subscribe(result => {
-      debugger;
       console.log('You have closed the dialog');
       if (result) {
         this.loadUsers();
@@ -197,6 +103,67 @@ export class UserComponent implements OnInit, AfterViewInit {
       if (this.userresult.paginator) {
         this.userresult.paginator.firstPage();
       }
+    }
+
+    getStaticUserData()
+    {
+      return [
+    {
+      "id": "21e83156-e8fb-4e54-b5d7-89fad9d6597e",
+      "email": "badi4net3@gmail.com",
+      "firstName": "User",
+      "lastName": "User",
+      "isActive": true,
+      "role": "User",
+      "emailConfirmed": false
+    },
+    {
+        "id": "5c1d97d9-9baa-472a-8eec-2ff9271e12bd",
+        "email": "badi4net2@gmail.com",
+        "firstName": "Sarfaraz",
+        "lastName": "Badi",
+        "isActive": true,
+        "role": "Reviewer",
+        "emailConfirmed": true
+    },
+    {
+      "id": "668f96df-8e03-11ee-b507-e86a64b47aae",
+      "email": "badi4net@gmail.com",
+      "firstName": "Super",
+      "lastName": "Admin",
+      "isActive": true,
+      "role": "Admin",
+      "emailConfirmed": true
+    },
+    {
+        "id": "8b322f95-3fb2-4d36-ad2d-aa3dbcbd1d32",
+        "email": "badi4net1@gmail.com",
+        "firstName": "Sarfaraz",
+        "lastName": "Badi",
+        "isActive": true,
+        "role": "User",
+        "emailConfirmed": false
+    },
+    {
+      "id": "668f96df-8e03-11ee-b507-e86a64b47aae",
+      "email": "badi4net@gmail.com",
+      "firstName": "Super",
+      "lastName": "Admin",
+      "isActive": true,
+      "role": "Admin",
+      "emailConfirmed": true
+    },
+    {
+        "id": "8b322f95-3fb2-4d36-ad2d-aa3dbcbd1d32",
+        "email": "badi4net1@gmail.com",
+        "firstName": "Sarfaraz",
+        "lastName": "Badi",
+        "isActive": true,
+        "role": "User",
+        "emailConfirmed": false
+    }
+  ]
+ 
     }
 
   }

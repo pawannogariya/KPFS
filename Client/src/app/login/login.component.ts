@@ -53,7 +53,6 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.valid) {
             var response:any={};// this.authenticationService.loginOffline();
             response.isSuccess=false;
-            debugger;
             if(response.isSuccess && response.data)
             {
                 localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -70,7 +69,6 @@ export class LoginComponent implements OnInit {
                 //.pipe(first())
                 .subscribe({
                     next: (response) => {
-                        debugger;
                         this.submitted = false;
                         this.loading = false;
                         if(response.isSuccess){
@@ -127,7 +125,7 @@ export class LoginComponent implements OnInit {
                     else
                     {
                         //Need to display message
-                        alert(response.message);
+                        this.error=response.message;
                     }
                 },
                 error: error => {

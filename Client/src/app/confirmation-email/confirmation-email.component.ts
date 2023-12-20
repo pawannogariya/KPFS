@@ -24,7 +24,6 @@ export class ConfirmationEmailComponent implements OnInit {
     }
   
     confirmEmail() {
-      debugger
       //this.submitted = true;
       if (this.token && this.email) {
         //this.loading=true;
@@ -32,7 +31,6 @@ export class ConfirmationEmailComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: (response) => {
-                    debugger;
                     if(response.isSuccess){
                       this.router.navigate(['/login']);
                       alert("Your email has been confirmed.");

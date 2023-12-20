@@ -16,7 +16,7 @@ export class MasterService {
     // }
 
     public async getAllUsers(): Promise<IResponse<any>> {
-        return await this.apiService.get<IResponse<any>>("/admin/users");
+        return await this.apiService.get<IResponse<any>>("/admin/user/list");
     }
 
     getById(id: number) {
