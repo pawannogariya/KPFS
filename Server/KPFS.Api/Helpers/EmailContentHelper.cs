@@ -8,7 +8,7 @@ namespace KPFS.Web.Helpers
     {
         public static async Task<EmailMessageContentDto> GetUserLoginOptEmailContentAsync(string otp)
         {
-            return await GetEmailContentInternalAsync(nameof(EmailContentResource.LoginOtpEmailBody), new
+            return await GetEmailContentInternalAsync(EmailContentResource.LoginOtpEmailSubject, nameof(EmailContentResource.LoginOtpEmailBody), new
             {
                 LoginOtp = otp
             });
@@ -16,20 +16,20 @@ namespace KPFS.Web.Helpers
 
         public static async Task<EmailMessageContentDto> GetUserEmailConfirmationEmailContentAsync(string confirmEmailLink)
         {
-            return await GetEmailContentInternalAsync(nameof(EmailContentResource.UserEmailConfirmationEmailBody), new
+            return await GetEmailContentInternalAsync(EmailContentResource.UserEmailConfirmationEmailSubject, nameof(EmailContentResource.UserEmailConfirmationEmailBody), new
             {
                 ConfirmEmailLink = confirmEmailLink
             });
         }
 
-        private static async Task<EmailMessageContentDto> GetEmailContentInternalAsync(string resourceKey, object model)
+        private static async Task<EmailMessageContentDto> GetEmailContentInternalAsync(string emailSubject, string resourceKey, object model)
         {
             IRazorEngineCompiledTemplate compiledTemplate = await RazorEngineCompiledTemplate.LoadFromFileAsync(GetCompiledTemplateFilePath(resourceKey));
             string result = compiledTemplate.Run(model);
 
             return new EmailMessageContentDto()
             {
-                Subject = EmailContentResource.UserEmailConfirmationEmailSubject,
+                Subject = emailSubject,
                 Body = result
             };
         }

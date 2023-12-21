@@ -121,7 +121,7 @@
     <value>&lt;p&gt;Hi,&lt;/p&gt;
 
 &lt;p&gt;Please use @Model.LoginOtp to login into KPFS Experience App.
-This OTP is valid for 5 minutes.&lt;/p&gt;
+This OTP is valid for 3 minutes.&lt;/p&gt;
 
 &lt;p&gt;Thanks,&lt;br/&gt;
 KPFS EXP&lt;/p&gt;</value>

@@ -132,7 +132,7 @@ namespace KPFS.Web.Controllers
 
                         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                        var confirmationLink = $"{_applicationSettings.BaseAppPath}/confirm-email?token={token}&email={user.Email}";
+                        var confirmationLink = $"{_applicationSettings.BaseAppPath}/confirm-email/{token}/{user.Email}";
 
                         var messageContent = await EmailContentHelper.GetUserEmailConfirmationEmailContentAsync(confirmationLink);
 
