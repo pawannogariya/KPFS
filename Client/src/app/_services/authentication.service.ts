@@ -5,9 +5,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { environment } from '@environments/environment';
-import { Role, User } from '@app/_models';
+import { Role, User, UserWithToken } from '@app/_models';
 import { ApiService } from './api.service';
-import { IUsers } from '@app/feature_components/user';
+import { IResponse } from './dto/response.dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -53,8 +53,8 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        //return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
-        return this.http.post<any>(`${environment.apiUrl}/authentication/login`, {email: username,password: password }, {observe:'response',withCredentials:true})
+        //return this.http.post<IResponse<UserWithToken>>(`${environment.apiUrl}/users/authenticate`, { username, password })
+        return this.http.post<IResponse<UserWithToken>>(`${environment.apiUrl}/authentication/login`, {email: username,password: password }, {observe:'response',withCredentials:true})
         //.subscribe(user=>{
             .pipe(map((httpResponse) => {
                 //store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -71,8 +71,8 @@ export class AuthenticationService {
     }
 
     login2Factor(email: string, code: string) {
-        //return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
-        return this.http.post<any>(`${environment.apiUrl}/authentication/login-2fa?code=${code}`, {}, {observe:'response',withCredentials:true})
+        //return this.http.post<IResponse<UserWithToken>>(`${environment.apiUrl}/users/authenticate`, { username, password })
+        return this.http.post<IResponse<UserWithToken>>(`${environment.apiUrl}/authentication/login-2fa?code=${code}`, {}, {observe:'response',withCredentials:true})
         .pipe(map(httpResponse => {
             var response = httpResponse.body;
             // store user details and jwt token in local storage to keep user logged in between page refreshes

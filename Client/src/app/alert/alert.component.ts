@@ -8,8 +8,8 @@ import { MatDialogRef as MatDialogRef, MAT_DIALOG_DATA } from '@angular/material
 })
 export class AlertComponent implements OnInit {
   message: string;
-  title: string = 'Alert';
-  status: string;
+  title: string = 'Message';
+  status: string='';
 
 
   public constructor(

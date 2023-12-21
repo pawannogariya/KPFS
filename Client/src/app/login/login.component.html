@@ -82,6 +82,9 @@
           <mat-card-title class="text-center login100-form-title"
             >Two Step Verification</mat-card-title
           >
+          <div *ngIf="successMessage" class="alert alert-success mt-3 mb-0">
+            {{ successMessage }}
+          </div>
           <mat-card-actions>
             <form [formGroup]="codeForm" (ngSubmit)="onCodeSubmit()">
               <div class="mt-3">
@@ -92,6 +95,8 @@
                     matInput
                     formControlName="code"
                     placeholder="Code"
+                    maxlength="6"
+                    minlength="6"
                   />
                   <mat-icon matPrefix>lock</mat-icon>
                   <mat-error *ngIf="submitted || c.code.errors?.required">

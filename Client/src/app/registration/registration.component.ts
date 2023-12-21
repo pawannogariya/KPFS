@@ -1,6 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertsService } from '@app/_services/alerts.service';
 import { CustomvalidationService } from '@app/_services/custom-validation.service';
 import { IRegisterUserDto } from '@app/_services/dto/registration.dto';
 import { RegistrationService } from '@app/_services/registration.service';
@@ -21,6 +22,7 @@ export class RegistrationComponent implements OnInit {
 
     constructor(
       private fb: FormBuilder,
+      private alertsService:AlertsService,
       private customValidator: CustomvalidationService,
       private route: ActivatedRoute,
         private router: Router,
@@ -62,9 +64,9 @@ export class RegistrationComponent implements OnInit {
                     this.submitted = false;
                     this.loading=false;
                     if(response.isSuccess)
-                      alert("Registration completed and confirmation link has been sent.");
+                    this.alertsService.showInfo("Registration completed and confirmation link has been sent.");
                     else
-                      alert(response.message);
+                    this.alertsService.showInfo(response.message);
                 },
                 error: error => {
                   this.loading=false;

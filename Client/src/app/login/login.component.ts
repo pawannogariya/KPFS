@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '@app/_services';
+import { AlertsService } from '@app/_services/alerts.service';
 
 @Component({
     selector: 'app-login',
@@ -16,13 +17,15 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
     isLogin=false;
-    error = '';
+    error = null;
+    successMessage=null
     passwordField = true;
 
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
+        private alertsService:AlertsService,
         private authenticationService: AuthenticationService
     ) {
         // redirect to home if already logged in
@@ -49,6 +52,8 @@ export class LoginComponent implements OnInit {
     get c() { return this.codeForm.controls; }
 
     onSubmit() {
+        this.error=null;
+        this.successMessage =null;
         // stop here if form is invalid
         if (this.loginForm.valid) {
             var response:any={};// this.authenticationService.loginOffline();
@@ -82,6 +87,7 @@ export class LoginComponent implements OnInit {
                                 const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
                                 this.router.navigateByUrl(returnUrl);
                             }
+                            this.successMessage = "OTP has been sent to your email for the two factor authentication.";
                         }
                         else
                         {
@@ -99,6 +105,8 @@ export class LoginComponent implements OnInit {
     }
 
     onCodeSubmit() {
+        this.error = null;
+        this.successMessage =null;
         this.submitted = true;
 
         // stop here if form is invalid

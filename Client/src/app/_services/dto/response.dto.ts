@@ -1,6 +1,7 @@
 import { IDto } from './base.dto';
 
-export interface IResponse<TData> extends IDto {
+export interface IResponse<TData> extends IDto
+{
   data: TData;
   dataTotalCount: number;
   isSuccess: boolean;

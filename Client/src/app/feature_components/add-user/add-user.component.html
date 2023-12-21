@@ -78,8 +78,10 @@
                             </button>
                         </div> -->
                         <div class="my-3 text-center">
-                            <button type="submit" mat-raised-button color="primary"
-                            class="me-3 w-40 rounded-pill btn-ht">Submit</button>
+                            <button [disabled]="loading" type="submit" mat-raised-button color="primary"
+                            class="me-3 w-40 rounded-pill btn-ht">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                            Submit</button>
                             <button type="button" mat-raised-button color="warn"
                             class="me-3 w-40 rounded-pill btn-ht"
                              (click)="onNoClick()">Close</button>
