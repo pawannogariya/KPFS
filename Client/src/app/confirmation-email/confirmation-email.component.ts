@@ -45,7 +45,7 @@ export class ConfirmationEmailComponent implements OnInit {
                     }
                 },
                 error: error => {
-                  error=error.message;
+                  this.alertsService.showInfo(error,'Error');
                 }
             });
       }
