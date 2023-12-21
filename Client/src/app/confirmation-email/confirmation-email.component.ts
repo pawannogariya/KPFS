@@ -26,6 +26,9 @@ export class ConfirmationEmailComponent implements OnInit {
     }
   
     confirmEmail() {
+      // this.alertsService.showInfo("Congratulations! Your email has been confirmed successfully, please login to continue!");
+      // this.router.navigate(['/login']);
+
       //this.submitted = true;
       if (this.token && this.email) {
         //this.loading=true;

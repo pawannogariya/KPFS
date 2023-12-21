@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
 import { IAddUserDto, IRegisterUserDto } from './dto/registration.dto';
+import { IResponse } from './dto/response.dto';
 
 @Injectable({ providedIn: 'root' })
 export class RegistrationService {
@@ -14,7 +15,7 @@ export class RegistrationService {
     }
 
     registerUser(dto:IRegisterUserDto) {
-        return this.http.post<any>(`${environment.apiUrl}/authentication/register`, dto)
+        return this.http.post<IResponse<boolean>>(`${environment.apiUrl}/authentication/register`, dto)
         //.subscribe(user=>{
             .pipe(map((response) => {
                 return response;
@@ -22,7 +23,7 @@ export class RegistrationService {
     }
     
     confirmEmail(email:string,token:string) {
-        return this.http.get<any>(`${environment.apiUrl}/authentication/confirm-email?token=${token}&email=${email}`)
+        return this.http.get<IResponse<boolean>>(`${environment.apiUrl}/authentication/confirm-email?token=${token}&email=${email}`)
         //.subscribe(user=>{
             .pipe(map((response) => {
                 return response;
@@ -30,7 +31,7 @@ export class RegistrationService {
     }
 
     addUser(dto:IAddUserDto) {
-        return this.http.post<any>(`${environment.apiUrl}/admin/user/add`, dto)
+        return this.http.post<IResponse<boolean>>(`${environment.apiUrl}/admin/user/add`, dto)
         //.subscribe(user=>{
             .pipe(map((response) => {
                 return response;

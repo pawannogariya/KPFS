@@ -7,6 +7,8 @@ import { DataDtoRange, DataDtoFilter } from '@app/_services/dto/response.dto';
 import { MasterService } from '@app/_services/master.service';
 import { AddUserComponent } from '../add-user';
 import { MatTableDataSource } from '@angular/material/table';
+import {MatSort, Sort} from '@angular/material/sort';
+import { IUsers } from '@app/_models/user';
 
 //@Component({ templateUrl: 'user.component.html' })
 @Component({
@@ -16,9 +18,8 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class UserComponent implements OnInit, AfterViewInit {
 
-  userColumns: string[] = ['firstName', 'lastName', 'email', 'role'];
+  userColumns: string[] = ['firstName', 'lastName', 'email', 'role','emailConfirmed','isActive'];
   userresult: MatTableDataSource<IUsers>;
-  checklistId: number;
   userData:any;
   discription:string[];
   selectedStatusName:string;
@@ -28,7 +29,8 @@ export class UserComponent implements OnInit, AfterViewInit {
   pdialogConfig: MatDialogConfig;
   dialogWithForm: MatDialogRef<AddUserComponent>;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  
+  @ViewChild('empTbSort') empTbSort = new MatSort();
+
   constructor(private dialogModel: MatDialog,
     private clipboard: Clipboard,
     //public readonly alertsService: AlertsService,
@@ -37,7 +39,6 @@ export class UserComponent implements OnInit, AfterViewInit {
    //@Inject(MAT_DIALOG_DATA) public data: any
   ) {
     
-    this.checklistId =0;// data;
     this.range.limit = 10;
     //this.userresult = new MatTableDataSource(this.usersData);
   }
@@ -49,15 +50,18 @@ export class UserComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if(this.userresult)
       this.userresult.paginator = this.paginator;
+      this.userresult.sort = this.empTbSort;
   }
 
   public async loadUsers() {
     // this.userresult = new MatTableDataSource(this.getStaticUserData());
     // return;
+    
       this.userData = this.masterService.getAllUsers().then(response => {
       if (response.isSuccess) {
         //this.userresult = response.data;
         this.userresult = new MatTableDataSource(response.data);
+        this.userresult.sort = this.empTbSort;
         this.range.total = response.dataTotalCount;
       }
     });
@@ -168,14 +172,4 @@ export class UserComponent implements OnInit, AfterViewInit {
  
     }
 
-  }
-
-  export interface IUsers {
-    email: string
-    emailConfirmed: boolean
-    firstName: string
-    id: string
-    isActive: boolean
-    lastName: string
-    role: string
   }
